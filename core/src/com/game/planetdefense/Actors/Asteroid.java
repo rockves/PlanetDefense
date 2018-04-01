@@ -11,34 +11,32 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Pool;
 import com.game.planetdefense.StaticUtils;
 
-public class Missile extends Actor implements Pool.Poolable {
-
+public class Asteroid extends Actor implements Pool.Poolable{
+//TODO: Zastanowic sie nad zmiana lotu z poruszania w przod na Action aktora
     private Sprite sprite;
     private Rectangle position;
     private Vector2 target;
-    public float flight_time;
 
-
-    public Missile() {
+    public Asteroid() {
         this.position = new Rectangle(0,0,0,0);
-        this.sprite = new Sprite(new Texture(Gdx.files.internal("missile.png")));
+        this.sprite = new Sprite(new Texture(Gdx.files.internal("rock.png")));
         this.sprite.setBounds( position.getX(), position.getY(), position.getWidth(), position.getHeight());
         this.target = new Vector2(0,0);
-        flight_time = 0;
     }
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
-        sprite.draw(batch,parentAlpha);
+        this.sprite.draw(batch, parentAlpha);
+
     }
 
     @Override
     public void act(float delta) {
         super.act(delta);
-        moveToTarget(delta);
-        this.sprite.setPosition(position.x,position.y);
-        flight_time += delta;
+        this.moveToTarget(delta);
+        this.sprite.setPosition(getX(), getY());
+
     }
 
     @Override
@@ -47,18 +45,11 @@ public class Missile extends Actor implements Pool.Poolable {
         this.sprite.setBounds( position.getX(), position.getY(), position.getWidth(), position.getHeight());
         this.setRotation(0);
         this.target.set(0,0);
-        this.flight_time = 0;
         this.remove();
     }
 
     public void setTarget(float x, float y){
         target.set(x,y);
-    }
-
-    public void rotateToPoint(float x, float y){
-        Vector2 temp = new Vector2(0,0);
-        float angle = temp.set(x,y).sub(position.getX() + sprite.getOriginX(), position.getY() + sprite.getOriginY()).angle();
-        this.sprite.setRotation(angle);
     }
 
     public void rotateToTarget(){
@@ -72,15 +63,15 @@ public class Missile extends Actor implements Pool.Poolable {
         /*Vector2 help = new Vector2(position.getX(), position.getY());
         help.add(new Vector2(StaticUtils.MISSILE_SPEED * Gdx.graphics.getDeltaTime(), 0).rotate(sprite.getRotation()));
         position.setPosition(help);*/
-        this.position.x += StaticUtils.MISSILE_SPEED * delta * MathUtils.cos((float)((Math.PI / 180) * ( sprite.getRotation())));
-        this.position.y += StaticUtils.MISSILE_SPEED * delta * MathUtils.sin((float)((Math.PI / 180) * ( sprite.getRotation())));
+        this.position.x += StaticUtils.ASTEROID_SPEED * delta * MathUtils.cos((float)((Math.PI / 180) * ( sprite.getRotation())));
+        this.position.y += StaticUtils.ASTEROID_SPEED * delta * MathUtils.sin((float)((Math.PI / 180) * ( sprite.getRotation())));
     }
 
-    public void setMissile(Launcher launcher){
-        this.position.set(launcher.getX() + launcher.getOriginX() - StaticUtils.MISSILE_WIDTH/2, launcher.getY() + launcher.getOriginY() - StaticUtils.MISSILE_HEIGHT/2, StaticUtils.MISSILE_WIDTH, StaticUtils.MISSILE_HEIGHT);
+    public void setAsteroid(float x, float y){
+        this.position.set(x - StaticUtils.ASTEROID_WIDTH/2, y - StaticUtils.ASTEROID_HEIGHT/2, StaticUtils.ASTEROID_WIDTH, StaticUtils.ASTEROID_HEIGHT);
         this.sprite.setBounds(this.position.getX(), this.position.getY(), this.position.getWidth(), this.position.getHeight());
         this.sprite.setOriginCenter();
-        Gdx.app.log("Missile position", " " + sprite.getX() + " " + sprite.getY());
+        Gdx.app.log("Asteroid position", " " + sprite.getX() + " " + sprite.getY());
     }
 
     @Override
@@ -102,4 +93,5 @@ public class Missile extends Actor implements Pool.Poolable {
     public Rectangle getRectangle(){
         return position;
     }
+
 }

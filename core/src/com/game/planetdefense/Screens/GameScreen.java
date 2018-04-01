@@ -6,29 +6,28 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.game.planetdefense.Actors.Asteroid;
 import com.game.planetdefense.Actors.Missile;
-import com.game.planetdefense.Actors.Weapon;
+import com.game.planetdefense.Actors.Launcher;
+import com.game.planetdefense.GameStage;
 import com.game.planetdefense.PlanetDefense;
+import com.game.planetdefense.StaticUtils;
 
 public class GameScreen implements Screen {
 
-    private Stage stage;
+    private GameStage stage;
     private PlanetDefense planet_defense;
-    private Weapon launcher;
 
     public GameScreen(PlanetDefense planet_defense) {
-        this.stage = new Stage(new ScreenViewport());
+        StaticUtils.loadData();
+        this.stage = new GameStage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
         this.planet_defense = planet_defense;
-        this.launcher = new Weapon(stage);
-        stage.addActor(launcher);
         stage.addListener(new InputListener(){
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                Missile missile = new Missile(launcher,x,y);
-                stage.addActor(missile);
+                stage.launcherLaunch(x,y);
                 return super.touchDown(event, x, y, pointer, button);
             }
         });
