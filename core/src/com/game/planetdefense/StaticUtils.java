@@ -1,7 +1,10 @@
 package com.game.planetdefense;
 
 public class StaticUtils {
+    //STYLE UTILS
+    /////////////
     //STAGE UTILS
+    public static int MONEY;
     public static float ASTEROID_DROP_INTERVAL;
     ////////////////
     //LAUNCHER UTILS
@@ -22,6 +25,8 @@ public class StaticUtils {
     ////////////////
 
     public static void loadData() {
+
+        MONEY = 0;
         ASTEROID_DROP_INTERVAL = 2.5f;
 
         LAUNCHER_WIDTH = 100;

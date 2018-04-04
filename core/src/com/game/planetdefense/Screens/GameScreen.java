@@ -2,6 +2,7 @@ package com.game.planetdefense.Screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -18,8 +19,10 @@ public class GameScreen implements Screen {
 
     private GameStage stage;
     private PlanetDefense planet_defense;
+    //private FPSLogger fps;
 
     public GameScreen(PlanetDefense planet_defense) {
+        //fps = new FPSLogger();
         StaticUtils.loadData();
         this.stage = new GameStage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
@@ -42,8 +45,9 @@ public class GameScreen implements Screen {
     public void render(float delta) {
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        stage.act(delta);
+        stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 60f));
         stage.draw();
+        //fps.log();
     }
 
     @Override

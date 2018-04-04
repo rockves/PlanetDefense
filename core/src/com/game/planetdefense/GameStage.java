@@ -1,8 +1,13 @@
 package com.game.planetdefense;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Pool;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.game.planetdefense.Actors.Asteroid;
@@ -20,6 +25,8 @@ public class GameStage extends Stage {
     private List<Missile> active_missiles;
     private Pool<Missile> missile_pool;
     private Launcher launcher;
+    private Table ui_table;
+    //private Label money_label;
     private float time_to_asteroid_drop;
 
     public GameStage() {
@@ -73,10 +80,24 @@ public class GameStage extends Stage {
         //build launcher
         buildLauncher();
         time_to_asteroid_drop = StaticUtils.ASTEROID_DROP_INTERVAL;
+        //load UI
+        loadUi();
+    }
+
+    private void loadUi(){
+        //build ui
+        ui_table = new Table();
+        ui_table.setFillParent(true);
+        ui_table.setDebug(true);
+        this.addActor(ui_table);
+        //build score label
+        /*Label.LabelStyle label_style = new Label.LabelStyle(new BitmapFont(), Color.BLACK);
+        money_label = new Label("Your score: " + StaticUtils.MONEY, label_style);
+        ui_table.add(money_label).expandX().expandY().left().top();*/
+
     }
 
     private void checkCollisions(){
-        //TODO: Make asteroids collision with delete of missiles and asteroids
         Iterator<Asteroid> asteroid_iterator = active_asteroids.iterator();
         //asteroid iteration
         while (asteroid_iterator.hasNext()) {
@@ -96,6 +117,7 @@ public class GameStage extends Stage {
                     asteroid_pool.free(asteroid);
                     missile_iterator.remove();
                     asteroid_iterator.remove();
+                    //TODO: Add money earning;
                     break;
                 }
                 //missile flight too long
