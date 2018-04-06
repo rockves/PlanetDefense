@@ -1,7 +1,6 @@
 package com.game.planetdefense.Actors;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
@@ -9,19 +8,22 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Pool;
-import com.game.planetdefense.StaticUtils;
+import com.game.planetdefense.Utils.Managers.GraphicManager;
+import com.game.planetdefense.Utils.StaticUtils;
 
 public class Missile extends Actor implements Pool.Poolable {
 
     private Sprite sprite;
     private Rectangle position;
     private Vector2 target;
+    private int damage;
     public float flight_time;
 
 
     public Missile() {
+        this.damage = 1;
         this.position = new Rectangle(0,0,0,0);
-        this.sprite = new Sprite(new Texture(Gdx.files.internal("missile.png")));
+        this.sprite = new Sprite(GraphicManager.missile_texture);
         this.sprite.setBounds( position.getX(), position.getY(), position.getWidth(), position.getHeight());
         this.target = new Vector2(0,0);
         flight_time = 0;
@@ -81,6 +83,13 @@ public class Missile extends Actor implements Pool.Poolable {
         this.sprite.setBounds(this.position.getX(), this.position.getY(), this.position.getWidth(), this.position.getHeight());
         this.sprite.setOriginCenter();
         Gdx.app.log("Missile position", " " + sprite.getX() + " " + sprite.getY());
+    }
+
+    public int getDamage() {
+        return damage;
+    }
+    public void setDamage(int damage) {
+        this.damage = damage;
     }
 
     @Override
