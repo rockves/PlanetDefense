@@ -13,8 +13,8 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.game.planetdefense.Actors.Asteroid;
 import com.game.planetdefense.Actors.Launcher;
 import com.game.planetdefense.Actors.Missile;
-import com.game.planetdefense.Utils.StaticUtils;
 import com.game.planetdefense.Utils.Managers.WaveManager;
+import com.game.planetdefense.Utils.StaticUtils;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -169,7 +169,7 @@ public class GameStage extends Stage {
         this.addActor(asteroid);
     }
 
-    public void launcherLaunch(float target_X, float target_Y){
+    private void launcherLaunch(float target_X, float target_Y){
         if(isPause) return;
         Missile missile = launcher.launchMissile(missile_pool.obtain(),target_X,target_Y);
         if(missile == null) return;
