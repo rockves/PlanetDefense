@@ -2,18 +2,12 @@ package com.game.planetdefense.Screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.game.planetdefense.Actors.Asteroid;
-import com.game.planetdefense.Actors.Missile;
-import com.game.planetdefense.Actors.Launcher;
 import com.game.planetdefense.GameStage;
 import com.game.planetdefense.PlanetDefense;
-import com.game.planetdefense.StaticUtils;
+import com.game.planetdefense.Utils.Managers.GraphicManager;
+import com.game.planetdefense.Utils.StaticUtils;
 
 public class GameScreen implements Screen {
 
@@ -24,16 +18,10 @@ public class GameScreen implements Screen {
     public GameScreen(PlanetDefense planet_defense) {
         //fps = new FPSLogger();
         StaticUtils.loadData();
+        GraphicManager.loadAssets();
         this.stage = new GameStage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
         this.planet_defense = planet_defense;
-        stage.addListener(new InputListener(){
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                stage.launcherLaunch(x,y);
-                return super.touchDown(event, x, y, pointer, button);
-            }
-        });
     }
 
     @Override

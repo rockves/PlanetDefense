@@ -1,0 +1,83 @@
+
+atlas.png
+size: 256,256
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+launcher
+  rotate: false
+  xy: 222, 156
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+meteor
+  rotate: false
+  xy: 2, 2
+  size: 64, 27
+  orig: 64, 32
+  offset: 0, 2
+  index: 0
+meteor
+  rotate: false
+  xy: 164, 102
+  size: 64, 27
+  orig: 64, 32
+  offset: 0, 1
+  index: 1
+meteor
+  rotate: false
+  xy: 68, 4
+  size: 64, 27
+  orig: 64, 32
+  offset: 0, 2
+  index: 2
+meteor
+  rotate: false
+  xy: 164, 73
+  size: 64, 27
+  orig: 64, 32
+  offset: 0, 2
+  index: 3
+missile
+  rotate: false
+  xy: 119, 52
+  size: 60, 19
+  orig: 64, 22
+  offset: 1, 2
+  index: -1
+rock
+  rotate: false
+  xy: 2, 93
+  size: 160, 155
+  orig: 160, 160
+  offset: 0, 5
+  index: -1
+satellite
+  rotate: false
+  xy: 2, 31
+  size: 56, 60
+  orig: 64, 64
+  offset: 2, 3
+  index: 2
+satellite
+  rotate: false
+  xy: 164, 190
+  size: 58, 58
+  orig: 64, 64
+  offset: 1, 3
+  index: 3
+satellite
+  rotate: false
+  xy: 60, 33
+  size: 57, 58
+  orig: 64, 64
+  offset: 1, 3
+  index: 1
+satellite
+  rotate: false
+  xy: 164, 131
+  size: 56, 57
+  orig: 64, 64
+  offset: 2, 4
+  index: 0

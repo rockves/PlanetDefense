@@ -1,11 +1,13 @@
-package com.game.planetdefense;
+package com.game.planetdefense.Utils;
 
 public class StaticUtils {
-    //STYLE UTILS
-    /////////////
+    private StaticUtils(){}
     //STAGE UTILS
     public static int MONEY;
-    public static float ASTEROID_DROP_INTERVAL;
+    public static float ASTEROID_MAX_DROP_INTERVAL;
+    ////////////////
+    //WAVE UTILS
+    public static short COUNT_OF_ASTEROID_IN_NEXT_WAVE;
     ////////////////
     //LAUNCHER UTILS
     public static int LAUNCHER_WIDTH;
@@ -21,25 +23,25 @@ public class StaticUtils {
     //ASTEROID UTILS
     public static int ASTEROID_WIDTH;
     public static int ASTEROID_HEIGHT;
-    public static float ASTEROID_SPEED;
     ////////////////
 
     public static void loadData() {
 
         MONEY = 0;
-        ASTEROID_DROP_INTERVAL = 2.5f;
+        ASTEROID_MAX_DROP_INTERVAL = 1f;
+
+        COUNT_OF_ASTEROID_IN_NEXT_WAVE = 1;
 
         LAUNCHER_WIDTH = 100;
         LAUNCHER_HEIGHT = 100;
-        LAUNCHER_DELAY_TIME = 1;
+        LAUNCHER_DELAY_TIME = 0;
 
         MISSILE_WIDTH = 90;
         MISSILE_HEIGHT = 45;
         MISSILE_SPEED = 700;
         MISSILE_TIME_TO_DESTROY = 4;
 
-        ASTEROID_WIDTH = 100;
+        ASTEROID_WIDTH = 200;
         ASTEROID_HEIGHT = 100;
-        ASTEROID_SPEED = 200;
     }
 }

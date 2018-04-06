@@ -1,25 +1,35 @@
 package com.game.planetdefense.Actors;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Pool;
-import com.game.planetdefense.StaticUtils;
+import com.game.planetdefense.Utils.Managers.GraphicManager;
+import com.game.planetdefense.Utils.StaticUtils;
 
 public class Asteroid extends Actor implements Pool.Poolable{
 //TODO: Zastanowic sie nad zmiana lotu z poruszania w przod na Action aktora
+    private Animation<TextureRegion> animation;
     private Sprite sprite;
     private Rectangle position;
     private Vector2 target;
+    private float state_time;
+
+    private int hp;
+    private float speed;
+    private float money_drop;
 
     public Asteroid() {
+        this.state_time = 0f;
+        this.animation = null;
         this.position = new Rectangle(0,0,0,0);
-        this.sprite = new Sprite(new Texture(Gdx.files.internal("rock.png")));
+        this.sprite = new Sprite(GraphicManager.meteor_animation.getKeyFrame(state_time,true));
         this.sprite.setBounds( position.getX(), position.getY(), position.getWidth(), position.getHeight());
         this.target = new Vector2(0,0);
     }
@@ -34,6 +44,8 @@ public class Asteroid extends Actor implements Pool.Poolable{
     @Override
     public void act(float delta) {
         super.act(delta);
+        state_time += delta;
+        sprite.setRegion(animation.getKeyFrame(state_time, true));
         this.moveToTarget(delta);
         this.sprite.setPosition(getX(), getY());
 
@@ -41,10 +53,15 @@ public class Asteroid extends Actor implements Pool.Poolable{
 
     @Override
     public void reset() {
+        this.state_time = 0f;
         this.position.set(0,0,0,0);
         this.sprite.setBounds( position.getX(), position.getY(), position.getWidth(), position.getHeight());
         this.setRotation(0);
         this.target.set(0,0);
+        this.animation = null;
+        this.hp = 0;
+        this.speed = 0;
+        this.money_drop = 0;
         this.remove();
     }
 
@@ -63,8 +80,8 @@ public class Asteroid extends Actor implements Pool.Poolable{
         /*Vector2 help = new Vector2(position.getX(), position.getY());
         help.add(new Vector2(StaticUtils.MISSILE_SPEED * Gdx.graphics.getDeltaTime(), 0).rotate(sprite.getRotation()));
         position.setPosition(help);*/
-        this.position.x += StaticUtils.ASTEROID_SPEED * delta * MathUtils.cos((float)((Math.PI / 180) * ( sprite.getRotation())));
-        this.position.y += StaticUtils.ASTEROID_SPEED * delta * MathUtils.sin((float)((Math.PI / 180) * ( sprite.getRotation())));
+        this.position.x += speed * delta * MathUtils.cos((float)((Math.PI / 180) * ( sprite.getRotation())));
+        this.position.y += speed * delta * MathUtils.sin((float)((Math.PI / 180) * ( sprite.getRotation())));
     }
 
     public void setAsteroid(float x, float y){
@@ -72,6 +89,38 @@ public class Asteroid extends Actor implements Pool.Poolable{
         this.sprite.setBounds(this.position.getX(), this.position.getY(), this.position.getWidth(), this.position.getHeight());
         this.sprite.setOriginCenter();
         Gdx.app.log("Asteroid position", " " + sprite.getX() + " " + sprite.getY());
+    }
+
+    public Animation getAnimation() {
+        return animation;
+    }
+
+    public void setAnimation(Animation animation) {
+        this.animation = animation;
+    }
+
+    public int getHp() {
+        return hp;
+    }
+
+    public void setHp(int hp) {
+        this.hp = hp;
+    }
+
+    public float getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(float speed) {
+        this.speed = speed;
+    }
+
+    public float getMoneyDrop() {
+        return money_drop;
+    }
+
+    public void setMoneyDrop(float money_drop) {
+        this.money_drop = money_drop;
     }
 
     @Override

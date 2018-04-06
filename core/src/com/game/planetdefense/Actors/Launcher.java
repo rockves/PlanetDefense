@@ -1,13 +1,11 @@
 package com.game.planetdefense.Actors;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.game.planetdefense.StaticUtils;
+import com.game.planetdefense.Utils.Managers.GraphicManager;
+import com.game.planetdefense.Utils.StaticUtils;
 
 public class Launcher extends Actor {
 
@@ -17,7 +15,7 @@ public class Launcher extends Actor {
 
     public Launcher() {
         position = new Rectangle(0,0,0,0);
-        this.sprite = new Sprite(new Texture(Gdx.files.internal("launcher.png")));
+        this.sprite = new Sprite(GraphicManager.launcher_texture);
         this.sprite.setBounds(position.getX(),position.getY(),position.getWidth(),position.getHeight());
         timer = 0;
     }
