@@ -14,6 +14,7 @@ import com.game.planetdefense.Actors.Asteroid;
 import com.game.planetdefense.Actors.Launcher;
 import com.game.planetdefense.Actors.Missile;
 import com.game.planetdefense.Utils.Managers.WaveManager;
+import com.game.planetdefense.Utils.Singletons.UserData;
 import com.game.planetdefense.Utils.StaticUtils;
 
 import java.util.ArrayList;
@@ -138,6 +139,7 @@ public class GameStage extends Stage {
                     if(asteroid.getHp() > 0){
                         break;
                     }
+                    UserData.getInstance().addMoney(asteroid.getMoneyDrop());
                     missile_pool.free(missile);
                     asteroid_pool.free(asteroid);
                     missile_iterator.remove();
