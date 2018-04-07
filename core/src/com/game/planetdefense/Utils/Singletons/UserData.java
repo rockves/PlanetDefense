@@ -5,7 +5,7 @@ import com.badlogic.gdx.Preferences;
 
 public class UserData {
     private static final UserData ourInstance = new UserData();
-    private static final Preferences prefs = Gdx.app.getPreferences("userData");
+    private Preferences prefs = null;
 
     private static float money;
 
@@ -14,11 +14,13 @@ public class UserData {
     }
 
     private UserData() {
-        prefs.getFloat("money", 0);
+        prefs = Gdx.app.getPreferences("userData");
+        money = prefs.getFloat("money", 0);
     }
 
     public void updateUserData(){
         prefs.putFloat("money",money);
+        prefs.flush();
     }
 
     public float getMoney() {
