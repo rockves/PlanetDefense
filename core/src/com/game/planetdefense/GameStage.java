@@ -171,7 +171,7 @@ public class GameStage extends Stage {
         this.addActor(asteroid);
     }
 
-    public void launcherLaunch(float target_X, float target_Y){
+    private void launcherLaunch(float target_X, float target_Y){
         if(isPause) return;
         Missile missile = launcher.launchMissile(missile_pool.obtain(),target_X,target_Y);
         if(missile == null) return;

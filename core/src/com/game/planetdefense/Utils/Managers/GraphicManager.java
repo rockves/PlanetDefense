@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class GraphicManager {
 
+    @SuppressWarnings("FieldCanBeLocal")
     private static TextureAtlas atlas;
 
     public static TextureRegion launcher_texture;

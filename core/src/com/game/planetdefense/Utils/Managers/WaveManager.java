@@ -6,7 +6,7 @@ import com.game.planetdefense.Utils.StaticUtils;
 
 public class WaveManager {
 //TODO: Przniesc pozycjonowanie asteroidy do waveManagera albo enumeratora typu aby pozniej moc zrobic inne przeszkody niz asteroidy na przyklad latajacych horyzontalnie kosmitow
-    AsteroidType asteroid_type;
+    private AsteroidType asteroid_type;
     private int wave;
     private int asteroid_in_wave;
     private int asteroid_to_drop;
