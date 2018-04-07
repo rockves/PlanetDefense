@@ -25,4 +25,8 @@ public class GraphicManager {
         meteor_animation = new Animation<TextureRegion>(0.099f, atlas.findRegions("meteor"), Animation.PlayMode.LOOP);
         satellite_animation = new Animation<TextureRegion>(0.099f, atlas.findRegions("satellite"), Animation.PlayMode.LOOP);
     }
+
+    public static void update(){
+
+    }
 }

@@ -2,12 +2,13 @@ package com.game.planetdefense;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.game.planetdefense.Screens.GameScreen;
-import com.sun.xml.internal.bind.v2.TODO;
+import com.game.planetdefense.Screens.MenuScreen;
 
 public class PlanetDefense extends Game {
 
@@ -17,7 +18,7 @@ public class PlanetDefense extends Game {
 	public void create () {
         //TODO: Make scalable font
 		font = new BitmapFont();
-        this.setScreen(new GameScreen(this));
+        this.setScreen(new MenuScreen(this));
 	}
 
 	@Override
@@ -27,6 +28,11 @@ public class PlanetDefense extends Game {
 	
 	@Override
 	public void dispose () {
+		font.dispose();
+	}
 
+	public void changeScreen(Screen newScreen, Screen thisScreen){
+        thisScreen.dispose();
+		this.setScreen(newScreen);
 	}
 }
