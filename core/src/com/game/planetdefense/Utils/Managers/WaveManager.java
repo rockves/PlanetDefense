@@ -2,10 +2,12 @@ package com.game.planetdefense.Utils.Managers;
 
 import com.game.planetdefense.Actors.Asteroid;
 import com.game.planetdefense.Enums.AsteroidType;
+import com.game.planetdefense.PlanetDefense;
 import com.game.planetdefense.Utils.StaticUtils;
 
 public class WaveManager {
 //TODO: Przniesc pozycjonowanie asteroidy do waveManagera albo enumeratora typu aby pozniej moc zrobic inne przeszkody niz asteroidy na przyklad latajacych horyzontalnie kosmitow
+    private AssetsManager assetsManager;
     private AsteroidType asteroid_type;
     private int wave;
     private int asteroid_in_wave;
@@ -13,7 +15,8 @@ public class WaveManager {
     private float drop_interval;
     private float difficult_ratio;
 
-    public WaveManager(){
+    public WaveManager(PlanetDefense planetDefense){
+        this.assetsManager = planetDefense.assets_manager;
         wave = 0;
         asteroid_in_wave = 0;
         asteroid_to_drop = 0;
@@ -23,7 +26,8 @@ public class WaveManager {
 
     public void prepareWave(){
         wave++;
-        asteroid_in_wave += StaticUtils.COUNT_OF_ASTEROID_IN_NEXT_WAVE;
+        if(wave == 1){asteroid_in_wave = StaticUtils.START_ASTEROIDS_NUMBER;}
+        else asteroid_in_wave += StaticUtils.COUNT_OF_ASTEROID_IN_NEXT_WAVE;
         drop_interval = StaticUtils.ASTEROID_MAX_DROP_INTERVAL;
         asteroid_to_drop = asteroid_in_wave;
     }
@@ -34,7 +38,7 @@ public class WaveManager {
         asteroid.setHp((int)asteroid_type.getHp());
         asteroid.setSpeed(asteroid_type.getSpeed());
         asteroid.setMoneyDrop(asteroid_type.getMoneyDrop());
-        asteroid.setAnimation(asteroid_type.getAsteroidAnimation());
+        asteroid.setAnimation(asteroid_type.getAnimation(assetsManager));
     }
 
     public boolean isAsteroidToDrop(){

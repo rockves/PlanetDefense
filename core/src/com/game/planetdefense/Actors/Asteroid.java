@@ -10,7 +10,6 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Pool;
-import com.game.planetdefense.Utils.Managers.GraphicManager;
 import com.game.planetdefense.Utils.StaticUtils;
 
 public class Asteroid extends Actor implements Pool.Poolable{
@@ -29,7 +28,8 @@ public class Asteroid extends Actor implements Pool.Poolable{
         this.state_time = 0f;
         this.animation = null;
         this.position = new Rectangle(0,0,0,0);
-        this.sprite = new Sprite(GraphicManager.meteor_animation.getKeyFrame(state_time,true));
+        this.sprite = new Sprite();
+        //this.sprite = new Sprite(GraphicManager.meteor_animation.getKeyFrame(state_time,true));
         this.sprite.setBounds( position.getX(), position.getY(), position.getWidth(), position.getHeight());
         this.target = new Vector2(0,0);
     }
@@ -97,6 +97,7 @@ public class Asteroid extends Actor implements Pool.Poolable{
 
     public void setAnimation(Animation animation) {
         this.animation = animation;
+        this.sprite.setRegion(this.animation.getKeyFrame(state_time, true));
     }
 
     public int getHp() {

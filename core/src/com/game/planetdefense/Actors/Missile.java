@@ -8,7 +8,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Pool;
-import com.game.planetdefense.Utils.Managers.GraphicManager;
+import com.game.planetdefense.Utils.Managers.AssetsManager;
 import com.game.planetdefense.Utils.StaticUtils;
 
 public class Missile extends Actor implements Pool.Poolable {
@@ -20,10 +20,10 @@ public class Missile extends Actor implements Pool.Poolable {
     public float flight_time;
 
 
-    public Missile() {
+    public Missile(AssetsManager assets_manager) {
         this.damage = 1;
         this.position = new Rectangle(0,0,0,0);
-        this.sprite = new Sprite(GraphicManager.missile_texture);
+        this.sprite = new Sprite(assets_manager.getMissile_texture());
         this.sprite.setBounds( position.getX(), position.getY(), position.getWidth(), position.getHeight());
         this.target = new Vector2(0,0);
         flight_time = 0;
