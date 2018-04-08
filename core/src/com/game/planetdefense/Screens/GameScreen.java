@@ -7,7 +7,6 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.game.planetdefense.GameStage;
 import com.game.planetdefense.PlanetDefense;
 import com.game.planetdefense.Utils.Singletons.UserData;
-import com.game.planetdefense.Utils.StaticUtils;
 
 public class GameScreen implements Screen {
 
@@ -20,6 +19,8 @@ public class GameScreen implements Screen {
         this.stage = new GameStage(new ScreenViewport(), planet_defense);
         Gdx.input.setInputProcessor(stage);
         this.planet_defense = planet_defense;
+
+        Gdx.input.setCatchBackKey(true);
     }
 
     @Override

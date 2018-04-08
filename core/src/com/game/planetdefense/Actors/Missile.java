@@ -16,12 +16,12 @@ public class Missile extends Actor implements Pool.Poolable {
     private Sprite sprite;
     private Rectangle position;
     private Vector2 target;
-    private int damage;
+    private float damage;
     public float flight_time;
 
 
     public Missile(AssetsManager assets_manager) {
-        this.damage = 1;
+        this.damage = 5f;
         this.position = new Rectangle(0,0,0,0);
         this.sprite = new Sprite(assets_manager.getMissile_texture());
         this.sprite.setBounds( position.getX(), position.getY(), position.getWidth(), position.getHeight());
@@ -85,13 +85,12 @@ public class Missile extends Actor implements Pool.Poolable {
         Gdx.app.log("Missile position", " " + sprite.getX() + " " + sprite.getY());
     }
 
-    public int getDamage() {
+    public float getDamage() {
         return damage;
     }
-    public void setDamage(int damage) {
+    public void setDamage(float damage) {
         this.damage = damage;
     }
-
     @Override
     public float getX() {
         return position.getX();

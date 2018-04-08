@@ -2,7 +2,6 @@ package com.game.planetdefense.Enums;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.game.planetdefense.Actors.Asteroid;
 import com.game.planetdefense.Utils.Managers.AssetsManager;
 
 import java.util.Random;
@@ -15,9 +14,9 @@ public enum AsteroidType {
             /*case ROCK:
                 return 1;*/
             case SATELLITE:
-                return 2;
+                return 6;
             case METEOR:
-                return 3;
+                return 4;
             default:
                 return 0;
         }

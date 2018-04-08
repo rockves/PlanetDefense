@@ -20,7 +20,6 @@ import com.game.planetdefense.Utils.StaticUtils;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Random;
 
 public class GameStage extends Stage {
 
@@ -35,7 +34,6 @@ public class GameStage extends Stage {
     //private Table ui_table;
     private Container stage_screen;
     //private Label money_label;
-    private float time_to_asteroid_drop;
     private boolean isPause = false;
 
     public GameStage(Viewport viewport, PlanetDefense planetDefense) {
@@ -48,7 +46,6 @@ public class GameStage extends Stage {
                 if(isPause){
                     wave_manager.prepareWave();
                     toggleWaveScreen();
-                    time_to_asteroid_drop = StaticUtils.ASTEROID_MAX_DROP_INTERVAL;
                     return super.touchDown(event, x, y, pointer, button);
                 }
                 launcherLaunch(x,y);
@@ -69,12 +66,12 @@ public class GameStage extends Stage {
         if(isPause) return;
         checkCollisions();
         super.act(delta);
-        if(wave_manager.isAsteroidToDrop()) {
-            if (time_to_asteroid_drop <= 0) {
-                time_to_asteroid_drop = StaticUtils.ASTEROID_MAX_DROP_INTERVAL;
-                dropAsteroid();
+        if(!wave_manager.isEndOfWave()) {
+            if (wave_manager.getTime_to_next_object_spawn() <= 0) {
+                wave_manager.setTime_to_next_object_spawn(StaticUtils.ASTEROID_MAX_DROP_INTERVAL);
+                wave_manager.spawnNextObject();
             } else {
-                time_to_asteroid_drop -= delta;
+                wave_manager.setTime_to_next_object_spawn(wave_manager.getTime_to_next_object_spawn() - delta);
             }
         }else if(active_asteroids.isEmpty()){
             endWave();
@@ -99,7 +96,7 @@ public class GameStage extends Stage {
         active_asteroids = new ArrayList<Asteroid>();
         active_missiles = new ArrayList<Missile>();
         //Wave manager load
-        wave_manager = new WaveManager(planetDefense);
+        wave_manager = new WaveManager(planetDefense, this);
         //build launcher
         buildLauncher();
         //load UI
@@ -150,17 +147,7 @@ public class GameStage extends Stage {
         }
     }
 
-    private void dropAsteroid(){
-        Random rand = new Random();
-        float start_y = this.getHeight() + (com.game.planetdefense.Utils.StaticUtils.ASTEROID_HEIGHT * 2);
-        float start_x = rand.nextFloat() * (this.getWidth());
-        float target_x = rand.nextFloat() * (this.getWidth());
-
-        Asteroid asteroid = asteroid_pool.obtain();
-        asteroid.setAsteroid(start_x, start_y);
-        asteroid.setTarget(target_x, 0);
-        asteroid.rotateToTarget();
-        wave_manager.generateAsteroid(asteroid);
+    public void dropAsteroid(Asteroid asteroid){
         active_asteroids.add(asteroid);
         this.addActor(asteroid);
     }
@@ -200,5 +187,20 @@ public class GameStage extends Stage {
             missile_pool.free(missile);
             missile_iterator.remove();
         }
+
+        if(UserData.getInstance().getHigh_wave() < wave_manager.getWave()) UserData.getInstance().setHigh_wave(wave_manager.getWave());
+    }
+
+    public List<Asteroid> getActive_asteroids() {
+        return active_asteroids;
+    }
+    public Pool<Asteroid> getAsteroid_pool() {
+        return asteroid_pool;
+    }
+    public List<Missile> getActive_missiles() {
+        return active_missiles;
+    }
+    public Pool<Missile> getMissile_pool() {
+        return missile_pool;
     }
 }

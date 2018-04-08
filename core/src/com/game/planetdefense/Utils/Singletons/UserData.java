@@ -8,6 +8,7 @@ public class UserData {
     private Preferences prefs = null;
 
     private float money;
+    private int high_wave;
     private boolean hasPlaying;
 
     public static UserData getInstance() {
@@ -15,19 +16,27 @@ public class UserData {
     }
 
     private UserData() {
+        getUserData();
+    }
+
+    private void getUserData(){
         prefs = Gdx.app.getPreferences("userData");
         money = prefs.getFloat("money", 0);
+        high_wave = prefs.getInteger("highWave", 0);
         hasPlaying = prefs.getBoolean("hasPlaying", false);
     }
 
     public void updateUserData(){
         prefs.putFloat("money",money);
+        prefs.putInteger("highWave", high_wave);
         prefs.putBoolean("hasPlaying", hasPlaying);
         prefs.flush();
     }
 
     public void resetUserData(){
         prefs.clear();
+        getUserData();
+        prefs.flush();
     }
 
     public float getMoney() {
@@ -40,6 +49,14 @@ public class UserData {
 
     public void addMoney(float money){
         this.money += money;
+    }
+
+    public int getHigh_wave() {
+        return high_wave;
+    }
+
+    public void setHigh_wave(int high_wave) {
+        this.high_wave = high_wave;
     }
 
     public boolean isHasPlaying() {

@@ -20,7 +20,7 @@ public class Asteroid extends Actor implements Pool.Poolable{
     private Vector2 target;
     private float state_time;
 
-    private int hp;
+    private float hp;
     private float speed;
     private float money_drop;
 
@@ -59,9 +59,9 @@ public class Asteroid extends Actor implements Pool.Poolable{
         this.setRotation(0);
         this.target.set(0,0);
         this.animation = null;
-        this.hp = 0;
-        this.speed = 0;
-        this.money_drop = 0;
+        this.hp = 0f;
+        this.speed = 0f;
+        this.money_drop = 0f;
         this.remove();
     }
 
@@ -100,11 +100,11 @@ public class Asteroid extends Actor implements Pool.Poolable{
         this.sprite.setRegion(this.animation.getKeyFrame(state_time, true));
     }
 
-    public int getHp() {
+    public float getHp() {
         return hp;
     }
 
-    public void setHp(int hp) {
+    public void setHp(float hp) {
         this.hp = hp;
     }
 
