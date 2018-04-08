@@ -6,76 +6,73 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.game.planetdefense.PlanetDefense;
+import com.game.planetdefense.Utils.Singletons.UserData;
 
 public class MenuScreen implements Screen {
 
     private final PlanetDefense planetDefense;
     private final MenuScreen menuScreen;
     private Stage stage;
-    private VerticalGroup vertical_group;
+    private Table table;
 
     public MenuScreen(final PlanetDefense planetDefense) {
+
         this.menuScreen = this;
         this.planetDefense = planetDefense;
+        this.table = new Table();
+
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
-        vertical_group = new VerticalGroup();
-        vertical_group.debugAll();
-        vertical_group.setHeight(stage.getHeight()/2);
-        vertical_group.setWidth(stage.getWidth()/3);
-        vertical_group.setOrigin(vertical_group.getWidth()/2, vertical_group.getHeight()/2);
-        vertical_group.setPosition(stage.getWidth()/2 - vertical_group.getOriginX(), stage.getHeight()/2 - vertical_group.getOriginY());
-        stage.addActor(vertical_group);
-        TextButton.TextButtonStyle style = new TextButton.TextButtonStyle();
-        style.font = PlanetDefense.font;
-        style.fontColor = Color.BLACK;
-        //Continue button
+        table.setFillParent(true);
+        table.debugAll();
+        stage.addActor(table);
 
-        //Start new game button
-        TextButton start_new_game = new TextButton("Start new game",style);
-        start_new_game.debug();
-        start_new_game.setHeight(vertical_group.getHeight()/3);
-        start_new_game.setWidth(vertical_group.getWidth());
-        start_new_game.addListener(new ChangeListener() {
+        TextButton.TextButtonStyle button_style = new TextButton.TextButtonStyle();
+        button_style.font = planetDefense.assets_manager.getGame_font();
+        button_style.fontColor = Color.BLACK;
+
+        TextButton new_game_button = new TextButton("NEW GAME", button_style);
+        new_game_button.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+                if(UserData.getInstance().isHasPlaying()) UserData.getInstance().resetUserData();
+
                 planetDefense.changeScreen(new GameScreen(planetDefense), menuScreen);
             }
         });
-        vertical_group.addActor(start_new_game);
-        //Options button
-        TextButton options_button = new TextButton("Options", style);
-        options_button.debug();
-        options_button.setHeight(vertical_group.getHeight()/3);
-        options_button.setWidth(vertical_group.getWidth());
+        TextButton options_button = new TextButton("OPTIONS", button_style);
         options_button.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
 
             }
         });
-        options_button.setDisabled(true);
-        vertical_group.addActor(options_button);
-        //Exit button
-        TextButton exit_button = new TextButton("Exit", style);
-        exit_button.debug();
-        exit_button.setHeight(vertical_group.getHeight()/3);
-        exit_button.setWidth(vertical_group.getWidth());
-        exit_button.getLabel().setFillParent(true);
-        exit_button.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                menuScreen.dispose();
-                planetDefense.dispose();
-                System.exit(0);
-            }
-        });
-        vertical_group.addActor(exit_button);
+        options_button.setTouchable(Touchable.disabled);
+
+        if(UserData.getInstance().isHasPlaying()){
+            TextButton continue_button = new TextButton("CONTINUE", button_style);
+            continue_button.addListener(new ChangeListener() {
+                @Override
+                public void changed(ChangeEvent event, Actor actor) {
+                    planetDefense.changeScreen(new GameScreen(planetDefense), menuScreen);
+                }
+            });
+            table.add(continue_button).height(stage.getHeight()/5).width(stage.getWidth()/4);
+            table.row();
+        }
+
+        table.add(new_game_button).height(stage.getHeight()/5).width(stage.getWidth()/4);
+        table.row();
+        table.add(options_button).height(stage.getHeight()/5).width(stage.getWidth()/4);
     }
 
     @Override

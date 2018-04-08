@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.game.planetdefense.GameStage;
 import com.game.planetdefense.PlanetDefense;
-import com.game.planetdefense.Utils.Managers.GraphicManager;
+import com.game.planetdefense.Utils.Singletons.UserData;
 import com.game.planetdefense.Utils.StaticUtils;
 
 public class GameScreen implements Screen {
@@ -17,9 +17,7 @@ public class GameScreen implements Screen {
 
     public GameScreen(PlanetDefense planet_defense) {
         //fps = new FPSLogger();
-        StaticUtils.loadData();
-        GraphicManager.loadAssets();
-        this.stage = new GameStage(new ScreenViewport());
+        this.stage = new GameStage(new ScreenViewport(), planet_defense);
         Gdx.input.setInputProcessor(stage);
         this.planet_defense = planet_defense;
     }
@@ -60,6 +58,7 @@ public class GameScreen implements Screen {
 
     @Override
     public void dispose() {
+        UserData.getInstance().updateUserData();
         stage.dispose();
     }
 }

@@ -24,6 +24,8 @@ import java.util.Random;
 
 public class GameStage extends Stage {
 
+    private PlanetDefense planetDefense;
+
     private List<Asteroid> active_asteroids;
     private Pool<Asteroid> asteroid_pool;
     private List<Missile> active_missiles;
@@ -36,8 +38,10 @@ public class GameStage extends Stage {
     private float time_to_asteroid_drop;
     private boolean isPause = false;
 
-    public GameStage(Viewport viewport) {
+    public GameStage(Viewport viewport, PlanetDefense planetDefense) {
         super(viewport);
+        if(!UserData.getInstance().isHasPlaying()) UserData.getInstance().setHasPlaying(true);
+        this.planetDefense = planetDefense;
         this.addListener(new InputListener(){
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -73,7 +77,7 @@ public class GameStage extends Stage {
                 time_to_asteroid_drop -= delta;
             }
         }else if(active_asteroids.isEmpty()){
-            toggleWaveScreen();
+            endWave();
         }
     }
 
@@ -88,14 +92,14 @@ public class GameStage extends Stage {
         missile_pool = new Pool<Missile>() {
             @Override
             protected Missile newObject() {
-                return new Missile();
+                return new Missile(planetDefense.assets_manager);
             }
         };
         //list create
         active_asteroids = new ArrayList<Asteroid>();
         active_missiles = new ArrayList<Missile>();
         //Wave manager load
-        wave_manager = new WaveManager();
+        wave_manager = new WaveManager(planetDefense);
         //build launcher
         buildLauncher();
         //load UI
@@ -103,16 +107,7 @@ public class GameStage extends Stage {
     }
 
     private void loadUi(){
-        //build ui
-        /*ui_table = new Table();
-        ui_table.setFillParent(true);
-        ui_table.setDebug(true);
-        this.addActor(ui_table);*/
-        //build score label
-        /*Label.LabelStyle label_style = new Label.LabelStyle(new BitmapFont(), Color.BLACK);
-        money_label = new Label("Your score: " + StaticUtils.MONEY, label_style);
-        ui_table.add(money_label).expandX().expandY().left().top();*/
-        stage_screen = new Container(new Label("", new Label.LabelStyle(PlanetDefense.font, Color.BLACK)));
+        stage_screen = new Container(new Label("", new Label.LabelStyle(planetDefense.assets_manager.getGame_font(), Color.BLACK)));
         stage_screen.setFillParent(true);
         stage_screen.debugAll();
         stage_screen.setVisible(false);
@@ -144,7 +139,6 @@ public class GameStage extends Stage {
                     asteroid_pool.free(asteroid);
                     missile_iterator.remove();
                     asteroid_iterator.remove();
-                    //TODO: Add money earning;
                     break;
                 }
                 //missile flight too long
@@ -182,7 +176,7 @@ public class GameStage extends Stage {
     }
 
     private void buildLauncher(){
-        launcher = new Launcher();
+        launcher = new Launcher(planetDefense.assets_manager);
         launcher.setLauncher(this.getWidth()/2 - com.game.planetdefense.Utils.StaticUtils.LAUNCHER_WIDTH/2, 0, com.game.planetdefense.Utils.StaticUtils.LAUNCHER_WIDTH, com.game.planetdefense.Utils.StaticUtils.LAUNCHER_HEIGHT);
         this.addActor(launcher);
         Gdx.app.log("Launcher position", " " + launcher.getX() + " " + launcher.getY());
@@ -194,8 +188,17 @@ public class GameStage extends Stage {
         if(stage_screen.isVisible()){
             Label label = (Label)stage_screen.getActor();
             label.setText("Wave " + (wave_manager.getWave() + 1));
-            label.setFontScale(5f);
             label.setAlignment(Align.center);
+        }
+    }
+
+    private void endWave(){
+        toggleWaveScreen();
+        Iterator<Missile> missile_iterator = active_missiles.iterator();
+        while (missile_iterator.hasNext()){
+            Missile missile = missile_iterator.next();
+            missile_pool.free(missile);
+            missile_iterator.remove();
         }
     }
 }

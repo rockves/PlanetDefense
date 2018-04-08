@@ -7,7 +7,8 @@ public class UserData {
     private static final UserData ourInstance = new UserData();
     private Preferences prefs = null;
 
-    private static float money;
+    private float money;
+    private boolean hasPlaying;
 
     public static UserData getInstance() {
         return ourInstance;
@@ -16,11 +17,17 @@ public class UserData {
     private UserData() {
         prefs = Gdx.app.getPreferences("userData");
         money = prefs.getFloat("money", 0);
+        hasPlaying = prefs.getBoolean("hasPlaying", false);
     }
 
     public void updateUserData(){
         prefs.putFloat("money",money);
+        prefs.putBoolean("hasPlaying", hasPlaying);
         prefs.flush();
+    }
+
+    public void resetUserData(){
+        prefs.clear();
     }
 
     public float getMoney() {
@@ -28,10 +35,18 @@ public class UserData {
     }
 
     public void setMoney(float money) {
-        UserData.money = money;
+        this.money = money;
     }
 
     public void addMoney(float money){
-        UserData.money += money;
+        this.money += money;
+    }
+
+    public boolean isHasPlaying() {
+        return hasPlaying;
+    }
+
+    public void setHasPlaying(boolean hasPlaying) {
+        this.hasPlaying = hasPlaying;
     }
 }

@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.game.planetdefense.Utils.Managers.GraphicManager;
+import com.game.planetdefense.Utils.Managers.AssetsManager;
 import com.game.planetdefense.Utils.StaticUtils;
 
 public class Launcher extends Actor {
@@ -13,9 +13,9 @@ public class Launcher extends Actor {
     private Rectangle position;
     private float timer;
 
-    public Launcher() {
+    public Launcher(AssetsManager assets_manager) {
         position = new Rectangle(0,0,0,0);
-        this.sprite = new Sprite(GraphicManager.launcher_texture);
+        this.sprite = new Sprite(assets_manager.getLauncher_texture());
         this.sprite.setBounds(position.getX(),position.getY(),position.getWidth(),position.getHeight());
         timer = 0;
     }

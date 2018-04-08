@@ -3,17 +3,19 @@ package com.game.planetdefense;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.game.planetdefense.Screens.LoadingScreen;
 import com.game.planetdefense.Screens.MenuScreen;
+import com.game.planetdefense.Utils.Managers.AssetsManager;
 
 public class PlanetDefense extends Game {
 
-	public static BitmapFont font;
+	public AssetsManager assets_manager;
 
 	@Override
 	public void create () {
         //TODO: Make scalable font
-		font = new BitmapFont();
-        this.setScreen(new MenuScreen(this));
+		assets_manager = new AssetsManager();
+        this.setScreen(new LoadingScreen(this));
 	}
 
 	@Override
@@ -23,7 +25,7 @@ public class PlanetDefense extends Game {
 	
 	@Override
 	public void dispose () {
-		font.dispose();
+		assets_manager.dispose();
 	}
 
 	public void changeScreen(Screen newScreen, Screen thisScreen){
