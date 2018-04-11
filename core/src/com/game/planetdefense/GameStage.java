@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Container;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Pool;
@@ -101,6 +102,8 @@ public class GameStage extends Stage {
         buildLauncher();
         //load UI
         loadUi();
+        //load background image
+        createBackground();
     }
 
     private void loadUi(){
@@ -109,6 +112,12 @@ public class GameStage extends Stage {
         stage_screen.debugAll();
         stage_screen.setVisible(false);
         this.addActor(stage_screen);
+    }
+
+    private void createBackground(){
+        Image background = new Image(planetDefense.assets_manager.getGameBackground());
+        background.setFillParent(true);
+        this.addActor(background);
     }
 
     private void checkCollisions(){

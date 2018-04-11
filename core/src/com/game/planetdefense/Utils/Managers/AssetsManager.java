@@ -3,7 +3,6 @@ package com.game.planetdefense.Utils.Managers;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.FileHandleResolver;
-import com.badlogic.gdx.assets.loaders.TextureAtlasLoader;
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -92,5 +91,17 @@ public class AssetsManager extends AssetManager {
 
     public Animation<TextureRegion> getSatellite_animation() {
         return satellite_animation;
+    }
+
+    public TextureRegion getTitleImage(){
+        return atlas.findRegion("game_title");
+    }
+
+    public TextureRegion getMenuBackground(){
+        return atlas.findRegion("menu_background");
+    }
+
+    public TextureRegion getGameBackground(){
+        return atlas.findRegion("game_background");
     }
 }

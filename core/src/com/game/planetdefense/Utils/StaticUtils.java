@@ -27,7 +27,7 @@ public class StaticUtils {
     ////////////////
 
 
-    //MISSILE UTILS
+    //MISSILES UTILS
     public static final int MISSILE_WIDTH = 90;
     public static final int MISSILE_HEIGHT = 45;
     public static final float MISSILE_SPEED = 700f;

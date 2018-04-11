@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Pool;
 import com.game.planetdefense.Utils.Managers.AssetsManager;
+import com.game.planetdefense.Utils.Singletons.UserData;
 import com.game.planetdefense.Utils.StaticUtils;
 
 public class Missile extends Actor implements Pool.Poolable {
@@ -21,7 +22,7 @@ public class Missile extends Actor implements Pool.Poolable {
 
 
     public Missile(AssetsManager assets_manager) {
-        this.damage = 5f;
+        this.damage = 0f;
         this.position = new Rectangle(0,0,0,0);
         this.sprite = new Sprite(assets_manager.getMissile_texture());
         this.sprite.setBounds( position.getX(), position.getY(), position.getWidth(), position.getHeight());
@@ -82,6 +83,7 @@ public class Missile extends Actor implements Pool.Poolable {
         this.position.set(launcher.getX() + launcher.getOriginX() - StaticUtils.MISSILE_WIDTH/2, launcher.getY() + launcher.getOriginY() - StaticUtils.MISSILE_HEIGHT/2, StaticUtils.MISSILE_WIDTH, StaticUtils.MISSILE_HEIGHT);
         this.sprite.setBounds(this.position.getX(), this.position.getY(), this.position.getWidth(), this.position.getHeight());
         this.sprite.setOriginCenter();
+        this.damage = 5f * UserData.getInstance().getBonus_shoot_damage();
         Gdx.app.log("Missile position", " " + sprite.getX() + " " + sprite.getY());
     }
 
