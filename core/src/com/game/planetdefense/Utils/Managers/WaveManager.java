@@ -29,7 +29,7 @@ public class WaveManager {
 
     public void prepareWave(){
         wave++;
-        if(wave == 1){start_difficulty_points = StaticUtils.DIFFICULTY_MONSTER_POINTS;}
+        if(wave == 1){start_difficulty_points = StaticUtils.DIFFICULTY_POINTS;}
         else start_difficulty_points *= StaticUtils.DIFFICULTY_POINTS_MULTIPLIER;
         difficulty_points = start_difficulty_points;
     }
