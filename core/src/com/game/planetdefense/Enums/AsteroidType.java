@@ -14,11 +14,11 @@ public enum AsteroidType {
             /*case ROCK:
                 return 1;*/
             case SATELLITE:
-                return 6;
+                return 15f;
             case METEOR:
-                return 4;
+                return 5f;
             default:
-                return 0;
+                return 0f;
         }
     }
 
@@ -27,11 +27,11 @@ public enum AsteroidType {
             /*case ROCK:
                 return 10;*/
             case SATELLITE:
-                return 20;
+                return 30f;
             case METEOR:
-                return 30;
+                return 20f;
             default:
-                return 0;
+                return 0f;
         }
     }
 
@@ -40,11 +40,11 @@ public enum AsteroidType {
             /*case ROCK:
                 return 150;*/
             case SATELLITE:
-                return 500;
+                return 200f;
             case METEOR:
-                return 500;
+                return 400f;
             default:
-                return 0;
+                return 0f;
         }
     }
 
@@ -58,6 +58,32 @@ public enum AsteroidType {
                 return assets_manager.getMeteor_animation();
             default:
                 return null;
+        }
+    }
+
+    public float getWidth(){
+        switch(this){
+            /*case ROCK:
+                return 150;*/
+            case SATELLITE:
+                return 100f;
+            case METEOR:
+                return 100f;
+            default:
+                return 0f;
+        }
+    }
+
+    public float getHeight(){
+        switch(this){
+            /*case ROCK:
+                return 150;*/
+            case SATELLITE:
+                return 100f;
+            case METEOR:
+                return 50f;
+            default:
+                return 0f;
         }
     }
 

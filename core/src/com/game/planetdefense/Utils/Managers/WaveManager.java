@@ -52,7 +52,7 @@ public class WaveManager {
         float start_y = stage.getHeight() + (com.game.planetdefense.Utils.StaticUtils.ASTEROID_HEIGHT * 2);
         float start_x = rand.nextFloat() * (stage.getWidth());
         float target_x = rand.nextFloat() * (stage.getWidth());
-        asteroid.setAsteroid(start_x, start_y);
+        asteroid.setAsteroid(start_x, start_y, asteroid_type.getWidth(), asteroid_type.getHeight());
         asteroid.setTarget(target_x, 0);
         asteroid.rotateToTarget();
 

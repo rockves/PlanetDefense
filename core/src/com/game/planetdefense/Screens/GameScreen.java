@@ -36,6 +36,7 @@ public class GameScreen implements Screen {
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 60f));
         stage.draw();
         if(Gdx.input.isKeyPressed(Input.Keys.BACK)) backToMenu();
+        if(stage.makeChangeToUpgradeScreen()) planet_defense.changeScreen(new UpgradeScreen(planet_defense), this);
         //fps.log();
     }
 

@@ -83,7 +83,7 @@ public class Missile extends Actor implements Pool.Poolable {
         this.position.set(launcher.getX() + launcher.getOriginX() - StaticUtils.MISSILE_WIDTH/2, launcher.getY() + launcher.getOriginY() - StaticUtils.MISSILE_HEIGHT/2, StaticUtils.MISSILE_WIDTH, StaticUtils.MISSILE_HEIGHT);
         this.sprite.setBounds(this.position.getX(), this.position.getY(), this.position.getWidth(), this.position.getHeight());
         this.sprite.setOriginCenter();
-        this.damage = 5f * UserData.getInstance().getBonus_shoot_damage();
+        this.damage = 5f + UserData.getInstance().getBonus_shoot_damage();
         Gdx.app.log("Missile position", " " + sprite.getX() + " " + sprite.getY());
     }
 

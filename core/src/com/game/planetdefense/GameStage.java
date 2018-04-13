@@ -14,6 +14,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.game.planetdefense.Actors.Asteroid;
 import com.game.planetdefense.Actors.Launcher;
 import com.game.planetdefense.Actors.Missile;
+import com.game.planetdefense.Screens.UpgradeScreen;
 import com.game.planetdefense.Utils.Managers.WaveManager;
 import com.game.planetdefense.Utils.Singletons.UserData;
 import com.game.planetdefense.Utils.StaticUtils;
@@ -36,6 +37,7 @@ public class GameStage extends Stage {
     private Container stage_screen;
     //private Label money_label;
     private boolean isPause = false;
+    private boolean changeToUpgradeScreen = false;
 
     public GameStage(Viewport viewport, PlanetDefense planetDefense) {
         super(viewport);
@@ -129,6 +131,8 @@ public class GameStage extends Stage {
             if(asteroid.getY() < 0){
                 asteroid_pool.free(asteroid);
                 asteroid_iterator.remove();
+                changeToUpgradeScreen = true;
+                break;
             }
             Iterator<Missile> missile_iterator = active_missiles.iterator();
             //missile iteration
@@ -138,6 +142,8 @@ public class GameStage extends Stage {
                 if(asteroid.getRectangle().overlaps(missile.getRectangle())){
                     asteroid.setHp(asteroid.getHp() - missile.getDamage());
                     if(asteroid.getHp() > 0){
+                        missile_pool.free(missile);
+                        missile_iterator.remove();
                         break;
                     }
                     UserData.getInstance().addMoney(asteroid.getMoneyDrop());
@@ -211,5 +217,8 @@ public class GameStage extends Stage {
     }
     public Pool<Missile> getMissile_pool() {
         return missile_pool;
+    }
+    public boolean makeChangeToUpgradeScreen(){
+        return changeToUpgradeScreen;
     }
 }

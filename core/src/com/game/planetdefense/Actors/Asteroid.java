@@ -84,8 +84,8 @@ public class Asteroid extends Actor implements Pool.Poolable{
         this.position.y += speed * delta * MathUtils.sin((float)((Math.PI / 180) * ( sprite.getRotation())));
     }
 
-    public void setAsteroid(float x, float y){
-        this.position.set(x - StaticUtils.ASTEROID_WIDTH/2, y - StaticUtils.ASTEROID_HEIGHT/2, StaticUtils.ASTEROID_WIDTH, StaticUtils.ASTEROID_HEIGHT);
+    public void setAsteroid(float x, float y, float width, float height){
+        this.position.set(x - width/2, y - height/2, width, height);
         this.sprite.setBounds(this.position.getX(), this.position.getY(), this.position.getWidth(), this.position.getHeight());
         this.sprite.setOriginCenter();
         Gdx.app.log("Asteroid position", " " + sprite.getX() + " " + sprite.getY());
