@@ -19,10 +19,7 @@ public class AssetsManager extends AssetManager {
 
     private TextureAtlas atlas;
 
-    private TextureRegion launcher_texture;
-
-    private TextureRegion missile_texture;
-
+    private Animation<TextureRegion> laser_launcher_body_animation;
     private TextureRegion rock_texture;
     private Animation<TextureRegion> meteor_animation;
     private Animation<TextureRegion> satellite_animation;
@@ -59,11 +56,8 @@ public class AssetsManager extends AssetManager {
     public void getAssets(){
         game_font = this.get("Font/roboto.ttf");
         atlas = this.get("Atlas/atlas");
-
         //get atlas assets
-        launcher_texture = atlas.findRegion("launcher");
-        missile_texture = atlas.findRegion("missile");
-        rock_texture = atlas.findRegion("rock");
+        laser_launcher_body_animation = new Animation<TextureRegion>(0.099f, atlas.findRegions("laserlauncher_body"), Animation.PlayMode.LOOP);
         meteor_animation = new Animation<TextureRegion>(0.099f, atlas.findRegions("meteor"), Animation.PlayMode.LOOP);
         satellite_animation = new Animation<TextureRegion>(0.099f, atlas.findRegions("satellite"), Animation.PlayMode.LOOP);
 
@@ -73,12 +67,16 @@ public class AssetsManager extends AssetManager {
         return game_font;
     }
 
-    public TextureRegion getLauncher_texture() {
-        return launcher_texture;
+    public Animation<TextureRegion> getLaser_launcher_body_animation() {
+        return laser_launcher_body_animation;
     }
 
-    public TextureRegion getMissile_texture() {
-        return missile_texture;
+    public TextureRegion getLaser_launcher_head() {
+        return atlas.findRegion("laserlauncher_head");
+    }
+
+    public TextureRegion getRed_laser_texture() {
+        return atlas.findRegion("laser");
     }
 
     public TextureRegion getRock_texture() {
@@ -97,11 +95,43 @@ public class AssetsManager extends AssetManager {
         return atlas.findRegion("game_title");
     }
 
-    public TextureRegion getMenuBackground(){
-        return atlas.findRegion("menu_background");
+    public TextureRegion getStarBackground(){
+        return atlas.findRegion("stars_background");
     }
 
-    public TextureRegion getGameBackground(){
-        return atlas.findRegion("game_background");
+    public TextureRegion getButtonsBackground(){
+        return atlas.findRegion("menu_buttons_background");
+    }
+
+    public TextureRegion getButton_continue(){
+        return atlas.findRegion("button_continue");
+    }
+
+    public TextureRegion getButton_continue_hover(){
+        return atlas.findRegion("button_continue_hover");
+    }
+
+    public TextureRegion getButton_newGame(){
+        return atlas.findRegion("button_newgame");
+    }
+
+    public TextureRegion getButton_newGame_hover(){
+        return atlas.findRegion("button_newgame_hover");
+    }
+
+    public TextureRegion getButton_options(){
+        return atlas.findRegion("button_options");
+    }
+
+    public TextureRegion getButton_options_hover(){
+        return atlas.findRegion("button_options_hover");
+    }
+
+    public TextureRegion getButton_highscore(){
+        return atlas.findRegion("button_highscore");
+    }
+
+    public TextureRegion getButton_highscore_hover(){
+        return atlas.findRegion("button_highscore_hover");
     }
 }

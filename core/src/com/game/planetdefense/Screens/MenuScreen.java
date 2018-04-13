@@ -8,10 +8,12 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.game.planetdefense.PlanetDefense;
@@ -23,6 +25,7 @@ public class MenuScreen implements Screen {
     private final MenuScreen menuScreen;
     private Stage stage;
     private Table table;
+    private Table buttons_table;
     private Table high_score;
 
     public MenuScreen(final PlanetDefense planetDefense) {
@@ -30,6 +33,7 @@ public class MenuScreen implements Screen {
         this.menuScreen = this;
         this.planetDefense = planetDefense;
         this.table = new Table();
+        this.buttons_table = new Table();
         this.high_score = new Table();
 
 
@@ -37,7 +41,7 @@ public class MenuScreen implements Screen {
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
 
-        Image background = new Image(planetDefense.assets_manager.getMenuBackground());
+        Image background = new Image(planetDefense.assets_manager.getStarBackground());
         background.setFillParent(true);
         stage.addActor(background);
 
@@ -45,6 +49,14 @@ public class MenuScreen implements Screen {
         //table.debugAll();
         table.align(Align.top);
         stage.addActor(table);
+
+
+        buttons_table.setBackground(new TextureRegionDrawable(planetDefense.assets_manager.getButtonsBackground()));
+        //buttons_table.debugAll();
+        buttons_table.setSize(stage.getWidth() * 0.6f, stage.getHeight() * 0.2f);
+        buttons_table.setPosition(stage.getWidth() / 2 - buttons_table.getWidth()/2, stage.getHeight()/2 - buttons_table.getHeight()/2);
+        stage.addActor(buttons_table);
+
 
         high_score.setFillParent(true);
         //high_score.debugAll();
@@ -62,9 +74,11 @@ public class MenuScreen implements Screen {
             title_image.setWidth(stage.getWidth() * 0.6f);
             title_image.setHeight(stage.getHeight() / 3 * 0.8f);
             table.add(title_image).width(title_image.getWidth()).height(title_image.getHeight());
-            table.row();
 
-            TextButton new_game_button = new TextButton("NEW GAME", button_style);
+            //table.add(buttons_table).center().expand(true,true).width(stage.getWidth() * 0.7f).height(stage.getHeight() * 0.2f);
+
+            ImageButton new_game_button = new ImageButton(new TextureRegionDrawable(planetDefense.assets_manager.getButton_newGame()), new TextureRegionDrawable(planetDefense.assets_manager.getButton_newGame_hover()));
+            new_game_button.getImageCell().width(buttons_table.getWidth()/4).height(buttons_table.getHeight());
             new_game_button.addListener(new ChangeListener() {
                 @Override
                 public void changed(ChangeEvent event, Actor actor) {
@@ -73,8 +87,8 @@ public class MenuScreen implements Screen {
                 }
             });
 
-
-            TextButton options_button = new TextButton("OPTIONS", button_style);
+            ImageButton options_button = new ImageButton(new TextureRegionDrawable(planetDefense.assets_manager.getButton_options()), new TextureRegionDrawable(planetDefense.assets_manager.getButton_options_hover()));
+            options_button.getImageCell().width(buttons_table.getWidth()/4).height(buttons_table.getHeight());
             options_button.addListener(new ChangeListener() {
                 @Override
                 public void changed(ChangeEvent event, Actor actor) {
@@ -82,15 +96,10 @@ public class MenuScreen implements Screen {
                 }
             });
             options_button.setTouchable(Touchable.disabled);
-            options_button.addListener(new ChangeListener() {
-                @Override
-                public void changed(ChangeEvent event, Actor actor) {
-
-                }
-            });
 
 
-            TextButton high_score_button = new TextButton("HIGH SCORE", button_style);
+            ImageButton high_score_button = new ImageButton(new TextureRegionDrawable(planetDefense.assets_manager.getButton_highscore()), new TextureRegionDrawable(planetDefense.assets_manager.getButton_highscore_hover()));
+            high_score_button.getImageCell().width(buttons_table.getWidth()/4).height(buttons_table.getHeight());
             high_score_button.addListener(new ChangeListener() {
                 @Override
                 public void changed(ChangeEvent event, Actor actor) {
@@ -101,22 +110,20 @@ public class MenuScreen implements Screen {
 
 
             if (UserData.getInstance().isHasPlaying()) {
-                TextButton continue_button = new TextButton("CONTINUE", button_style);
+                ImageButton continue_button = new ImageButton(new TextureRegionDrawable(planetDefense.assets_manager.getButton_continue()), new TextureRegionDrawable(planetDefense.assets_manager.getButton_continue_hover()));
+                continue_button.getImageCell().width(buttons_table.getWidth()/4).height(buttons_table.getHeight());
                 continue_button.addListener(new ChangeListener() {
                     @Override
                     public void changed(ChangeEvent event, Actor actor) {
                         planetDefense.changeScreen(new GameScreen(planetDefense), menuScreen);
                     }
                 });
-                table.add(continue_button).height((stage.getHeight() - title_image.getHeight())/4).width(stage.getWidth() / 4);
-                table.row();
+                buttons_table.add(continue_button).height(buttons_table.getHeight()).width(buttons_table.getWidth()/4);
             }
 
-            table.add(new_game_button).height((stage.getHeight() - title_image.getHeight())/4).width(stage.getWidth() / 4);
-            table.row();
-            table.add(options_button).height((stage.getHeight() - title_image.getHeight())/4).width(stage.getWidth() / 4);
-            table.row();
-            table.add(high_score_button).height((stage.getHeight() - title_image.getHeight())/4).width(stage.getWidth() / 4);
+            buttons_table.add(new_game_button).height(buttons_table.getHeight()).width(buttons_table.getWidth()/4);
+            buttons_table.add(options_button).height(buttons_table.getHeight()).width(buttons_table.getWidth()/4);
+            buttons_table.add(high_score_button).height(buttons_table.getHeight()).width(buttons_table.getWidth()/4);
         }
 
 

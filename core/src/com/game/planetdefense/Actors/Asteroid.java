@@ -10,7 +10,6 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Pool;
-import com.game.planetdefense.Utils.StaticUtils;
 
 public class Asteroid extends Actor implements Pool.Poolable{
 //TODO: Zastanowic sie nad zmiana lotu z poruszania w przod na Action aktora
@@ -29,26 +28,23 @@ public class Asteroid extends Actor implements Pool.Poolable{
         this.animation = null;
         this.position = new Rectangle(0,0,0,0);
         this.sprite = new Sprite();
-        //this.sprite = new Sprite(GraphicManager.meteor_animation.getKeyFrame(state_time,true));
         this.sprite.setBounds( position.getX(), position.getY(), position.getWidth(), position.getHeight());
         this.target = new Vector2(0,0);
     }
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
-        super.draw(batch, parentAlpha);
         this.sprite.draw(batch, parentAlpha);
-
+        super.draw(batch, parentAlpha);
     }
 
     @Override
     public void act(float delta) {
-        super.act(delta);
         state_time += delta;
         sprite.setRegion(animation.getKeyFrame(state_time, true));
         this.moveToTarget(delta);
         this.sprite.setPosition(getX(), getY());
-
+        super.act(delta);
     }
 
     @Override
@@ -88,6 +84,7 @@ public class Asteroid extends Actor implements Pool.Poolable{
         this.position.set(x - width/2, y - height/2, width, height);
         this.sprite.setBounds(this.position.getX(), this.position.getY(), this.position.getWidth(), this.position.getHeight());
         this.sprite.setOriginCenter();
+        this.position.setSize(this.position.getWidth() - (this.position.getWidth() * 0.2f), this.position.getHeight() - (this.position.getHeight() * 0.2f));
         Gdx.app.log("Asteroid position", " " + sprite.getX() + " " + sprite.getY());
     }
 

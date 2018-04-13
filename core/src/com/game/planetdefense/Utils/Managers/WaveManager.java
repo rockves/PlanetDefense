@@ -49,7 +49,7 @@ public class WaveManager {
         asteroid.setAnimation(asteroid_type.getAnimation(assetsManager));
 
         Random rand = new Random();
-        float start_y = stage.getHeight() + (com.game.planetdefense.Utils.StaticUtils.ASTEROID_HEIGHT * 2);
+        float start_y = stage.getHeight() + (asteroid_type.getHeight());
         float start_x = rand.nextFloat() * (stage.getWidth());
         float target_x = rand.nextFloat() * (stage.getWidth());
         asteroid.setAsteroid(start_x, start_y, asteroid_type.getWidth(), asteroid_type.getHeight());

@@ -14,7 +14,6 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.game.planetdefense.Actors.Asteroid;
 import com.game.planetdefense.Actors.Launcher;
 import com.game.planetdefense.Actors.Missile;
-import com.game.planetdefense.Screens.UpgradeScreen;
 import com.game.planetdefense.Utils.Managers.WaveManager;
 import com.game.planetdefense.Utils.Singletons.UserData;
 import com.game.planetdefense.Utils.StaticUtils;
@@ -33,9 +32,7 @@ public class GameStage extends Stage {
     private Pool<Missile> missile_pool;
     private WaveManager wave_manager;
     private Launcher launcher;
-    //private Table ui_table;
     private Container stage_screen;
-    //private Label money_label;
     private boolean isPause = false;
     private boolean changeToUpgradeScreen = false;
 
@@ -66,9 +63,9 @@ public class GameStage extends Stage {
 
     @Override
     public void act(float delta) {
+        super.act(delta);
         if(isPause) return;
         checkCollisions();
-        super.act(delta);
         if(!wave_manager.isEndOfWave()) {
             if (wave_manager.getTime_to_next_object_spawn() <= 0) {
                 wave_manager.setTime_to_next_object_spawn(StaticUtils.ASTEROID_MAX_DROP_INTERVAL);
@@ -100,16 +97,16 @@ public class GameStage extends Stage {
         active_missiles = new ArrayList<Missile>();
         //Wave manager load
         wave_manager = new WaveManager(planetDefense, this);
+        //load background image
+        createBackground();
         //build launcher
         buildLauncher();
         //load UI
         loadUi();
-        //load background image
-        createBackground();
     }
 
     private void loadUi(){
-        stage_screen = new Container(new Label("", new Label.LabelStyle(planetDefense.assets_manager.getGame_font(), Color.BLACK)));
+        stage_screen = new Container<Label>(new Label("", new Label.LabelStyle(planetDefense.assets_manager.getGame_font(), Color.BLACK)));
         stage_screen.setFillParent(true);
         stage_screen.debugAll();
         stage_screen.setVisible(false);
@@ -117,7 +114,7 @@ public class GameStage extends Stage {
     }
 
     private void createBackground(){
-        Image background = new Image(planetDefense.assets_manager.getGameBackground());
+        Image background = new Image(planetDefense.assets_manager.getStarBackground());
         background.setFillParent(true);
         this.addActor(background);
     }
@@ -131,7 +128,7 @@ public class GameStage extends Stage {
             if(asteroid.getY() < 0){
                 asteroid_pool.free(asteroid);
                 asteroid_iterator.remove();
-                changeToUpgradeScreen = true;
+                //changeToUpgradeScreen = true;
                 break;
             }
             Iterator<Missile> missile_iterator = active_missiles.iterator();
