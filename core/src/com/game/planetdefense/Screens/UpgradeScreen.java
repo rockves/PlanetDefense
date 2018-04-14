@@ -71,7 +71,7 @@ public class UpgradeScreen implements Screen {
                 planetDefense.changeScreen(new MenuScreen(planetDefense), upgradeScreen);
             }
         });
-        exit_game_button.debug();
+        //exit_game_button.debug();
         stage.addActor(exit_game_button);
 
         //set start button
@@ -86,7 +86,7 @@ public class UpgradeScreen implements Screen {
                 planetDefense.changeScreen(new GameScreen(planetDefense), upgradeScreen);
             }
         });
-        start_game_button.debug();
+        //start_game_button.debug();
         stage.addActor(start_game_button);
 
     }

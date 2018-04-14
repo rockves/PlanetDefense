@@ -15,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.game.planetdefense.PlanetDefense;
 import com.game.planetdefense.Utils.Singletons.UserData;
@@ -50,10 +51,16 @@ public class MenuScreen implements Screen {
         table.align(Align.top);
         stage.addActor(table);
 
+        byte how_many_buttons;
 
         buttons_table.setBackground(new TextureRegionDrawable(planetDefense.assets_manager.getButtonsBackground()));
         //buttons_table.debugAll();
-        buttons_table.setSize(stage.getWidth() * 0.6f, stage.getHeight() * 0.2f);
+        if(UserData.getInstance().isHasPlaying()){
+            how_many_buttons = 4;
+        }else {
+            how_many_buttons = 3;
+        }
+        buttons_table.setSize(stage.getWidth() * 0.12f * how_many_buttons, stage.getWidth() * 0.1f);
         buttons_table.setPosition(stage.getWidth() / 2 - buttons_table.getWidth()/2, stage.getHeight()/2 - buttons_table.getHeight()/2);
         stage.addActor(buttons_table);
 
@@ -75,10 +82,11 @@ public class MenuScreen implements Screen {
             title_image.setHeight(stage.getHeight() / 3 * 0.8f);
             table.add(title_image).width(title_image.getWidth()).height(title_image.getHeight());
 
-            //table.add(buttons_table).center().expand(true,true).width(stage.getWidth() * 0.7f).height(stage.getHeight() * 0.2f);
 
             ImageButton new_game_button = new ImageButton(new TextureRegionDrawable(planetDefense.assets_manager.getButton_newGame()), new TextureRegionDrawable(planetDefense.assets_manager.getButton_newGame_hover()));
-            new_game_button.getImageCell().width(buttons_table.getWidth()/4).height(buttons_table.getHeight());
+            new_game_button.setSize(buttons_table.getWidth()/how_many_buttons, buttons_table.getHeight());
+            new_game_button.getImageCell().width(buttons_table.getWidth()/how_many_buttons).height(buttons_table.getHeight());
+            new_game_button.getImage().setScaling(Scaling.stretch);
             new_game_button.addListener(new ChangeListener() {
                 @Override
                 public void changed(ChangeEvent event, Actor actor) {
@@ -88,7 +96,9 @@ public class MenuScreen implements Screen {
             });
 
             ImageButton options_button = new ImageButton(new TextureRegionDrawable(planetDefense.assets_manager.getButton_options()), new TextureRegionDrawable(planetDefense.assets_manager.getButton_options_hover()));
-            options_button.getImageCell().width(buttons_table.getWidth()/4).height(buttons_table.getHeight());
+            options_button.setSize(buttons_table.getWidth()/how_many_buttons, buttons_table.getHeight());
+            options_button.getImageCell().width(buttons_table.getWidth()/how_many_buttons).height(buttons_table.getHeight());
+            options_button.getImage().setScaling(Scaling.stretch);
             options_button.addListener(new ChangeListener() {
                 @Override
                 public void changed(ChangeEvent event, Actor actor) {
@@ -99,7 +109,9 @@ public class MenuScreen implements Screen {
 
 
             ImageButton high_score_button = new ImageButton(new TextureRegionDrawable(planetDefense.assets_manager.getButton_highscore()), new TextureRegionDrawable(planetDefense.assets_manager.getButton_highscore_hover()));
-            high_score_button.getImageCell().width(buttons_table.getWidth()/4).height(buttons_table.getHeight());
+            high_score_button.setSize(buttons_table.getWidth()/how_many_buttons, buttons_table.getHeight());
+            high_score_button.getImageCell().width(buttons_table.getWidth()/how_many_buttons).height(buttons_table.getHeight());
+            high_score_button.getImage().setScaling(Scaling.stretch);
             high_score_button.addListener(new ChangeListener() {
                 @Override
                 public void changed(ChangeEvent event, Actor actor) {
@@ -111,19 +123,21 @@ public class MenuScreen implements Screen {
 
             if (UserData.getInstance().isHasPlaying()) {
                 ImageButton continue_button = new ImageButton(new TextureRegionDrawable(planetDefense.assets_manager.getButton_continue()), new TextureRegionDrawable(planetDefense.assets_manager.getButton_continue_hover()));
-                continue_button.getImageCell().width(buttons_table.getWidth()/4).height(buttons_table.getHeight());
+                continue_button.setSize(buttons_table.getWidth()/how_many_buttons, buttons_table.getHeight());
+                continue_button.getImageCell().width(buttons_table.getWidth()/how_many_buttons).height(buttons_table.getHeight());
+                continue_button.getImage().setScaling(Scaling.stretch);
                 continue_button.addListener(new ChangeListener() {
                     @Override
                     public void changed(ChangeEvent event, Actor actor) {
                         planetDefense.changeScreen(new GameScreen(planetDefense), menuScreen);
                     }
                 });
-                buttons_table.add(continue_button).height(buttons_table.getHeight()).width(buttons_table.getWidth()/4);
+                buttons_table.add(continue_button).height(buttons_table.getHeight()).width(buttons_table.getWidth()/how_many_buttons);
             }
 
-            buttons_table.add(new_game_button).height(buttons_table.getHeight()).width(buttons_table.getWidth()/4);
-            buttons_table.add(options_button).height(buttons_table.getHeight()).width(buttons_table.getWidth()/4);
-            buttons_table.add(high_score_button).height(buttons_table.getHeight()).width(buttons_table.getWidth()/4);
+            buttons_table.add(new_game_button).height(buttons_table.getHeight()).width(buttons_table.getWidth()/how_many_buttons);
+            buttons_table.add(options_button).height(buttons_table.getHeight()).width(buttons_table.getWidth()/how_many_buttons);
+            buttons_table.add(high_score_button).height(buttons_table.getHeight()).width(buttons_table.getWidth()/how_many_buttons);
         }
 
 

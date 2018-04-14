@@ -112,7 +112,7 @@ public class GameStage extends Stage {
     private void loadUi(){
         stage_screen = new Container<Label>(new Label("", new Label.LabelStyle(planetDefense.assets_manager.getGame_font(), Color.WHITE)));
         stage_screen.setFillParent(true);
-        stage_screen.debugAll();
+        //stage_screen.debugAll();
         stage_screen.setVisible(false);
         this.addActor(stage_screen);
     }
