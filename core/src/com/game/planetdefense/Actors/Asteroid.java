@@ -141,4 +141,39 @@ public class Asteroid extends Actor implements Pool.Poolable{
         return position;
     }
 
+    /* Rectangle bounds;
+   Polygon polygon;
+
+   Rectangle bounds2;
+   Polygon polygon2;
+...
+   @Override
+   public void create() {
+...
+      bounds = new Rectangle(0, 0, 32, 20);
+      polygon = new Polygon(new float[]{0,0,bounds.width,0,bounds.width,bounds.height,0,bounds.height});
+      polygon.setOrigin(bounds.width/2, bounds.height/2);
+
+      bounds2 = new Rectangle(0, 0, 32, 20);
+      polygon2 = new Polygon(new float[]{0,0,bounds2.width,0,bounds2.width,bounds2.height,0,bounds2.height});
+      polygon2.setOrigin(bounds2.width/2, bounds2.height/2);
+
+...
+}
+   @Override
+   public void render() {
+...
+
+
+      polygon.setPosition(car1.x, car1.y);
+      polygon.setRotation(car1.rotation);
+      polygon2.setPosition(car2.x, car2.y);
+      polygon2.setRotation(car2.rotation);
+
+...
+        if(Intersector.overlapConvexPolygons(polygon, polygon2)){
+            //COLLISION DON'T HAPPEN!!!
+        }
+...
+}*/
 }

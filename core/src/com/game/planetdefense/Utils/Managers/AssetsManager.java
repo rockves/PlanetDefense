@@ -23,6 +23,7 @@ public class AssetsManager extends AssetManager {
     private TextureRegion rock_texture;
     private Animation<TextureRegion> meteor_animation;
     private Animation<TextureRegion> satellite_animation;
+    private Animation<TextureRegion> shop_guy_animation;
 
     public AssetsManager() {
         super();
@@ -60,7 +61,7 @@ public class AssetsManager extends AssetManager {
         laser_launcher_body_animation = new Animation<TextureRegion>(0.099f, atlas.findRegions("laserlauncher_body"), Animation.PlayMode.LOOP);
         meteor_animation = new Animation<TextureRegion>(0.099f, atlas.findRegions("meteor"), Animation.PlayMode.LOOP);
         satellite_animation = new Animation<TextureRegion>(0.099f, atlas.findRegions("satellite"), Animation.PlayMode.LOOP);
-
+        shop_guy_animation = new Animation<TextureRegion>(0.2f, atlas.findRegions("shopguy"), Animation.PlayMode.LOOP);
     }
 
     public BitmapFont getGame_font() {
@@ -133,5 +134,21 @@ public class AssetsManager extends AssetManager {
 
     public TextureRegion getButton_highscore_hover(){
         return atlas.findRegion("button_highscore_hover");
+    }
+
+    public TextureRegion getEarthTexture(){
+        return atlas.findRegion("earth");
+    }
+
+    public TextureRegion getMoneyCounterTexture(){
+        return atlas.findRegion("money_count");
+    }
+
+    public Animation<TextureRegion> getShopGuyAnimation(){
+        return shop_guy_animation;
+    }
+
+    public TextureRegion getUpgradeButtonTexture(){
+        return atlas.findRegion("upgrade_button");
     }
 }

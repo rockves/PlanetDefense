@@ -6,197 +6,232 @@ filter: Nearest,Nearest
 repeat: none
 button_continue
   rotate: false
-  xy: 1168, 193
+  xy: 1072, 6
   size: 56, 52
   orig: 64, 64
   offset: 4, 6
   index: -1
 button_continue_hover
   rotate: false
-  xy: 1898, 461
+  xy: 1130, 12
   size: 56, 46
   orig: 64, 64
   offset: 4, 6
   index: -1
 button_highscore
   rotate: false
-  xy: 1364, 389
+  xy: 1278, 99
   size: 56, 52
   orig: 64, 64
   offset: 4, 6
   index: -1
 button_highscore_hover
   rotate: false
-  xy: 1006, 40
+  xy: 1380, 272
   size: 56, 46
   orig: 64, 64
   offset: 4, 6
   index: -1
 button_newgame
   rotate: false
-  xy: 1840, 455
+  xy: 1722, 330
   size: 56, 52
   orig: 64, 64
   offset: 4, 6
   index: -1
 button_newgame_hover
   rotate: false
-  xy: 1227, 259
+  xy: 1839, 405
   size: 56, 46
   orig: 64, 64
   offset: 4, 6
   index: -1
 button_options
   rotate: false
-  xy: 1064, 96
+  xy: 1780, 339
   size: 56, 52
   orig: 64, 64
   offset: 4, 6
   index: -1
 button_options_hover
   rotate: false
-  xy: 1422, 395
+  xy: 1936, 464
   size: 56, 46
   orig: 64, 64
   offset: 4, 6
   index: -1
 earth
   rotate: false
-  xy: 2, 7
+  xy: 2, 10
   size: 520, 500
   orig: 640, 640
   offset: 60, 70
   index: -1
 game_title
   rotate: false
-  xy: 524, 307
+  xy: 524, 310
   size: 772, 200
   orig: 1024, 256
   offset: 140, 28
   index: -1
-icon
-  rotate: false
-  xy: 1298, 377
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: -1
 laser
   rotate: false
-  xy: 1156, 84
+  xy: 1380, 206
   size: 3, 64
   orig: 22, 64
   offset: 10, 0
   index: -1
 laserlauncher_body
   rotate: false
-  xy: 1122, 106
+  xy: 1336, 109
   size: 32, 42
   orig: 64, 64
   offset: 16, 0
   index: 0
 laserlauncher_body
   rotate: false
-  xy: 1168, 149
+  xy: 1897, 409
   size: 32, 42
   orig: 64, 64
   offset: 16, 0
   index: 1
 laserlauncher_body
   rotate: false
-  xy: 1122, 64
+  xy: 1994, 470
   size: 32, 40
   orig: 64, 64
   offset: 16, 2
   index: 2
 laserlauncher_head
   rotate: false
-  xy: 1064, 64
+  xy: 1218, 61
   size: 56, 30
   orig: 64, 64
   offset: 4, 16
   index: -1
 laserxx
   rotate: false
-  xy: 2, 2
+  xy: 1298, 315
   size: 64, 3
   orig: 64, 22
   offset: 0, 9
   index: -1
 menu_buttons_background
   rotate: false
-  xy: 1298, 443
+  xy: 1298, 446
   size: 480, 64
   orig: 480, 64
   offset: 0, 0
   index: -1
 meteor
   rotate: false
-  xy: 1480, 414
+  xy: 1438, 291
   size: 64, 27
   orig: 64, 32
   offset: 0, 2
-  index: 2
+  index: 0
 meteor
   rotate: false
-  xy: 1956, 480
-  size: 64, 27
-  orig: 64, 32
-  offset: 0, 2
-  index: 3
-meteor
-  rotate: false
-  xy: 1546, 414
+  xy: 524, 9
   size: 64, 27
   orig: 64, 32
   offset: 0, 1
   index: 1
 meteor
   rotate: false
-  xy: 1612, 414
+  xy: 590, 9
   size: 64, 27
   orig: 64, 32
   offset: 0, 2
-  index: 0
+  index: 2
+meteor
+  rotate: false
+  xy: 656, 9
+  size: 64, 27
+  orig: 64, 32
+  offset: 0, 2
+  index: 3
+money_count
+  rotate: false
+  xy: 1780, 453
+  size: 96, 57
+  orig: 96, 96
+  offset: 0, 15
+  index: -1
 rock
   rotate: false
-  xy: 1006, 150
+  xy: 1218, 153
   size: 160, 155
   orig: 160, 160
   offset: 0, 5
   index: -1
 satellite
   rotate: false
-  xy: 1780, 449
-  size: 58, 58
-  orig: 64, 64
-  offset: 1, 3
-  index: 3
-satellite
-  rotate: false
-  xy: 1006, 88
+  xy: 1722, 384
   size: 56, 60
   orig: 64, 64
   offset: 2, 3
   index: 2
 satellite
   rotate: false
-  xy: 1168, 247
+  xy: 1218, 93
+  size: 58, 58
+  orig: 64, 64
+  offset: 1, 3
+  index: 3
+satellite
+  rotate: false
+  xy: 1780, 393
   size: 57, 58
   orig: 64, 64
   offset: 1, 3
   index: 1
 satellite
   rotate: false
-  xy: 1298, 318
+  xy: 1878, 453
   size: 56, 57
   orig: 64, 64
   offset: 2, 4
   index: 0
+shopguy
+  rotate: false
+  xy: 1006, 184
+  size: 210, 124
+  orig: 256, 256
+  offset: 28, 74
+  index: 0
+shopguy
+  rotate: false
+  xy: 1298, 320
+  size: 210, 124
+  orig: 256, 256
+  offset: 28, 76
+  index: 3
+shopguy
+  rotate: false
+  xy: 1006, 60
+  size: 210, 122
+  orig: 256, 256
+  offset: 28, 72
+  index: 1
+shopguy
+  rotate: false
+  xy: 1510, 322
+  size: 210, 122
+  orig: 256, 256
+  offset: 28, 74
+  index: 2
 stars_background
   rotate: false
-  xy: 524, 35
+  xy: 524, 38
   size: 480, 270
   orig: 480, 270
   offset: 0, 0
+  index: -1
+upgrade_button
+  rotate: false
+  xy: 1006, 2
+  size: 64, 56
+  orig: 64, 64
+  offset: 0, 6
   index: -1

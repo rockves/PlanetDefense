@@ -33,6 +33,7 @@ public class GameStage extends Stage {
     private WaveManager wave_manager;
     private Launcher launcher;
     private Container stage_screen;
+    private Image earth;
     private boolean isPause = false;
     private boolean changeToUpgradeScreen = false;
 
@@ -54,6 +55,7 @@ public class GameStage extends Stage {
         });
         loadGameStage();
         toggleWaveScreen();
+
     }
 
     @Override
@@ -99,6 +101,8 @@ public class GameStage extends Stage {
         wave_manager = new WaveManager(planetDefense, this);
         //load background image
         createBackground();
+        //set earth
+        //setEarth();
         //build launcher
         buildLauncher();
         //load UI
@@ -106,7 +110,7 @@ public class GameStage extends Stage {
     }
 
     private void loadUi(){
-        stage_screen = new Container<Label>(new Label("", new Label.LabelStyle(planetDefense.assets_manager.getGame_font(), Color.BLACK)));
+        stage_screen = new Container<Label>(new Label("", new Label.LabelStyle(planetDefense.assets_manager.getGame_font(), Color.WHITE)));
         stage_screen.setFillParent(true);
         stage_screen.debugAll();
         stage_screen.setVisible(false);
@@ -128,7 +132,7 @@ public class GameStage extends Stage {
             if(asteroid.getY() < 0){
                 asteroid_pool.free(asteroid);
                 asteroid_iterator.remove();
-                //changeToUpgradeScreen = true;
+                changeToUpgradeScreen = true;
                 break;
             }
             Iterator<Missile> missile_iterator = active_missiles.iterator();
@@ -176,7 +180,7 @@ public class GameStage extends Stage {
 
     private void buildLauncher(){
         launcher = new Launcher(planetDefense.assets_manager);
-        launcher.setLauncher(this.getWidth()/2 - com.game.planetdefense.Utils.StaticUtils.LAUNCHER_WIDTH/2, 0, com.game.planetdefense.Utils.StaticUtils.LAUNCHER_WIDTH, com.game.planetdefense.Utils.StaticUtils.LAUNCHER_HEIGHT);
+        launcher.setLauncher(this.getWidth()/2 - com.game.planetdefense.Utils.StaticUtils.LAUNCHER_WIDTH/2, this.getHeight() * 0.05f, com.game.planetdefense.Utils.StaticUtils.LAUNCHER_WIDTH, com.game.planetdefense.Utils.StaticUtils.LAUNCHER_HEIGHT);
         this.addActor(launcher);
         Gdx.app.log("Launcher position", " " + launcher.getX() + " " + launcher.getY());
     }
@@ -201,6 +205,13 @@ public class GameStage extends Stage {
         }
 
         if(UserData.getInstance().getHigh_wave() < wave_manager.getWave()) UserData.getInstance().setHigh_wave(wave_manager.getWave());
+    }
+
+    private void setEarth(){
+        earth = new Image(planetDefense.assets_manager.getEarthTexture());
+        earth.setSize(this.getWidth() * 2, this.getWidth() * 2);
+        earth.setPosition(this.getWidth()/2 - earth.getWidth()/2, 0 - (earth.getHeight() * 0.7f));
+        this.addActor(earth);
     }
 
     public List<Asteroid> getActive_asteroids() {
