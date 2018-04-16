@@ -138,6 +138,14 @@ public class Asteroid extends Actor implements Pool.Poolable{
         return position.getY();
     }
     @Override
+    public float getWidth() {
+        return position.getWidth();
+    }
+    @Override
+    public float getHeight() {
+        return position.getHeight();
+    }
+    @Override
     public float getOriginX() {
         return sprite.getOriginX();
     }

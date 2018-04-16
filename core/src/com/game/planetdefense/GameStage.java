@@ -13,8 +13,10 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Pool;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.game.planetdefense.Actors.Asteroid;
+import com.game.planetdefense.Actors.Explosion;
 import com.game.planetdefense.Actors.Launcher;
 import com.game.planetdefense.Actors.Missile;
+import com.game.planetdefense.Enums.UpgradeType;
 import com.game.planetdefense.Utils.Managers.WaveManager;
 import com.game.planetdefense.Utils.Singletons.UserData;
 import com.game.planetdefense.Utils.StaticUtils;
@@ -31,9 +33,15 @@ public class GameStage extends Stage {
     private Pool<Asteroid> asteroid_pool;
     private List<Missile> active_missiles;
     private Pool<Missile> missile_pool;
+    private List<Explosion> active_explosion;
+    private Pool<Explosion> explosion_pool;
+
     private WaveManager wave_manager;
     private Launcher launcher;
     private Container stage_screen;
+    private Container fail_screen;
+    private Label shield_counter;
+    private float shield_points;
     private Image earth;
     private boolean isPause = false;
     private boolean changeToUpgradeScreen = false;
@@ -67,6 +75,7 @@ public class GameStage extends Stage {
     @Override
     public void act(float delta) {
         super.act(delta);
+        simulateExplosion();
         if(isPause) return;
         checkCollisions();
         if(!wave_manager.isEndOfWave()) {
@@ -95,15 +104,22 @@ public class GameStage extends Stage {
                 return new Missile(planetDefense.assets_manager);
             }
         };
+        explosion_pool = new Pool<Explosion>() {
+            @Override
+            protected Explosion newObject() {
+                return new Explosion(planetDefense.assets_manager);
+            }
+        };
         //list create
         active_asteroids = new ArrayList<Asteroid>();
         active_missiles = new ArrayList<Missile>();
+        active_explosion = new ArrayList<Explosion>();
         //Wave manager load
         wave_manager = new WaveManager(planetDefense, this);
         //load background image
         createBackground();
         //set earth
-        //setEarth();
+        setEarth();
         //build launcher
         buildLauncher();
         //load UI
@@ -116,12 +132,41 @@ public class GameStage extends Stage {
         //stage_screen.debugAll();
         stage_screen.setVisible(false);
         this.addActor(stage_screen);
+        ///////////////////////////////
+        fail_screen = new Container<Label>(new Label("YOU FAILED!\nEARTH WAS DESTROYED!", new Label.LabelStyle(planetDefense.assets_manager.getGame_font(), Color.WHITE)));
+        stage_screen.setFillParent(true);
+        //stage_screen.debugAll();
+        stage_screen.setVisible(false);
+        stage_screen.align(Align.center);
+        this.addActor(stage_screen);
+        ///////////////////////////////
+        Image shield_counter_image = new Image(planetDefense.assets_manager.getEarthTexture());
+        shield_counter_image.setSize(StaticUtils.SHIELD_COUNTER_SIZE, StaticUtils.SHIELD_COUNTER_SIZE);
+        shield_counter_image.setPosition(this.getWidth() * 0.02f, this.getHeight() - shield_counter_image.getHeight() - (this.getWidth() * 0.02f));
+        this.addActor(shield_counter_image);
+
+        shield_points = (UpgradeType.ShieldBonus.getUpgradeLvl() * UpgradeType.ShieldBonus.getUpgradeValue());
+        shield_counter = new Label("" + (int)shield_points, new Label.LabelStyle(planetDefense.assets_manager.getGame_font(), Color.WHITE));
+        shield_counter.setPosition(shield_counter_image.getX() + shield_counter_image.getWidth() + 10, shield_counter_image.getY() + shield_counter_image.getHeight()/2 - shield_counter.getHeight()/2);
+        shield_counter.setAlignment(Align.center);
+        this.addActor(shield_counter);
     }
 
     private void createBackground(){
         Image background = new Image(planetDefense.assets_manager.getStarBackground());
         background.setFillParent(true);
         this.addActor(background);
+    }
+
+    private void simulateExplosion(){
+        Iterator<Explosion> explosion_iterator = active_explosion.iterator();
+        while(explosion_iterator.hasNext()){
+            Explosion explosion = explosion_iterator.next();
+            if(explosion.isAnimationEnd()){
+                explosion_pool.free(explosion);
+                explosion_iterator.remove();
+            }
+        }
     }
 
     private void checkCollisions(){
@@ -131,9 +176,21 @@ public class GameStage extends Stage {
             Asteroid asteroid = asteroid_iterator.next();
             //check is asteroid touch ground
             if(asteroid.getY() < 0){
+                if(shield_points != 0){
+                    Explosion explosion = explosion_pool.obtain();
+                    explosion.setExplosion(asteroid.getX(), asteroid.getY(), asteroid.getWidth(), asteroid.getWidth());
+                    this.addActor(explosion);
+                    active_explosion.add(explosion);
+                    asteroid_pool.free(asteroid);
+                    asteroid_iterator.remove();
+                    shield_points -= 1;
+                    updateShieldCounter();
+                    break;
+                }
                 asteroid_pool.free(asteroid);
                 asteroid_iterator.remove();
                 changeToUpgradeScreen = true;
+                UserData.getInstance().updateUserData();
                 break;
             }
             Iterator<Missile> missile_iterator = active_missiles.iterator();
@@ -148,6 +205,11 @@ public class GameStage extends Stage {
                         missile_iterator.remove();
                         break;
                     }
+                    //explosion set
+                    Explosion explosion = explosion_pool.obtain();
+                    explosion.setExplosion(asteroid.getX(), asteroid.getY(), asteroid.getWidth(), asteroid.getWidth());
+                    this.addActor(explosion);
+                    active_explosion.add(explosion);
                     UserData.getInstance().addMoney(asteroid.getMoneyDrop());
                     missile_pool.free(missile);
                     asteroid_pool.free(asteroid);
@@ -181,7 +243,7 @@ public class GameStage extends Stage {
 
     private void buildLauncher(){
         launcher = new Launcher(planetDefense.assets_manager);
-        launcher.setLauncher(this.getWidth()/2 - com.game.planetdefense.Utils.StaticUtils.LAUNCHER_WIDTH/2, this.getHeight() * 0.05f, com.game.planetdefense.Utils.StaticUtils.LAUNCHER_WIDTH, com.game.planetdefense.Utils.StaticUtils.LAUNCHER_HEIGHT);
+        launcher.setLauncher(this.getWidth()/2 - com.game.planetdefense.Utils.StaticUtils.LAUNCHER_WIDTH/2, this.getHeight() * 0.1f, com.game.planetdefense.Utils.StaticUtils.LAUNCHER_WIDTH, com.game.planetdefense.Utils.StaticUtils.LAUNCHER_HEIGHT);
         this.addActor(launcher);
         Gdx.app.log("Launcher position", " " + launcher.getX() + " " + launcher.getY());
     }
@@ -209,10 +271,22 @@ public class GameStage extends Stage {
     }
 
     private void setEarth(){
-        earth = new Image(planetDefense.assets_manager.getEarthTexture());
-        earth.setSize(this.getWidth() * 2, this.getWidth() * 2);
-        earth.setPosition(this.getWidth()/2 - earth.getWidth()/2, 0 - (earth.getHeight() * 0.7f));
+        earth = new Image(planetDefense.assets_manager.getEarthTexture()){
+
+            @Override
+            public void act(float delta) {
+                this.setRotation((this.getRotation() + (5 * delta)) % 360);
+                super.act(delta);
+            }
+        };
+        earth.setSize(StaticUtils.EARTH_SIZE, StaticUtils.EARTH_SIZE);
+        earth.setOrigin(StaticUtils.EARTH_SIZE/2, StaticUtils.EARTH_SIZE/2);
+        earth.setPosition(this.getWidth()/2 - earth.getWidth()/2, 0 - earth.getHeight() * 0.70f);
         this.addActor(earth);
+    }
+
+    private void updateShieldCounter(){
+        shield_counter.setText("" + (int)shield_points);
     }
 
     public List<Asteroid> getActive_asteroids() {

@@ -8,7 +8,9 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.game.planetdefense.Enums.LaserType;
+import com.game.planetdefense.Enums.UpgradeType;
 import com.game.planetdefense.Utils.Managers.AssetsManager;
+import com.game.planetdefense.Utils.Singletons.UserData;
 import com.game.planetdefense.Utils.StaticUtils;
 
 public class Launcher extends Actor {
@@ -79,7 +81,7 @@ public class Launcher extends Actor {
 
 
     private LaserType checkUserLaserType(){
-        return LaserType.RED;
+        return LaserType.values()[UserData.getInstance().getUpgradeLvl(UpgradeType.LaserUpgrade)];
     }
 
     @Override

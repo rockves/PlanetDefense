@@ -16,16 +16,22 @@ import com.game.planetdefense.Utils.StaticUtils;
 public class AssetsManager extends AssetManager {
 
     private BitmapFont game_font;
-    private BitmapFont small_game_font;
 
     private TextureAtlas atlas;
 
     private Animation<TextureRegion> laser_launcher_body_animation;
-    private TextureRegion rock_texture;
-    private Animation<TextureRegion> meteor_animation;
-    private Animation<TextureRegion> satellite_animation;
     private Animation<TextureRegion> shop_guy_animation;
     private Animation<TextureRegion> upgrade_button_animation;
+
+    //asteroids
+    private Animation<TextureRegion> explosion_animation;
+
+    private Animation<TextureRegion> meteorite;
+    private Animation<TextureRegion> ice_meteorite;
+    private Animation<TextureRegion> lava_meteorite;
+    private Animation<TextureRegion> gold_meteorite;
+    private Animation<TextureRegion> crystal_meteorite;
+
 
     public AssetsManager() {
         super();
@@ -42,14 +48,14 @@ public class AssetsManager extends AssetManager {
         this.setLoader(BitmapFont.class, ".ttf", new FreetypeFontLoader(resolver));
 
         FreetypeFontLoader.FreeTypeFontLoaderParameter myFont = new FreetypeFontLoader.FreeTypeFontLoaderParameter();
-        myFont.fontFileName = "Font/roboto.ttf";
+        myFont.fontFileName = "Font/kid.ttf";
 
         float width = Gdx.graphics.getWidth();
         float ratio = width / 1280f;
         float baseSize = StaticUtils.FONT_SIZE_BASE;
         int size = (int) (baseSize * ratio);
         myFont.fontParameters.size = size;
-        this.load("Font/roboto.ttf", BitmapFont.class, myFont);
+        this.load("Font/kid.ttf", BitmapFont.class, myFont);
     }
 
     private void loadTextureAtlas(){
@@ -57,22 +63,23 @@ public class AssetsManager extends AssetManager {
     }
 
     public void getAssets(){
-        game_font = this.get("Font/roboto.ttf");
+        game_font = this.get("Font/kid.ttf");
         atlas = this.get("Atlas/atlas");
         //get atlas assets
         laser_launcher_body_animation = new Animation<TextureRegion>(0.099f, atlas.findRegions("laserlauncher_body"), Animation.PlayMode.LOOP);
-        meteor_animation = new Animation<TextureRegion>(0.099f, atlas.findRegions("meteor"), Animation.PlayMode.LOOP);
-        satellite_animation = new Animation<TextureRegion>(0.099f, atlas.findRegions("satellite"), Animation.PlayMode.LOOP);
         upgrade_button_animation = new Animation<TextureRegion>(0.2f, atlas.findRegions("upgrade_button"), Animation.PlayMode.LOOP);
         shop_guy_animation = new Animation<TextureRegion>(0.2f, atlas.findRegions("shopguy"), Animation.PlayMode.LOOP);
 
+        explosion_animation = new Animation<TextureRegion>(0.04f, atlas.findRegions("explosion"), Animation.PlayMode.NORMAL);
+
+        meteorite = new Animation<TextureRegion>(0.099f, atlas.findRegions("meteorite"), Animation.PlayMode.LOOP);
+        ice_meteorite = new Animation<TextureRegion>(0.099f, atlas.findRegions("ice_meteorite"), Animation.PlayMode.LOOP);
+        lava_meteorite = new Animation<TextureRegion>(0.099f, atlas.findRegions("lava_meteorite"), Animation.PlayMode.LOOP);
+        gold_meteorite = new Animation<TextureRegion>(0.099f, atlas.findRegions("gold_meteorite"), Animation.PlayMode.LOOP);
+        crystal_meteorite = new Animation<TextureRegion>(0.099f, atlas.findRegions("crystal_meteorite"), Animation.PlayMode.LOOP);
     }
 
     public BitmapFont getGame_font() {
-        return game_font;
-    }
-
-    public BitmapFont getSmall_game_font(){
         return game_font;
     }
 
@@ -85,19 +92,19 @@ public class AssetsManager extends AssetManager {
     }
 
     public TextureRegion getRed_laser_texture() {
-        return atlas.findRegion("laser");
+        return atlas.findRegion("red_laser");
     }
 
-    public TextureRegion getRock_texture() {
-        return rock_texture;
+    public TextureRegion getGreen_laser_texture() {
+        return atlas.findRegion("green_laser");
     }
 
-    public Animation<TextureRegion> getMeteor_animation() {
-        return meteor_animation;
+    public TextureRegion getYellow_laser_texture() {
+        return atlas.findRegion("yellow_laser");
     }
 
-    public Animation<TextureRegion> getSatellite_animation() {
-        return satellite_animation;
+    public TextureRegion getBlue_laser_texture() {
+        return atlas.findRegion("blue_laser");
     }
 
     public TextureRegion getTitleImage(){
@@ -144,6 +151,14 @@ public class AssetsManager extends AssetManager {
         return atlas.findRegion("button_highscore_hover");
     }
 
+    public TextureRegion getButton_exit(){
+        return atlas.findRegion("button_exit");
+    }
+
+    public TextureRegion getButton_exit_hover(){
+        return atlas.findRegion("button_exit_hover");
+    }
+
     public TextureRegion getEarthTexture(){
         return atlas.findRegion("earth");
     }
@@ -158,5 +173,47 @@ public class AssetsManager extends AssetManager {
 
     public Animation<TextureRegion> getUpgrade_button_animation(){
         return upgrade_button_animation;
+    }
+
+    public TextureRegion getDamageUpgradeIcon(){
+        return atlas.findRegion("upgrade_dmg_icon");
+    }
+
+    public TextureRegion getLaserUpgradeIcon(){
+        return atlas.findRegion("upgrade_laser_icon");
+    }
+
+    public TextureRegion getWaveUpUpgradeIcon(){
+        return atlas.findRegion("upgrade_wave_icon");
+    }
+
+    public TextureRegion getShieldUpgradeIcon(){
+        return atlas.findRegion("upgrade_def_icon");
+    }
+
+    ////////////////////////
+
+    public Animation<TextureRegion> getExplosion_animation() {
+        return explosion_animation;
+    }
+
+    public Animation<TextureRegion> getMeteorite() {
+        return meteorite;
+    }
+
+    public Animation<TextureRegion> getIce_meteorite() {
+        return ice_meteorite;
+    }
+
+    public Animation<TextureRegion> getLava_meteorite() {
+        return lava_meteorite;
+    }
+
+    public Animation<TextureRegion> getGold_meteorite() {
+        return gold_meteorite;
+    }
+
+    public Animation<TextureRegion> getCrystal_meteorite() {
+        return crystal_meteorite;
     }
 }

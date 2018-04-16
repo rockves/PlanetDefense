@@ -7,16 +7,37 @@ import com.game.planetdefense.Utils.Managers.AssetsManager;
 import java.util.Random;
 
 public enum AsteroidType {
-    METEOR, SATELLITE;
+    METEORITE, ICE_METEORITE, LAVA_METEORITE, GOLD_METEORITE, CRYSTAL_METEORITE;
 
     public float getHp(){
         switch(this){
-            /*case ROCK:
-                return 1;*/
-            case SATELLITE:
-                return 15f;
-            case METEOR:
-                return 5f;
+            case METEORITE:
+                return 2f;
+            case ICE_METEORITE:
+                return 10f;
+            case LAVA_METEORITE:
+                return 30f;
+            case GOLD_METEORITE:
+                return 50f;
+            case CRYSTAL_METEORITE:
+                return 100f;
+            default:
+                return 0f;
+        }
+    }
+
+    public float getDifficultyPoints(){
+        switch(this){
+            case METEORITE:
+                return 2f;
+            case ICE_METEORITE:
+                return 100f;
+            case LAVA_METEORITE:
+                return 150f;
+            case GOLD_METEORITE:
+                return 200f;
+            case CRYSTAL_METEORITE:
+                return 300f;
             default:
                 return 0f;
         }
@@ -24,12 +45,16 @@ public enum AsteroidType {
 
     public float getMoneyDrop(){
         switch(this){
-            /*case ROCK:
-                return 10;*/
-            case SATELLITE:
-                return 30f;
-            case METEOR:
+            case METEORITE:
+                return 5f;
+            case ICE_METEORITE:
+                return 10f;
+            case LAVA_METEORITE:
                 return 20f;
+            case GOLD_METEORITE:
+                return 50f;
+            case CRYSTAL_METEORITE:
+                return 100f;
             default:
                 return 0f;
         }
@@ -37,12 +62,16 @@ public enum AsteroidType {
 
     public float getSpeed(){
         switch(this){
-            /*case ROCK:
-                return 150;*/
-            case SATELLITE:
-                return 200f;
-            case METEOR:
-                return 400f;
+            case METEORITE:
+                return 250f;
+            case ICE_METEORITE:
+                return 250f;
+            case LAVA_METEORITE:
+                return 250f;
+            case GOLD_METEORITE:
+                return 250f;
+            case CRYSTAL_METEORITE:
+                return 250f;
             default:
                 return 0f;
         }
@@ -50,12 +79,16 @@ public enum AsteroidType {
 
     public Animation<TextureRegion> getAnimation(AssetsManager assets_manager){
         switch(this){
-            /*case ROCK:
-                return 150;*/
-            case SATELLITE:
-                return assets_manager.getSatellite_animation();
-            case METEOR:
-                return assets_manager.getMeteor_animation();
+            case METEORITE:
+                return assets_manager.getMeteorite();
+            case ICE_METEORITE:
+                return assets_manager.getIce_meteorite();
+            case LAVA_METEORITE:
+                return assets_manager.getLava_meteorite();
+            case GOLD_METEORITE:
+                return assets_manager.getGold_meteorite();
+            case CRYSTAL_METEORITE:
+                return assets_manager.getCrystal_meteorite();
             default:
                 return null;
         }
@@ -63,12 +96,16 @@ public enum AsteroidType {
 
     public float getWidth(){
         switch(this){
-            /*case ROCK:
-                return 150;*/
-            case SATELLITE:
-                return 100f;
-            case METEOR:
-                return 100f;
+            case METEORITE:
+                return 125f;
+            case ICE_METEORITE:
+                return 125f;
+            case LAVA_METEORITE:
+                return 125f;
+            case GOLD_METEORITE:
+                return 125f;
+            case CRYSTAL_METEORITE:
+                return 125f;
             default:
                 return 0f;
         }
@@ -76,19 +113,23 @@ public enum AsteroidType {
 
     public float getHeight(){
         switch(this){
-            /*case ROCK:
-                return 150;*/
-            case SATELLITE:
-                return 100f;
-            case METEOR:
+            case METEORITE:
+                return 50f;
+            case ICE_METEORITE:
+                return 50f;
+            case LAVA_METEORITE:
+                return 50f;
+            case GOLD_METEORITE:
+                return 50f;
+            case CRYSTAL_METEORITE:
                 return 50f;
             default:
                 return 0f;
         }
     }
 
-    public static AsteroidType getRandomType(){
+    public static AsteroidType getRandomType(int range){
         Random random = new Random();
-        return values()[random.nextInt(values().length)];
+        return values()[random.nextInt(range)];
     }
 }

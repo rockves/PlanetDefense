@@ -36,6 +36,7 @@ public class UserData {
 
     public void resetUserData(){
         prefs.clear();
+        prefs.flush();
         getUserData();
         prefs.flush();
     }

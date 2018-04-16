@@ -18,6 +18,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.game.planetdefense.Enums.UpgradeType;
 import com.game.planetdefense.PlanetDefense;
 import com.game.planetdefense.Utils.Singletons.UserData;
+import com.game.planetdefense.Utils.StaticUtils;
 import com.game.planetdefense.Utils.UpgradeButton;
 
 
@@ -48,6 +49,7 @@ public class UpgradeScreen implements Screen {
         counter_image.setSize(stage.getWidth()/3.5f, stage.getHeight()/3.5f);
         counter_image.setPosition(0, stage.getHeight() - counter_image.getHeight());
 
+
         money_label = new Label("" + MathUtils.floor(UserData.getInstance().getMoney()), new Label.LabelStyle(planetDefense.assets_manager.getGame_font(), Color.WHITE));
         money_label.setSize(counter_image.getWidth() * 0.5f, counter_image.getHeight() * 0.3f);
         money_label.setPosition(counter_image.getX() + (counter_image.getWidth() - money_label.getWidth() - counter_image.getWidth() * 0.1f), counter_image.getY() + counter_image.getHeight() - money_label.getHeight() - (counter_image.getHeight() * 0.1f));
@@ -63,8 +65,8 @@ public class UpgradeScreen implements Screen {
         stage.addActor(shop_guy_image);
 
         //set exit button
-        ImageButton exit_game_button = new ImageButton(new TextureRegionDrawable(planetDefense.assets_manager.getButton_newGame()), new TextureRegionDrawable(planetDefense.assets_manager.getButton_newGame_hover()));
-        exit_game_button.setSize(stage.getWidth() * 0.1f, stage.getWidth() * 0.1f);
+        ImageButton exit_game_button = new ImageButton(new TextureRegionDrawable(planetDefense.assets_manager.getButton_exit()), new TextureRegionDrawable(planetDefense.assets_manager.getButton_exit_hover()));
+        exit_game_button.setSize(StaticUtils.ACTION_BUTTON_SIZE, StaticUtils.ACTION_BUTTON_SIZE);
         exit_game_button.setPosition(stage.getWidth() * 0.02f, stage.getWidth() * 0.02f);
         exit_game_button.getImageCell().size(exit_game_button.getWidth(), exit_game_button.getHeight());
         exit_game_button.getImage().setScaling(Scaling.stretch);
@@ -94,10 +96,29 @@ public class UpgradeScreen implements Screen {
 
 
         {//upgrades
-            UpgradeButton dmgUpgrade = new UpgradeButton(planetDefense.assets_manager, UpgradeType.DmgBonus, stage.getWidth()/7f,  stage.getWidth()/7f);
-            dmgUpgrade.setPosition(stage.getWidth()/2, stage.getHeight()/3);
-            dmgUpgrade.debugAll();
+            float pad = StaticUtils.UPGRADE_BUTTON_SIZE * 0.1f;
+            float button_size = StaticUtils.UPGRADE_BUTTON_SIZE;
+            float pos_x = stage.getWidth()/2 - button_size - pad/2;
+            float pos_y = stage.getHeight()/3;
+
+            UpgradeButton dmgUpgrade = new UpgradeButton(planetDefense.assets_manager, UpgradeType.DmgBonus, pos_x, pos_y, button_size, button_size);
+            //dmgUpgrade.debugAll();
             stage.addActor(dmgUpgrade);
+
+            pos_x += button_size + pad;
+
+            UpgradeButton laserUpgrade = new UpgradeButton(planetDefense.assets_manager, UpgradeType.LaserUpgrade, pos_x, pos_y, button_size, button_size);
+            //dmgUpgrade.debugAll();
+            stage.addActor(laserUpgrade);
+            pos_y -= button_size + pad;
+            UpgradeButton stageUpgrade = new UpgradeButton(planetDefense.assets_manager, UpgradeType.StageBonus, pos_x, pos_y, button_size, button_size);
+            //dmgUpgrade.debugAll();
+            stage.addActor(stageUpgrade);
+
+            pos_x -= button_size + pad;
+            UpgradeButton shieldUpgrade = new UpgradeButton(planetDefense.assets_manager, UpgradeType.ShieldBonus, pos_x, pos_y, button_size, button_size);
+            //dmgUpgrade.debugAll();
+            stage.addActor(shieldUpgrade);
         }
 
     }

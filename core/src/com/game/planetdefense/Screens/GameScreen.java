@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.game.planetdefense.GameStage;
 import com.game.planetdefense.PlanetDefense;
-import com.game.planetdefense.Utils.Singletons.UserData;
 
 public class GameScreen implements Screen {
 
@@ -62,7 +61,6 @@ public class GameScreen implements Screen {
 
     @Override
     public void dispose() {
-        UserData.getInstance().updateUserData();
         stage.dispose();
     }
 
