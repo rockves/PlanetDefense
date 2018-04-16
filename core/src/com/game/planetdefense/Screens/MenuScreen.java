@@ -60,8 +60,9 @@ public class MenuScreen implements Screen {
         }else {
             how_many_buttons = 3;
         }
-        buttons_table.setSize(stage.getWidth() * 0.12f * how_many_buttons, stage.getWidth() * 0.1f);
-        buttons_table.setPosition(stage.getWidth() / 2 - buttons_table.getWidth()/2, stage.getHeight()/2 - buttons_table.getHeight()/2);
+        buttons_table.setSize(stage.getWidth(), stage.getWidth() * 0.1f);
+        buttons_table.setPosition(0, stage.getHeight()/2 - buttons_table.getHeight()/2);
+        buttons_table.align(Align.center);
         stage.addActor(buttons_table);
 
 
@@ -82,10 +83,12 @@ public class MenuScreen implements Screen {
             title_image.setHeight(stage.getHeight() / 3 * 0.8f);
             table.add(title_image).width(title_image.getWidth()).height(title_image.getHeight());
 
+            float size_width = stage.getWidth()/10;
+            float size_height = stage.getWidth()/10;
 
             ImageButton new_game_button = new ImageButton(new TextureRegionDrawable(planetDefense.assets_manager.getButton_newGame()), new TextureRegionDrawable(planetDefense.assets_manager.getButton_newGame_hover()));
-            new_game_button.setSize(buttons_table.getWidth()/how_many_buttons, buttons_table.getHeight());
-            new_game_button.getImageCell().width(buttons_table.getWidth()/how_many_buttons).height(buttons_table.getHeight());
+            new_game_button.setSize(size_width, size_height);
+            new_game_button.getImageCell().width(size_width).height(size_height);
             new_game_button.getImage().setScaling(Scaling.stretch);
             new_game_button.addListener(new ChangeListener() {
                 @Override
@@ -96,8 +99,8 @@ public class MenuScreen implements Screen {
             });
 
             ImageButton options_button = new ImageButton(new TextureRegionDrawable(planetDefense.assets_manager.getButton_options()), new TextureRegionDrawable(planetDefense.assets_manager.getButton_options_hover()));
-            options_button.setSize(buttons_table.getWidth()/how_many_buttons, buttons_table.getHeight());
-            options_button.getImageCell().width(buttons_table.getWidth()/how_many_buttons).height(buttons_table.getHeight());
+            options_button.setSize(size_width, size_height);
+            options_button.getImageCell().width(size_width).height(size_height);
             options_button.getImage().setScaling(Scaling.stretch);
             options_button.addListener(new ChangeListener() {
                 @Override
@@ -109,8 +112,8 @@ public class MenuScreen implements Screen {
 
 
             ImageButton high_score_button = new ImageButton(new TextureRegionDrawable(planetDefense.assets_manager.getButton_highscore()), new TextureRegionDrawable(planetDefense.assets_manager.getButton_highscore_hover()));
-            high_score_button.setSize(buttons_table.getWidth()/how_many_buttons, buttons_table.getHeight());
-            high_score_button.getImageCell().width(buttons_table.getWidth()/how_many_buttons).height(buttons_table.getHeight());
+            high_score_button.setSize(size_width, size_height);
+            high_score_button.getImageCell().width(size_width).height(size_height);
             high_score_button.getImage().setScaling(Scaling.stretch);
             high_score_button.addListener(new ChangeListener() {
                 @Override
@@ -123,8 +126,8 @@ public class MenuScreen implements Screen {
 
             if (UserData.getInstance().isHasPlaying()) {
                 ImageButton continue_button = new ImageButton(new TextureRegionDrawable(planetDefense.assets_manager.getButton_continue()), new TextureRegionDrawable(planetDefense.assets_manager.getButton_continue_hover()));
-                continue_button.setSize(buttons_table.getWidth()/how_many_buttons, buttons_table.getHeight());
-                continue_button.getImageCell().width(buttons_table.getWidth()/how_many_buttons).height(buttons_table.getHeight());
+                continue_button.setSize(size_width, size_height);
+                continue_button.getImageCell().width(size_width).height(size_height);
                 continue_button.getImage().setScaling(Scaling.stretch);
                 continue_button.addListener(new ChangeListener() {
                     @Override
@@ -132,12 +135,12 @@ public class MenuScreen implements Screen {
                         planetDefense.changeScreen(new GameScreen(planetDefense), menuScreen);
                     }
                 });
-                buttons_table.add(continue_button).height(buttons_table.getHeight()).width(buttons_table.getWidth()/how_many_buttons);
+                buttons_table.add(continue_button).height(size_height).width(size_width);
             }
 
-            buttons_table.add(new_game_button).height(buttons_table.getHeight()).width(buttons_table.getWidth()/how_many_buttons);
-            buttons_table.add(options_button).height(buttons_table.getHeight()).width(buttons_table.getWidth()/how_many_buttons);
-            buttons_table.add(high_score_button).height(buttons_table.getHeight()).width(buttons_table.getWidth()/how_many_buttons);
+            buttons_table.add(new_game_button).height(size_height).width(size_width);
+            buttons_table.add(options_button).height(size_height).width(size_width);
+            buttons_table.add(high_score_button).height(size_height).width(size_width);
         }
 
 

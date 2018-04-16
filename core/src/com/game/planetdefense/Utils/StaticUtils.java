@@ -6,6 +6,7 @@ public class StaticUtils {
 
     //GAME UTILS
     public static final float FONT_SIZE_BASE = 45f;
+    public static final float FONT_SIZE_SMALL = 35f;
     ////////////////
 
 

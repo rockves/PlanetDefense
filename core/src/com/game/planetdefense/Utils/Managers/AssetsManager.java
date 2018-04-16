@@ -16,6 +16,7 @@ import com.game.planetdefense.Utils.StaticUtils;
 public class AssetsManager extends AssetManager {
 
     private BitmapFont game_font;
+    private BitmapFont small_game_font;
 
     private TextureAtlas atlas;
 
@@ -24,6 +25,7 @@ public class AssetsManager extends AssetManager {
     private Animation<TextureRegion> meteor_animation;
     private Animation<TextureRegion> satellite_animation;
     private Animation<TextureRegion> shop_guy_animation;
+    private Animation<TextureRegion> upgrade_button_animation;
 
     public AssetsManager() {
         super();
@@ -61,10 +63,16 @@ public class AssetsManager extends AssetManager {
         laser_launcher_body_animation = new Animation<TextureRegion>(0.099f, atlas.findRegions("laserlauncher_body"), Animation.PlayMode.LOOP);
         meteor_animation = new Animation<TextureRegion>(0.099f, atlas.findRegions("meteor"), Animation.PlayMode.LOOP);
         satellite_animation = new Animation<TextureRegion>(0.099f, atlas.findRegions("satellite"), Animation.PlayMode.LOOP);
+        upgrade_button_animation = new Animation<TextureRegion>(0.2f, atlas.findRegions("upgrade_button"), Animation.PlayMode.LOOP);
         shop_guy_animation = new Animation<TextureRegion>(0.2f, atlas.findRegions("shopguy"), Animation.PlayMode.LOOP);
+
     }
 
     public BitmapFont getGame_font() {
+        return game_font;
+    }
+
+    public BitmapFont getSmall_game_font(){
         return game_font;
     }
 
@@ -148,7 +156,7 @@ public class AssetsManager extends AssetManager {
         return shop_guy_animation;
     }
 
-    public TextureRegion getUpgradeButtonTexture(){
-        return atlas.findRegion("upgrade_button");
+    public Animation<TextureRegion> getUpgrade_button_animation(){
+        return upgrade_button_animation;
     }
 }

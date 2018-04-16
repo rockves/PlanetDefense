@@ -10,8 +10,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Pool;
 import com.game.planetdefense.Enums.LaserType;
+import com.game.planetdefense.Enums.UpgradeType;
 import com.game.planetdefense.Utils.Managers.AssetsManager;
-import com.game.planetdefense.Utils.Singletons.UserData;
 
 public class Missile extends Actor implements Pool.Poolable {
 
@@ -95,7 +95,8 @@ public class Missile extends Actor implements Pool.Poolable {
         this.sprite.setBounds(this.position.getX(), this.position.getY(), this.position.getWidth(), this.position.getHeight());
         this.sprite.setOrigin(this.sprite.getWidth()/2, 0);
         rotateToTarget();
-        this.damage = 5f + UserData.getInstance().getBonus_shoot_damage();
+        this.damage = 5f + (UpgradeType.DmgBonus.getUpgradeLvl() * UpgradeType.DmgBonus.getUpgradeValue());
+        Gdx.app.log("DMG", ""+damage);
         Gdx.app.log("Missile position", " " + sprite.getX() + " " + sprite.getY());
     }
 

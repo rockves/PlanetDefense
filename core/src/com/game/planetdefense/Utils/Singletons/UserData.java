@@ -2,6 +2,7 @@ package com.game.planetdefense.Utils.Singletons;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
+import com.game.planetdefense.Enums.UpgradeType;
 
 public class UserData {
     private static final UserData ourInstance = new UserData();
@@ -10,9 +11,6 @@ public class UserData {
     private float money;
     private int high_wave;
     private boolean hasPlaying;
-
-    private float shoot_speed_multiplier;
-    private float bonus_shoot_damage;
 
     public static UserData getInstance() {
         return ourInstance;
@@ -27,16 +25,12 @@ public class UserData {
         money = prefs.getFloat("money", 0);
         high_wave = prefs.getInteger("highWave", 0);
         hasPlaying = prefs.getBoolean("hasPlaying", false);
-        shoot_speed_multiplier = prefs.getFloat("shoot_speed_multiplier", 1);
-        bonus_shoot_damage = prefs.getFloat("bonus_shoot_damage", 0);
     }
 
     public void updateUserData(){
         prefs.putFloat("money",money);
         prefs.putInteger("highWave", high_wave);
         prefs.putBoolean("hasPlaying", hasPlaying);
-        prefs.putFloat("shoot_speed_multiplier", shoot_speed_multiplier);
-        prefs.putFloat("bonus_shoot_damage", bonus_shoot_damage);
         prefs.flush();
     }
 
@@ -74,19 +68,12 @@ public class UserData {
         this.hasPlaying = hasPlaying;
     }
 
-    public float getShoot_speed_multiplier() {
-        return shoot_speed_multiplier;
+    public void addUpgradeLvl(UpgradeType upgradeType){
+        prefs.putInteger(upgradeType.name(), prefs.getInteger(upgradeType.name(), 0) + 1);
+        prefs.flush();
     }
 
-    public void setShoot_speed_multiplier(float shoot_speed_multiplier) {
-        this.shoot_speed_multiplier = shoot_speed_multiplier;
-    }
-
-    public float getBonus_shoot_damage() {
-        return bonus_shoot_damage;
-    }
-
-    public void setBonus_shoot_damage(float bonus_shoot_damage) {
-        this.bonus_shoot_damage = bonus_shoot_damage;
+    public int getUpgradeLvl(UpgradeType upgradeType){
+        return prefs.getInteger(upgradeType.name(), 0);
     }
 }

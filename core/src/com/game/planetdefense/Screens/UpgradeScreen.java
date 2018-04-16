@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -14,8 +15,10 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.game.planetdefense.Enums.UpgradeType;
 import com.game.planetdefense.PlanetDefense;
 import com.game.planetdefense.Utils.Singletons.UserData;
+import com.game.planetdefense.Utils.UpgradeButton;
 
 
 public class UpgradeScreen implements Screen {
@@ -45,7 +48,7 @@ public class UpgradeScreen implements Screen {
         counter_image.setSize(stage.getWidth()/3.5f, stage.getHeight()/3.5f);
         counter_image.setPosition(0, stage.getHeight() - counter_image.getHeight());
 
-        money_label = new Label("" + (int)UserData.getInstance().getMoney(), new Label.LabelStyle(planetDefense.assets_manager.getGame_font(), Color.WHITE));
+        money_label = new Label("" + MathUtils.floor(UserData.getInstance().getMoney()), new Label.LabelStyle(planetDefense.assets_manager.getGame_font(), Color.WHITE));
         money_label.setSize(counter_image.getWidth() * 0.5f, counter_image.getHeight() * 0.3f);
         money_label.setPosition(counter_image.getX() + (counter_image.getWidth() - money_label.getWidth() - counter_image.getWidth() * 0.1f), counter_image.getY() + counter_image.getHeight() - money_label.getHeight() - (counter_image.getHeight() * 0.1f));
 
@@ -89,6 +92,14 @@ public class UpgradeScreen implements Screen {
         //start_game_button.debug();
         stage.addActor(start_game_button);
 
+
+        {//upgrades
+            UpgradeButton dmgUpgrade = new UpgradeButton(planetDefense.assets_manager, UpgradeType.DmgBonus, stage.getWidth()/7f,  stage.getWidth()/7f);
+            dmgUpgrade.setPosition(stage.getWidth()/2, stage.getHeight()/3);
+            dmgUpgrade.debugAll();
+            stage.addActor(dmgUpgrade);
+        }
+
     }
 
     @Override
@@ -101,6 +112,7 @@ public class UpgradeScreen implements Screen {
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 60f));
+        money_label.setText("" + MathUtils.floor(UserData.getInstance().getMoney()));
         shop_guy_image.setDrawable(new TextureRegionDrawable(planetDefense.assets_manager.getShopGuyAnimation().getKeyFrame(state_time, true)));
         stage.draw();
         state_time += delta;
