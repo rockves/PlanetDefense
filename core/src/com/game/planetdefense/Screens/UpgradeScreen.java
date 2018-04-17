@@ -17,6 +17,7 @@ import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.game.planetdefense.Enums.UpgradeType;
 import com.game.planetdefense.PlanetDefense;
+import com.game.planetdefense.Utils.Managers.AudioManager;
 import com.game.planetdefense.Utils.Singletons.UserData;
 import com.game.planetdefense.Utils.StaticUtils;
 import com.game.planetdefense.Utils.UpgradeButton;
@@ -26,6 +27,7 @@ public class UpgradeScreen implements Screen {
 
     private final PlanetDefense planetDefense;
     private final UpgradeScreen upgradeScreen;
+    private AudioManager audio_manager;
     private Stage stage;
     private Label money_label;
     private Image shop_guy_image;
@@ -34,6 +36,7 @@ public class UpgradeScreen implements Screen {
     public UpgradeScreen(final PlanetDefense planetDefense) {
         this.planetDefense = planetDefense;
         this.upgradeScreen = this;
+        this.audio_manager = planetDefense.assets_manager.getAudio_manager();
         this.state_time = 0;
         Gdx.input.setCatchBackKey(true);
 
@@ -125,7 +128,7 @@ public class UpgradeScreen implements Screen {
 
     @Override
     public void show() {
-
+        audio_manager.playUpgradeMenuMusic();
     }
 
     @Override
@@ -163,6 +166,7 @@ public class UpgradeScreen implements Screen {
     @Override
     public void dispose() {
         UserData.getInstance().updateUserData();
+        audio_manager.stopUpgradeMenuMusic();
         stage.dispose();
     }
 }

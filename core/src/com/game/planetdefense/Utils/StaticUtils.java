@@ -18,7 +18,7 @@ public class StaticUtils {
 
     //WAVE UTILS
     public static final float DIFFICULTY_POINTS_MULTIPLIER = 1.2f;
-    public static final short DIFFICULTY_POINTS = 25;
+    public static final int DIFFICULTY_POINTS = 25;
     public static final float DIFFICULTY_STATS_MULTIPLIER = 0.001f;
     ////////////////
 
@@ -32,7 +32,7 @@ public class StaticUtils {
 
     //MISSILES UTILS
     public static final float MISSILE_TIME_TO_DESTROY = 4f;
-    public static final float BASIC_DAMAGE = 1F;
+    public static final float MISSILE_BASE_DAMAGE = 1f;
     ////////////////
 
     //UPGRADE SCREEN
@@ -42,5 +42,17 @@ public class StaticUtils {
 
     //MENU UPGRADE
     public static final float MENU_BUTTON_SIZE = 195f;
+    ////////////////
+
+    //SOUND
+    public static final float BUY_SOUND_VOLUME = 0.9f;
+    public static final float LASER_SOUND_VOLUME = 1f;
+    public static final float EXPLOSION_SOUND_VOLUME = 0.9f;
+    ////////////////
+
+    //MUSIC
+    public static final float MENU_MUSIC_VOLUME = 0.7f;
+    public static final float GAME_MUSIC_VOLUME = 0.7f;
+    public static final float UPGRADE_MENU_MUSIC_VOLUME = 0.7f;
     ////////////////
 }

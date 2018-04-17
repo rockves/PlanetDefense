@@ -52,7 +52,7 @@ public enum LaserType {
         }
     }
 
-    public float getDamage(){
+    public float getDamageMultiplier(){
         switch(this){
             case RED:
                 return 1f;

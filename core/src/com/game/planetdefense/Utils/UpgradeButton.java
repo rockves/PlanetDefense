@@ -15,11 +15,13 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.game.planetdefense.Enums.UpgradeType;
 import com.game.planetdefense.Utils.Managers.AssetsManager;
+import com.game.planetdefense.Utils.Managers.AudioManager;
 import com.game.planetdefense.Utils.Singletons.UserData;
 
 public class UpgradeButton extends Button {
 
     private UpgradeType upgrade_type;
+    private AudioManager audio_manager;
     private Animation<TextureRegion> button_animation;
     private Image upgrade_image;
     private Label price_label;
@@ -34,6 +36,7 @@ public class UpgradeButton extends Button {
     public UpgradeButton(AssetsManager assetsManager, UpgradeType upgradeType, float x, float y, float width, float height) {
         super(new TextureRegionDrawable(assetsManager.getUpgrade_button_animation().getKeyFrame(0, true)));
         this.setPosition(x,y);
+        this.audio_manager = assetsManager.getAudio_manager();
         start_y = y;
         this.setSize(width,height);
         this.align(Align.top);
@@ -97,6 +100,7 @@ public class UpgradeButton extends Button {
         if(upgrade_type.getUpgradeLvl() == upgrade_type.getUpgradeMaxLvl()){
             price_label.setText("MAX");
         }
+        audio_manager.playBuySound();
         Gdx.app.log("Upgrade", "" + upgrade_type.getUpgradeLvl());
     }
 }

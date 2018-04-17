@@ -61,6 +61,7 @@ public class GameScreen implements Screen {
 
     @Override
     public void dispose() {
+        planet_defense.assets_manager.getAudio_manager().stopGameMusic();
         stage.dispose();
     }
 

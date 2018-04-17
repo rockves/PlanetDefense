@@ -13,6 +13,7 @@ import com.badlogic.gdx.utils.Pool;
 import com.game.planetdefense.Enums.LaserType;
 import com.game.planetdefense.Enums.UpgradeType;
 import com.game.planetdefense.Utils.Managers.AssetsManager;
+import com.game.planetdefense.Utils.StaticUtils;
 
 public class Missile extends Actor implements Pool.Poolable {
 
@@ -103,7 +104,7 @@ public class Missile extends Actor implements Pool.Poolable {
         this.collision.setPosition(this.position.getX(), this.position.getY());
         this.collision.setOrigin(this.position.getWidth()/2, 0);
         rotateToTarget();
-        this.damage = laser_type.getDamage() + (UpgradeType.DmgBonus.getUpgradeLvl() * UpgradeType.DmgBonus.getUpgradeValue());
+        this.damage = ((UpgradeType.DmgBonus.getUpgradeLvl() * UpgradeType.DmgBonus.getUpgradeValue()) + StaticUtils.MISSILE_BASE_DAMAGE) * laser_type.getDamageMultiplier();
         Gdx.app.log("DMG", ""+damage);
         Gdx.app.log("Missile position", " " + sprite.getX() + " " + sprite.getY());
     }

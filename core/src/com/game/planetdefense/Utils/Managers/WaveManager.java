@@ -37,13 +37,13 @@ public class WaveManager {
         wave++;
         if(isFirst){
             if(UpgradeType.StageBonus.getUpgradeLvl() > 0){
-                start_difficulty_points = StaticUtils.DIFFICULTY_POINTS * StaticUtils.DIFFICULTY_POINTS_MULTIPLIER * (wave + 1);
+                start_difficulty_points = calculateDifficultyPoints(wave);
             }else {
                 start_difficulty_points = StaticUtils.DIFFICULTY_POINTS;
                 isFirst = false;
             }
         }
-        else start_difficulty_points *= StaticUtils.DIFFICULTY_POINTS_MULTIPLIER * (wave + 1);
+        else start_difficulty_points *= StaticUtils.DIFFICULTY_POINTS_MULTIPLIER;
         difficulty_points = start_difficulty_points;
         difficulty_multiplier += StaticUtils.DIFFICULTY_STATS_MULTIPLIER;
         Gdx.app.log("points", "" + difficulty_points);
@@ -94,5 +94,12 @@ public class WaveManager {
 
     public int getWave() {
         return wave;
+    }
+
+    private float calculateDifficultyPoints(int wave){
+        if(wave == 1){
+            return StaticUtils.DIFFICULTY_POINTS;
+        }
+        return StaticUtils.DIFFICULTY_POINTS_MULTIPLIER * calculateDifficultyPoints(wave - 1);
     }
 }

@@ -6,9 +6,11 @@ import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Container;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Pool;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -17,6 +19,7 @@ import com.game.planetdefense.Actors.Explosion;
 import com.game.planetdefense.Actors.Launcher;
 import com.game.planetdefense.Actors.Missile;
 import com.game.planetdefense.Enums.UpgradeType;
+import com.game.planetdefense.Utils.Managers.AudioManager;
 import com.game.planetdefense.Utils.Managers.WaveManager;
 import com.game.planetdefense.Utils.Singletons.UserData;
 import com.game.planetdefense.Utils.StaticUtils;
@@ -37,14 +40,17 @@ public class GameStage extends Stage {
     private Pool<Explosion> explosion_pool;
 
     private WaveManager wave_manager;
+    private AudioManager audio_manager;
     private Launcher launcher;
     private Container stage_screen;
+    private MoveToAction move_action;
     private Container fail_screen;
     private Label shield_counter;
     private float shield_points;
     private Image earth;
     private boolean isPause = false;
     private boolean changeToUpgradeScreen = false;
+    private boolean fail = false;
 
     public GameStage(Viewport viewport, PlanetDefense planetDefense) {
         super(viewport);
@@ -53,7 +59,16 @@ public class GameStage extends Stage {
         this.addListener(new InputListener(){
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                if(stage_screen.getActions().size > 0){
+                    return super.touchDown(event, x, y, pointer, button);
+                }
                 if(isPause){
+                    if(fail){
+                        if(!(fail_screen.getActions().size > 0)){
+                            changeToUpgradeScreen = true;
+                        }
+                        return super.touchDown(event, x, y, pointer, button);
+                    }
                     wave_manager.prepareWave();
                     toggleWaveScreen();
                     return super.touchDown(event, x, y, pointer, button);
@@ -64,7 +79,8 @@ public class GameStage extends Stage {
         });
         loadGameStage();
         toggleWaveScreen();
-
+        this.audio_manager = planetDefense.assets_manager.getAudio_manager();
+        this.audio_manager.playGameMusic();
     }
 
     @Override
@@ -76,7 +92,7 @@ public class GameStage extends Stage {
     public void act(float delta) {
         super.act(delta);
         simulateExplosion();
-        if(isPause) return;
+        if(isPause || stage_screen.getActions().size > 0) return;
         checkCollisions();
         if(!wave_manager.isEndOfWave()) {
             if (wave_manager.getTime_to_next_object_spawn() <= 0) {
@@ -128,22 +144,31 @@ public class GameStage extends Stage {
 
     private void loadUi(){
         stage_screen = new Container<Label>(new Label("", new Label.LabelStyle(planetDefense.assets_manager.getGame_font(), Color.WHITE)));
-        stage_screen.setFillParent(true);
+        stage_screen.setBackground(new TextureRegionDrawable(planetDefense.assets_manager.getButtonsBackground()));
+        stage_screen.setSize(this.getWidth(), this.getWidth() * 0.10f);
+        stage_screen.setPosition(0 - stage_screen.getWidth(), this.getHeight()/2 - stage_screen.getHeight()/2);
         //stage_screen.debugAll();
-        stage_screen.setVisible(false);
+        stage_screen.setVisible(true);
         this.addActor(stage_screen);
         ///////////////////////////////
-        fail_screen = new Container<Label>(new Label("YOU FAILED!\nEARTH WAS DESTROYED!", new Label.LabelStyle(planetDefense.assets_manager.getGame_font(), Color.WHITE)));
-        stage_screen.setFillParent(true);
+        fail_screen = new Container<Label>(new Label("YOU FAILED!\nGO ARM YOURSELF BETTER", new Label.LabelStyle(planetDefense.assets_manager.getGame_font(), Color.WHITE)));
+        fail_screen.setBackground(new TextureRegionDrawable(planetDefense.assets_manager.getButtonsBackground()));
+        fail_screen.setSize(this.getWidth(), this.getWidth() * 0.10f);
+        fail_screen.setPosition(0, this.getHeight() + fail_screen.getHeight());
         //stage_screen.debugAll();
-        stage_screen.setVisible(false);
-        stage_screen.align(Align.center);
-        this.addActor(stage_screen);
+        fail_screen.setVisible(true);
+        fail_screen.align(Align.center);
+        this.addActor(fail_screen);
         ///////////////////////////////
         Image shield_counter_image = new Image(planetDefense.assets_manager.getEarthTexture());
         shield_counter_image.setSize(StaticUtils.SHIELD_COUNTER_SIZE, StaticUtils.SHIELD_COUNTER_SIZE);
         shield_counter_image.setPosition(this.getWidth() * 0.02f, this.getHeight() - shield_counter_image.getHeight() - (this.getWidth() * 0.02f));
         this.addActor(shield_counter_image);
+
+        Image shield_image = new Image(planetDefense.assets_manager.getShieldTexture());
+        shield_image.setSize(shield_counter_image.getWidth() * 0.5f, shield_counter_image.getHeight()  * 0.5f);
+        shield_image.setPosition(shield_counter_image.getX() + shield_counter_image.getWidth()/2 - shield_image.getWidth()/2, shield_counter_image.getY() + shield_counter_image.getHeight()/2 - shield_image.getHeight()/2);
+        this.addActor(shield_image);
 
         shield_points = (UpgradeType.ShieldBonus.getUpgradeLvl() * UpgradeType.ShieldBonus.getUpgradeValue());
         shield_counter = new Label("" + (int)shield_points, new Label.LabelStyle(planetDefense.assets_manager.getGame_font(), Color.WHITE));
@@ -156,6 +181,14 @@ public class GameStage extends Stage {
         Image background = new Image(planetDefense.assets_manager.getStarBackground());
         background.setFillParent(true);
         this.addActor(background);
+    }
+
+    private void createExplosion(Asteroid asteroid){
+        Explosion explosion = explosion_pool.obtain();
+        explosion.setExplosion(asteroid.getX(), asteroid.getY(), asteroid.getWidth(), asteroid.getWidth());
+        this.addActor(explosion);
+        active_explosion.add(explosion);
+        audio_manager.playExplosionSound();
     }
 
     private void simulateExplosion(){
@@ -177,10 +210,7 @@ public class GameStage extends Stage {
             //check is asteroid touch ground
             if(asteroid.getY() < 0){
                 if(shield_points != 0){
-                    Explosion explosion = explosion_pool.obtain();
-                    explosion.setExplosion(asteroid.getX(), asteroid.getY(), asteroid.getWidth(), asteroid.getWidth());
-                    this.addActor(explosion);
-                    active_explosion.add(explosion);
+                    createExplosion(asteroid);
                     asteroid_pool.free(asteroid);
                     asteroid_iterator.remove();
                     shield_points -= 1;
@@ -189,7 +219,7 @@ public class GameStage extends Stage {
                 }
                 asteroid_pool.free(asteroid);
                 asteroid_iterator.remove();
-                changeToUpgradeScreen = true;
+                toggleFailScreen();
                 UserData.getInstance().updateUserData();
                 break;
             }
@@ -206,10 +236,7 @@ public class GameStage extends Stage {
                         break;
                     }
                     //explosion set
-                    Explosion explosion = explosion_pool.obtain();
-                    explosion.setExplosion(asteroid.getX(), asteroid.getY(), asteroid.getWidth(), asteroid.getWidth());
-                    this.addActor(explosion);
-                    active_explosion.add(explosion);
+                    createExplosion(asteroid);
                     UserData.getInstance().addMoney(asteroid.getMoneyDrop());
                     missile_pool.free(missile);
                     asteroid_pool.free(asteroid);
@@ -250,11 +277,45 @@ public class GameStage extends Stage {
 
     private void toggleWaveScreen(){
         isPause = !isPause;
-        stage_screen.setVisible(!stage_screen.isVisible());
-        if(stage_screen.isVisible()){
+        move_action = new MoveToAction();
+        if(isPause){
             Label label = (Label)stage_screen.getActor();
             label.setText("Wave " + (wave_manager.getWave() + 1));
             label.setAlignment(Align.center);
+            //set move
+            stage_screen.setPosition(0 - stage_screen.getWidth(),stage_screen.getY());
+            move_action.reset();
+            move_action.setDuration(0.5f);
+            move_action.setPosition(0,stage_screen.getY());
+            stage_screen.addAction(move_action);
+        }else {
+            move_action.reset();
+            move_action.setDuration(0.5f);
+            move_action.setPosition(this.getWidth(), stage_screen.getY());
+            stage_screen.addAction(move_action);
+        }
+    }
+
+    private void toggleFailScreen(){
+        isPause = true;
+        fail = true;
+        move_action = new MoveToAction();
+        move_action.reset();
+        move_action.setPosition(0, this.getHeight()/2 - fail_screen.getHeight()/2);
+        move_action.setDuration(0.8f);
+        fail_screen.addAction(move_action);
+
+        Iterator<Missile> missile_iterator = active_missiles.iterator();
+        while (missile_iterator.hasNext()){
+            Missile missile = missile_iterator.next();
+            missile_pool.free(missile);
+            missile_iterator.remove();
+        }
+        Iterator<Asteroid> asteroidIterator = active_asteroids.iterator();
+        while(asteroidIterator.hasNext()){
+            Asteroid asteroid = asteroidIterator.next();
+            asteroid_pool.free(asteroid);
+            asteroidIterator.remove();
         }
     }
 

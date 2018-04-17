@@ -10,12 +10,14 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.game.planetdefense.Enums.LaserType;
 import com.game.planetdefense.Enums.UpgradeType;
 import com.game.planetdefense.Utils.Managers.AssetsManager;
+import com.game.planetdefense.Utils.Managers.AudioManager;
 import com.game.planetdefense.Utils.Singletons.UserData;
 import com.game.planetdefense.Utils.StaticUtils;
 
 public class Launcher extends Actor {
 
     private LaserType laserType;
+    private AudioManager audio_manager;
     private Animation<TextureRegion> body_animation;
     private TextureRegion laser_texture;
     private Sprite launcher_body;
@@ -25,16 +27,17 @@ public class Launcher extends Actor {
     private float state_time;
 
     public Launcher(AssetsManager assets_manager) {
-        laserType = checkUserLaserType();
-        laser_texture = laserType.getTexture(assets_manager);
+        this.audio_manager = assets_manager.getAudio_manager();
+        this.laserType = checkUserLaserType();
+        this.laser_texture = laserType.getTexture(assets_manager);
         this.state_time = 0;
         this.body_animation = assets_manager.getLaser_launcher_body_animation();
-        position = new Rectangle(0,0,0,0);
+        this.position = new Rectangle(0,0,0,0);
         this.launcher_body = new Sprite(body_animation.getKeyFrame(state_time, true));
         this.launcher_head = new Sprite(assets_manager.getLaser_launcher_head());
         this.launcher_head.setBounds(position.getX(),position.getY(),position.getWidth(),position.getHeight());
         this.launcher_body.setBounds(position.getX(),position.getY(),position.getWidth(),position.getHeight());
-        timer = 0;
+        this.timer = 0;
     }
 
     @Override
@@ -70,6 +73,7 @@ public class Launcher extends Actor {
         missile.rotateToTarget();
         missile.moveForward(this.launcher_head.getHeight());
         timer = 0;
+        audio_manager.playLaserSound();
         return missile;
     }
 

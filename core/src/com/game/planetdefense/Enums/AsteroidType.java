@@ -7,7 +7,7 @@ import com.game.planetdefense.Utils.Managers.AssetsManager;
 import java.util.Random;
 
 public enum AsteroidType {
-    METEORITE, ICE_METEORITE, LAVA_METEORITE, GOLD_METEORITE, CRYSTAL_METEORITE;
+    METEORITE, ICE_METEORITE, METAL_METEORITE, LAVA_METEORITE, GOLD_METEORITE, CRYSTAL_METEORITE, SLIME_METEORITE, PURPLE_METEORITE;
 
     public float getHp(){
         switch(this){
@@ -15,12 +15,18 @@ public enum AsteroidType {
                 return 2f;
             case ICE_METEORITE:
                 return 10f;
+            case METAL_METEORITE:
+                return 10f;
             case LAVA_METEORITE:
                 return 30f;
             case GOLD_METEORITE:
                 return 50f;
             case CRYSTAL_METEORITE:
                 return 100f;
+            case SLIME_METEORITE:
+                return 125f;
+            case PURPLE_METEORITE:
+                return 125f;
             default:
                 return 0f;
         }
@@ -32,11 +38,17 @@ public enum AsteroidType {
                 return 2f;
             case ICE_METEORITE:
                 return 100f;
+            case METAL_METEORITE:
+                return 100f;
             case LAVA_METEORITE:
                 return 150f;
             case GOLD_METEORITE:
                 return 200f;
             case CRYSTAL_METEORITE:
+                return 300f;
+            case SLIME_METEORITE:
+                return 300f;
+            case PURPLE_METEORITE:
                 return 300f;
             default:
                 return 0f;
@@ -49,12 +61,18 @@ public enum AsteroidType {
                 return 5f;
             case ICE_METEORITE:
                 return 10f;
+            case METAL_METEORITE:
+                return 10f;
             case LAVA_METEORITE:
                 return 20f;
             case GOLD_METEORITE:
                 return 50f;
             case CRYSTAL_METEORITE:
                 return 100f;
+            case SLIME_METEORITE:
+                return 125f;
+            case PURPLE_METEORITE:
+                return 125f;
             default:
                 return 0f;
         }
@@ -66,11 +84,17 @@ public enum AsteroidType {
                 return 250f;
             case ICE_METEORITE:
                 return 250f;
+            case METAL_METEORITE:
+                return 250f;
             case LAVA_METEORITE:
                 return 250f;
             case GOLD_METEORITE:
                 return 250f;
             case CRYSTAL_METEORITE:
+                return 250f;
+            case SLIME_METEORITE:
+                return 250f;
+            case PURPLE_METEORITE:
                 return 250f;
             default:
                 return 0f;
@@ -83,12 +107,18 @@ public enum AsteroidType {
                 return assets_manager.getMeteorite();
             case ICE_METEORITE:
                 return assets_manager.getIce_meteorite();
+            case METAL_METEORITE:
+                return assets_manager.getMetal_meteorite();
             case LAVA_METEORITE:
                 return assets_manager.getLava_meteorite();
             case GOLD_METEORITE:
                 return assets_manager.getGold_meteorite();
             case CRYSTAL_METEORITE:
                 return assets_manager.getCrystal_meteorite();
+            case SLIME_METEORITE:
+                return assets_manager.getSlime_meteorite();
+            case PURPLE_METEORITE:
+                return assets_manager.getPurple_meteorite();
             default:
                 return null;
         }
@@ -100,11 +130,17 @@ public enum AsteroidType {
                 return 125f;
             case ICE_METEORITE:
                 return 125f;
+            case METAL_METEORITE:
+                return 125f;
             case LAVA_METEORITE:
                 return 125f;
             case GOLD_METEORITE:
                 return 125f;
             case CRYSTAL_METEORITE:
+                return 125f;
+            case SLIME_METEORITE:
+                return 125f;
+            case PURPLE_METEORITE:
                 return 125f;
             default:
                 return 0f;
@@ -117,11 +153,17 @@ public enum AsteroidType {
                 return 50f;
             case ICE_METEORITE:
                 return 50f;
+            case METAL_METEORITE:
+                return 50f;
             case LAVA_METEORITE:
                 return 50f;
             case GOLD_METEORITE:
                 return 50f;
             case CRYSTAL_METEORITE:
+                return 50f;
+            case SLIME_METEORITE:
+                return 50f;
+            case PURPLE_METEORITE:
                 return 50f;
             default:
                 return 0f;
