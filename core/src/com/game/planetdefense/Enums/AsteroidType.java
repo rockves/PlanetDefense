@@ -7,62 +7,171 @@ import com.game.planetdefense.Utils.Managers.AssetsManager;
 import java.util.Random;
 
 public enum AsteroidType {
-    METEOR, SATELLITE;
+    METEORITE, ICE_METEORITE, METAL_METEORITE, LAVA_METEORITE, GOLD_METEORITE, CRYSTAL_METEORITE, SLIME_METEORITE, PURPLE_METEORITE;
 
     public float getHp(){
         switch(this){
-            /*case ROCK:
-                return 1;*/
-            case SATELLITE:
-                return 6;
-            case METEOR:
-                return 4;
+            case METEORITE:
+                return 2f;
+            case ICE_METEORITE:
+                return 10f;
+            case METAL_METEORITE:
+                return 10f;
+            case LAVA_METEORITE:
+                return 30f;
+            case GOLD_METEORITE:
+                return 50f;
+            case CRYSTAL_METEORITE:
+                return 100f;
+            case SLIME_METEORITE:
+                return 125f;
+            case PURPLE_METEORITE:
+                return 125f;
             default:
-                return 0;
+                return 0f;
+        }
+    }
+
+    public float getDifficultyPoints(){
+        switch(this){
+            case METEORITE:
+                return 2f;
+            case ICE_METEORITE:
+                return 100f;
+            case METAL_METEORITE:
+                return 100f;
+            case LAVA_METEORITE:
+                return 150f;
+            case GOLD_METEORITE:
+                return 200f;
+            case CRYSTAL_METEORITE:
+                return 300f;
+            case SLIME_METEORITE:
+                return 300f;
+            case PURPLE_METEORITE:
+                return 300f;
+            default:
+                return 0f;
         }
     }
 
     public float getMoneyDrop(){
         switch(this){
-            /*case ROCK:
-                return 10;*/
-            case SATELLITE:
-                return 20;
-            case METEOR:
-                return 30;
+            case METEORITE:
+                return 5f;
+            case ICE_METEORITE:
+                return 10f;
+            case METAL_METEORITE:
+                return 10f;
+            case LAVA_METEORITE:
+                return 20f;
+            case GOLD_METEORITE:
+                return 50f;
+            case CRYSTAL_METEORITE:
+                return 100f;
+            case SLIME_METEORITE:
+                return 125f;
+            case PURPLE_METEORITE:
+                return 125f;
             default:
-                return 0;
+                return 0f;
         }
     }
 
     public float getSpeed(){
         switch(this){
-            /*case ROCK:
-                return 150;*/
-            case SATELLITE:
-                return 500;
-            case METEOR:
-                return 500;
+            case METEORITE:
+                return 250f;
+            case ICE_METEORITE:
+                return 250f;
+            case METAL_METEORITE:
+                return 250f;
+            case LAVA_METEORITE:
+                return 250f;
+            case GOLD_METEORITE:
+                return 250f;
+            case CRYSTAL_METEORITE:
+                return 250f;
+            case SLIME_METEORITE:
+                return 250f;
+            case PURPLE_METEORITE:
+                return 250f;
             default:
-                return 0;
+                return 0f;
         }
     }
 
     public Animation<TextureRegion> getAnimation(AssetsManager assets_manager){
         switch(this){
-            /*case ROCK:
-                return 150;*/
-            case SATELLITE:
-                return assets_manager.getSatellite_animation();
-            case METEOR:
-                return assets_manager.getMeteor_animation();
+            case METEORITE:
+                return assets_manager.getMeteorite();
+            case ICE_METEORITE:
+                return assets_manager.getIce_meteorite();
+            case METAL_METEORITE:
+                return assets_manager.getMetal_meteorite();
+            case LAVA_METEORITE:
+                return assets_manager.getLava_meteorite();
+            case GOLD_METEORITE:
+                return assets_manager.getGold_meteorite();
+            case CRYSTAL_METEORITE:
+                return assets_manager.getCrystal_meteorite();
+            case SLIME_METEORITE:
+                return assets_manager.getSlime_meteorite();
+            case PURPLE_METEORITE:
+                return assets_manager.getPurple_meteorite();
             default:
                 return null;
         }
     }
 
-    public static AsteroidType getRandomType(){
+    public float getWidth(){
+        switch(this){
+            case METEORITE:
+                return 125f;
+            case ICE_METEORITE:
+                return 125f;
+            case METAL_METEORITE:
+                return 125f;
+            case LAVA_METEORITE:
+                return 125f;
+            case GOLD_METEORITE:
+                return 125f;
+            case CRYSTAL_METEORITE:
+                return 125f;
+            case SLIME_METEORITE:
+                return 125f;
+            case PURPLE_METEORITE:
+                return 125f;
+            default:
+                return 0f;
+        }
+    }
+
+    public float getHeight(){
+        switch(this){
+            case METEORITE:
+                return 50f;
+            case ICE_METEORITE:
+                return 50f;
+            case METAL_METEORITE:
+                return 50f;
+            case LAVA_METEORITE:
+                return 50f;
+            case GOLD_METEORITE:
+                return 50f;
+            case CRYSTAL_METEORITE:
+                return 50f;
+            case SLIME_METEORITE:
+                return 50f;
+            case PURPLE_METEORITE:
+                return 50f;
+            default:
+                return 0f;
+        }
+    }
+
+    public static AsteroidType getRandomType(int range){
         Random random = new Random();
-        return values()[random.nextInt(values().length)];
+        return values()[random.nextInt(range)];
     }
 }

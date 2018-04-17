@@ -1,83 +1,545 @@
 
 atlas.png
-size: 256,256
+size: 2048,512
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-launcher
+blue_laser
   rotate: false
-  xy: 222, 156
-  size: 32, 32
-  orig: 32, 32
+  xy: 1276, 158
+  size: 5, 64
+  orig: 22, 64
+  offset: 8, 0
+  index: -1
+button_about
+  rotate: false
+  xy: 1878, 458
+  size: 56, 52
+  orig: 64, 64
+  offset: 4, 6
+  index: -1
+button_about_hover
+  rotate: false
+  xy: 1954, 410
+  size: 56, 46
+  orig: 64, 64
+  offset: 4, 6
+  index: -1
+button_continue
+  rotate: false
+  xy: 1780, 333
+  size: 56, 52
+  orig: 64, 64
+  offset: 4, 6
+  index: -1
+button_continue_hover
+  rotate: false
+  xy: 1896, 410
+  size: 56, 46
+  orig: 64, 64
+  offset: 4, 6
+  index: -1
+button_exit
+  rotate: false
+  xy: 1722, 326
+  size: 56, 52
+  orig: 64, 64
+  offset: 4, 6
+  index: -1
+button_exit_hover
+  rotate: false
+  xy: 1006, 10
+  size: 56, 46
+  orig: 64, 64
+  offset: 4, 6
+  index: -1
+button_highscore
+  rotate: false
+  xy: 1936, 458
+  size: 56, 52
+  orig: 64, 64
+  offset: 4, 6
+  index: -1
+button_highscore_hover
+  rotate: false
+  xy: 1218, 44
+  size: 56, 46
+  orig: 64, 64
+  offset: 4, 6
+  index: -1
+button_newgame
+  rotate: false
+  xy: 1838, 399
+  size: 56, 52
+  orig: 64, 64
+  offset: 4, 6
+  index: -1
+button_newgame_hover
+  rotate: false
+  xy: 1954, 362
+  size: 56, 46
+  orig: 64, 64
+  offset: 4, 6
+  index: -1
+button_options
+  rotate: false
+  xy: 1838, 345
+  size: 56, 52
+  orig: 64, 64
+  offset: 4, 6
+  index: -1
+button_options_hover
+  rotate: false
+  xy: 1896, 362
+  size: 56, 46
+  orig: 64, 64
+  offset: 4, 6
+  index: -1
+crystal_meteorite
+  rotate: false
+  xy: 704, 14
+  size: 59, 22
+  orig: 64, 32
+  offset: 1, 4
+  index: 0
+crystal_meteorite
+  rotate: false
+  xy: 765, 14
+  size: 59, 22
+  orig: 64, 32
+  offset: 1, 4
+  index: 3
+crystal_meteorite
+  rotate: false
+  xy: 1838, 298
+  size: 56, 22
+  orig: 64, 32
+  offset: 3, 4
+  index: 1
+crystal_meteorite
+  rotate: false
+  xy: 1336, 273
+  size: 58, 22
+  orig: 64, 32
+  offset: 1, 4
+  index: 2
+earth
+  rotate: false
+  xy: 2, 10
+  size: 520, 500
+  orig: 640, 640
+  offset: 60, 70
+  index: -1
+explosion
+  rotate: false
+  xy: 1994, 466
+  size: 48, 44
+  orig: 64, 64
+  offset: 6, 12
+  index: 2
+explosion
+  rotate: false
+  xy: 1064, 12
+  size: 44, 44
+  orig: 64, 64
+  offset: 10, 12
+  index: 3
+explosion
+  rotate: false
+  xy: 1110, 14
+  size: 42, 42
+  orig: 64, 64
+  offset: 10, 12
+  index: 5
+explosion
+  rotate: false
+  xy: 1154, 14
+  size: 42, 42
+  orig: 64, 64
+  offset: 10, 12
+  index: 4
+explosion
+  rotate: false
+  xy: 1198, 2
+  size: 42, 40
+  orig: 64, 64
+  offset: 10, 12
+  index: 1
+explosion
+  rotate: false
+  xy: 1292, 253
+  size: 42, 42
+  orig: 64, 64
+  offset: 10, 12
+  index: 6
+explosion
+  rotate: false
+  xy: 1691, 267
+  size: 28, 28
+  orig: 64, 64
+  offset: 18, 18
+  index: 0
+game_title
+  rotate: false
+  xy: 524, 310
+  size: 772, 200
+  orig: 1024, 256
+  offset: 140, 28
+  index: -1
+gold_meteorite
+  rotate: false
+  xy: 582, 14
+  size: 59, 22
+  orig: 64, 32
+  offset: 1, 5
+  index: 3
+gold_meteorite
+  rotate: false
+  xy: 643, 14
+  size: 59, 22
+  orig: 64, 32
+  offset: 1, 5
+  index: 0
+gold_meteorite
+  rotate: false
+  xy: 1780, 309
+  size: 56, 22
+  orig: 64, 32
+  offset: 3, 5
+  index: 1
+gold_meteorite
+  rotate: false
+  xy: 1276, 2
+  size: 58, 22
+  orig: 64, 32
+  offset: 1, 5
+  index: 2
+green_laser
+  rotate: false
+  xy: 1283, 158
+  size: 5, 64
+  orig: 22, 64
+  offset: 8, 0
+  index: -1
+ice_meteorite
+  rotate: false
+  xy: 1722, 303
+  size: 56, 21
+  orig: 64, 32
+  offset: 3, 5
+  index: 1
+ice_meteorite
+  rotate: false
+  xy: 1896, 293
+  size: 59, 21
+  orig: 64, 32
+  offset: 1, 5
+  index: 0
+ice_meteorite
+  rotate: false
+  xy: 1957, 293
+  size: 58, 21
+  orig: 64, 32
+  offset: 1, 5
+  index: 2
+ice_meteorite
+  rotate: false
+  xy: 1298, 297
+  size: 59, 21
+  orig: 64, 32
+  offset: 1, 5
+  index: 3
+laserlauncher_body
+  rotate: false
+  xy: 1242, 2
+  size: 32, 40
+  orig: 64, 64
+  offset: 16, 2
+  index: 2
+laserlauncher_body
+  rotate: false
+  xy: 2012, 422
+  size: 32, 42
+  orig: 64, 64
+  offset: 16, 0
+  index: 1
+laserlauncher_body
+  rotate: false
+  xy: 2012, 378
+  size: 32, 42
+  orig: 64, 64
+  offset: 16, 0
+  index: 0
+laserlauncher_head
+  rotate: false
+  xy: 524, 6
+  size: 56, 30
+  orig: 64, 64
+  offset: 4, 16
+  index: -1
+lava_meteorite
+  rotate: false
+  xy: 948, 15
+  size: 56, 21
+  orig: 64, 32
+  offset: 3, 5
+  index: 1
+lava_meteorite
+  rotate: false
+  xy: 1896, 339
+  size: 59, 21
+  orig: 64, 32
+  offset: 1, 5
+  index: 0
+lava_meteorite
+  rotate: false
+  xy: 1957, 316
+  size: 58, 21
+  orig: 64, 32
+  offset: 1, 5
+  index: 2
+lava_meteorite
+  rotate: false
+  xy: 1396, 274
+  size: 59, 21
+  orig: 64, 32
+  offset: 1, 5
+  index: 3
+menu_buttons_background
+  rotate: false
+  xy: 1298, 446
+  size: 480, 64
+  orig: 480, 64
   offset: 0, 0
   index: -1
-meteor
+metal_meteorite
   rotate: false
-  xy: 2, 2
-  size: 64, 27
+  xy: 1359, 297
+  size: 59, 21
   orig: 64, 32
-  offset: 0, 2
+  offset: 1, 5
   index: 0
-meteor
+metal_meteorite
   rotate: false
-  xy: 164, 102
-  size: 64, 27
+  xy: 1420, 297
+  size: 59, 21
   orig: 64, 32
-  offset: 0, 1
-  index: 1
-meteor
-  rotate: false
-  xy: 68, 4
-  size: 64, 27
-  orig: 64, 32
-  offset: 0, 2
-  index: 2
-meteor
-  rotate: false
-  xy: 164, 73
-  size: 64, 27
-  orig: 64, 32
-  offset: 0, 2
+  offset: 1, 5
   index: 3
-missile
+metal_meteorite
   rotate: false
-  xy: 119, 52
-  size: 60, 19
-  orig: 64, 22
-  offset: 1, 2
-  index: -1
-rock
-  rotate: false
-  xy: 2, 93
-  size: 160, 155
-  orig: 160, 160
-  offset: 0, 5
-  index: -1
-satellite
-  rotate: false
-  xy: 2, 31
-  size: 56, 60
-  orig: 64, 64
-  offset: 2, 3
+  xy: 1517, 274
+  size: 57, 21
+  orig: 64, 32
+  offset: 1, 5
   index: 2
-satellite
+metal_meteorite
   rotate: false
-  xy: 164, 190
-  size: 58, 58
-  orig: 64, 64
-  offset: 1, 3
-  index: 3
-satellite
-  rotate: false
-  xy: 60, 33
-  size: 57, 58
-  orig: 64, 64
-  offset: 1, 3
+  xy: 1664, 297
+  size: 55, 21
+  orig: 64, 32
+  offset: 3, 5
   index: 1
-satellite
+meteorite
   rotate: false
-  xy: 164, 131
-  size: 56, 57
-  orig: 64, 64
-  offset: 2, 4
+  xy: 826, 15
+  size: 59, 21
+  orig: 64, 32
+  offset: 1, 5
+  index: 3
+meteorite
+  rotate: false
+  xy: 1838, 322
+  size: 56, 21
+  orig: 64, 32
+  offset: 3, 5
+  index: 1
+meteorite
+  rotate: false
+  xy: 1542, 297
+  size: 59, 21
+  orig: 64, 32
+  offset: 1, 5
   index: 0
+meteorite
+  rotate: false
+  xy: 1457, 274
+  size: 58, 21
+  orig: 64, 32
+  offset: 1, 5
+  index: 2
+money_count
+  rotate: false
+  xy: 1780, 453
+  size: 96, 57
+  orig: 96, 96
+  offset: 0, 15
+  index: -1
+propablysomepurpleflame_meteorite
+  rotate: false
+  xy: 887, 15
+  size: 59, 21
+  orig: 64, 32
+  offset: 1, 5
+  index: 3
+propablysomepurpleflame_meteorite
+  rotate: false
+  xy: 1957, 339
+  size: 58, 21
+  orig: 64, 32
+  offset: 1, 5
+  index: 2
+propablysomepurpleflame_meteorite
+  rotate: false
+  xy: 1780, 286
+  size: 56, 21
+  orig: 64, 32
+  offset: 3, 5
+  index: 1
+propablysomepurpleflame_meteorite
+  rotate: false
+  xy: 1603, 297
+  size: 59, 21
+  orig: 64, 32
+  offset: 1, 5
+  index: 0
+red_laser
+  rotate: false
+  xy: 1276, 92
+  size: 5, 64
+  orig: 22, 64
+  offset: 8, 0
+  index: -1
+shield
+  rotate: false
+  xy: 1218, 224
+  size: 72, 84
+  orig: 128, 128
+  offset: 32, 16
+  index: -1
+shopguy
+  rotate: false
+  xy: 1006, 184
+  size: 210, 124
+  orig: 256, 128
+  offset: 28, 0
+  index: 2
+shopguy
+  rotate: false
+  xy: 1298, 320
+  size: 210, 124
+  orig: 256, 128
+  offset: 28, 0
+  index: 0
+shopguy
+  rotate: false
+  xy: 1006, 58
+  size: 210, 124
+  orig: 256, 128
+  offset: 28, 0
+  index: 1
+shopguy
+  rotate: false
+  xy: 1510, 320
+  size: 210, 124
+  orig: 256, 128
+  offset: 28, 0
+  index: 3
+slime_meteorite
+  rotate: false
+  xy: 1896, 316
+  size: 59, 21
+  orig: 64, 32
+  offset: 1, 5
+  index: 0
+slime_meteorite
+  rotate: false
+  xy: 1481, 297
+  size: 59, 21
+  orig: 64, 32
+  offset: 1, 5
+  index: 3
+slime_meteorite
+  rotate: false
+  xy: 1576, 274
+  size: 57, 21
+  orig: 64, 32
+  offset: 1, 5
+  index: 2
+slime_meteorite
+  rotate: false
+  xy: 1635, 274
+  size: 54, 21
+  orig: 64, 32
+  offset: 3, 5
+  index: 1
+stars_background
+  rotate: false
+  xy: 524, 38
+  size: 480, 270
+  orig: 480, 270
+  offset: 0, 0
+  index: -1
+upgrade_button
+  rotate: false
+  xy: 1722, 380
+  size: 56, 64
+  orig: 64, 64
+  offset: 4, 0
+  index: 3
+upgrade_button
+  rotate: false
+  xy: 1218, 158
+  size: 56, 64
+  orig: 64, 64
+  offset: 4, 0
+  index: 0
+upgrade_button
+  rotate: false
+  xy: 1780, 387
+  size: 56, 64
+  orig: 64, 64
+  offset: 4, 0
+  index: 1
+upgrade_button
+  rotate: false
+  xy: 1218, 92
+  size: 56, 64
+  orig: 64, 64
+  offset: 4, 0
+  index: 2
+upgrade_def_icon
+  rotate: false
+  xy: 1290, 193
+  size: 36, 28
+  orig: 64, 64
+  offset: 14, 18
+  index: -1
+upgrade_dmg_icon
+  rotate: false
+  xy: 1290, 163
+  size: 36, 28
+  orig: 64, 64
+  offset: 14, 18
+  index: -1
+upgrade_laser_icon
+  rotate: false
+  xy: 1336, 249
+  size: 36, 22
+  orig: 64, 64
+  offset: 14, 22
+  index: -1
+upgrade_wave_icon
+  rotate: false
+  xy: 1292, 223
+  size: 36, 28
+  orig: 64, 64
+  offset: 14, 18
+  index: -1
+yellow_laser
+  rotate: false
+  xy: 1276, 26
+  size: 5, 64
+  orig: 22, 64
+  offset: 8, 0
+  index: -1

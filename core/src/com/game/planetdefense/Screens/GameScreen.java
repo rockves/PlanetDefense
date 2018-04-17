@@ -1,12 +1,12 @@
 package com.game.planetdefense.Screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.game.planetdefense.GameStage;
 import com.game.planetdefense.PlanetDefense;
-import com.game.planetdefense.Utils.Singletons.UserData;
 
 public class GameScreen implements Screen {
 
@@ -34,6 +34,8 @@ public class GameScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 60f));
         stage.draw();
+        if(Gdx.input.isKeyPressed(Input.Keys.BACK)) backToMenu();
+        if(stage.makeChangeToUpgradeScreen()) planet_defense.changeScreen(new UpgradeScreen(planet_defense), this);
         //fps.log();
     }
 
@@ -59,7 +61,11 @@ public class GameScreen implements Screen {
 
     @Override
     public void dispose() {
-        UserData.getInstance().updateUserData();
+        planet_defense.assets_manager.getAudio_manager().stopGameMusic();
         stage.dispose();
+    }
+
+    private void backToMenu(){
+        planet_defense.changeScreen(new MenuScreen(planet_defense), this);
     }
 }

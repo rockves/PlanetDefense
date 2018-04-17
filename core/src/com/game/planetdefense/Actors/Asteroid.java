@@ -6,17 +6,18 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Pool;
-import com.game.planetdefense.Utils.StaticUtils;
 
 public class Asteroid extends Actor implements Pool.Poolable{
 //TODO: Zastanowic sie nad zmiana lotu z poruszania w przod na Action aktora
     private Animation<TextureRegion> animation;
     private Sprite sprite;
     private Rectangle position;
+    private Polygon collision;
     private Vector2 target;
     private float state_time;
 
@@ -29,26 +30,24 @@ public class Asteroid extends Actor implements Pool.Poolable{
         this.animation = null;
         this.position = new Rectangle(0,0,0,0);
         this.sprite = new Sprite();
-        //this.sprite = new Sprite(GraphicManager.meteor_animation.getKeyFrame(state_time,true));
         this.sprite.setBounds( position.getX(), position.getY(), position.getWidth(), position.getHeight());
         this.target = new Vector2(0,0);
+        this.collision = new Polygon();
     }
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
-        super.draw(batch, parentAlpha);
         this.sprite.draw(batch, parentAlpha);
-
+        super.draw(batch, parentAlpha);
     }
 
     @Override
     public void act(float delta) {
-        super.act(delta);
         state_time += delta;
         sprite.setRegion(animation.getKeyFrame(state_time, true));
         this.moveToTarget(delta);
         this.sprite.setPosition(getX(), getY());
-
+        super.act(delta);
     }
 
     @Override
@@ -73,6 +72,7 @@ public class Asteroid extends Actor implements Pool.Poolable{
         Vector2 temp = new Vector2(0,0);
         float angle = temp.set(target.x,target.y).sub(position.getX() + sprite.getOriginX(), position.getY() + sprite.getOriginY()).angle();
         this.sprite.setRotation(angle);
+        this.collision.setRotation(angle);
     }
 
     private void moveToTarget(float delta){
@@ -82,12 +82,17 @@ public class Asteroid extends Actor implements Pool.Poolable{
         position.setPosition(help);*/
         this.position.x += speed * delta * MathUtils.cos((float)((Math.PI / 180) * ( sprite.getRotation())));
         this.position.y += speed * delta * MathUtils.sin((float)((Math.PI / 180) * ( sprite.getRotation())));
+        this.collision.setPosition(this.position.getX(), this.position.getY());
     }
 
-    public void setAsteroid(float x, float y){
-        this.position.set(x - StaticUtils.ASTEROID_WIDTH/2, y - StaticUtils.ASTEROID_HEIGHT/2, StaticUtils.ASTEROID_WIDTH, StaticUtils.ASTEROID_HEIGHT);
+    public void setAsteroid(float x, float y, float width, float height){
+        this.position.set(x /*- width/2*/, y /*- height/2*/, width, height);
         this.sprite.setBounds(this.position.getX(), this.position.getY(), this.position.getWidth(), this.position.getHeight());
         this.sprite.setOriginCenter();
+        //this.position.setSize(this.position.getWidth() - (this.position.getWidth() * 0.2f), this.position.getHeight() - (this.position.getHeight() * 0.2f));
+        this.collision.setVertices(new float[]{0,0,position.width * 0.99f,0,position.width * 0.99f,position.height * 0.99f,0,position.height * 0.99f});
+        this.collision.setPosition(this.position.getX(), this.position.getY());
+        this.collision.setOrigin(this.position.getWidth()/2, this.position.getHeight()/2);
         Gdx.app.log("Asteroid position", " " + sprite.getX() + " " + sprite.getY());
     }
 
@@ -133,6 +138,14 @@ public class Asteroid extends Actor implements Pool.Poolable{
         return position.getY();
     }
     @Override
+    public float getWidth() {
+        return position.getWidth();
+    }
+    @Override
+    public float getHeight() {
+        return position.getHeight();
+    }
+    @Override
     public float getOriginX() {
         return sprite.getOriginX();
     }
@@ -143,5 +156,6 @@ public class Asteroid extends Actor implements Pool.Poolable{
     public Rectangle getRectangle(){
         return position;
     }
+    public Polygon getPolygon(){return collision;}
 
 }

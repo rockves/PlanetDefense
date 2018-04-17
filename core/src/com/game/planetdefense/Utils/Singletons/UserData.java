@@ -2,6 +2,7 @@ package com.game.planetdefense.Utils.Singletons;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
+import com.game.planetdefense.Enums.UpgradeType;
 
 public class UserData {
     private static final UserData ourInstance = new UserData();
@@ -35,6 +36,7 @@ public class UserData {
 
     public void resetUserData(){
         prefs.clear();
+        prefs.flush();
         getUserData();
         prefs.flush();
     }
@@ -65,5 +67,14 @@ public class UserData {
 
     public void setHasPlaying(boolean hasPlaying) {
         this.hasPlaying = hasPlaying;
+    }
+
+    public void addUpgradeLvl(UpgradeType upgradeType){
+        prefs.putInteger(upgradeType.name(), prefs.getInteger(upgradeType.name(), 0) + 1);
+        prefs.flush();
+    }
+
+    public int getUpgradeLvl(UpgradeType upgradeType){
+        return prefs.getInteger(upgradeType.name(), 0);
     }
 }

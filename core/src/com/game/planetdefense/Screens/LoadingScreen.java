@@ -2,7 +2,6 @@ package com.game.planetdefense.Screens;
 
 import com.badlogic.gdx.Screen;
 import com.game.planetdefense.PlanetDefense;
-import com.game.planetdefense.Utils.StaticUtils;
 
 public class LoadingScreen implements Screen {
 

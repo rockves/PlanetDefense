@@ -3,48 +3,57 @@ package com.game.planetdefense.Actors;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Pool;
+import com.game.planetdefense.Enums.LaserType;
+import com.game.planetdefense.Enums.UpgradeType;
 import com.game.planetdefense.Utils.Managers.AssetsManager;
 import com.game.planetdefense.Utils.StaticUtils;
 
 public class Missile extends Actor implements Pool.Poolable {
 
+    private LaserType laserType;
     private Sprite sprite;
     private Rectangle position;
+    private Polygon collision;
     private Vector2 target;
     private float damage;
     public float flight_time;
 
 
     public Missile(AssetsManager assets_manager) {
-        this.damage = 5f;
+        this.laserType = null;
+        this.damage = 0f;
         this.position = new Rectangle(0,0,0,0);
-        this.sprite = new Sprite(assets_manager.getMissile_texture());
+        this.sprite = new Sprite();
         this.sprite.setBounds( position.getX(), position.getY(), position.getWidth(), position.getHeight());
         this.target = new Vector2(0,0);
         flight_time = 0;
+        collision = new Polygon();
     }
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
-        super.draw(batch, parentAlpha);
         sprite.draw(batch,parentAlpha);
+        super.draw(batch, parentAlpha);
     }
 
     @Override
     public void act(float delta) {
-        super.act(delta);
         moveToTarget(delta);
         this.sprite.setPosition(position.x,position.y);
         flight_time += delta;
+        super.act(delta);
     }
 
     @Override
     public void reset() {
+        this.laserType = null;
         this.position.set(0,0,0,0);
         this.sprite.setBounds( position.getX(), position.getY(), position.getWidth(), position.getHeight());
         this.setRotation(0);
@@ -66,7 +75,8 @@ public class Missile extends Actor implements Pool.Poolable {
     public void rotateToTarget(){
         Vector2 temp = new Vector2(0,0);
         float angle = temp.set(target.x,target.y).sub(position.getX() + sprite.getOriginX(), position.getY() + sprite.getOriginY()).angle();
-        this.sprite.setRotation(angle);
+        this.sprite.setRotation(angle - 90f);
+        this.collision.setRotation(angle - 90f);
     }
 
     private void moveToTarget(float delta){
@@ -74,14 +84,28 @@ public class Missile extends Actor implements Pool.Poolable {
         /*Vector2 help = new Vector2(position.getX(), position.getY());
         help.add(new Vector2(StaticUtils.MISSILE_SPEED * Gdx.graphics.getDeltaTime(), 0).rotate(sprite.getRotation()));
         position.setPosition(help);*/
-        this.position.x += StaticUtils.MISSILE_SPEED * delta * MathUtils.cos((float)((Math.PI / 180) * ( sprite.getRotation())));
-        this.position.y += StaticUtils.MISSILE_SPEED * delta * MathUtils.sin((float)((Math.PI / 180) * ( sprite.getRotation())));
+        this.position.x += laserType.getSpeed() * delta * MathUtils.cos((float)((Math.PI / 180) * ( sprite.getRotation() + 90)));
+        this.position.y += laserType.getSpeed() * delta * MathUtils.sin((float)((Math.PI / 180) * ( sprite.getRotation() + 90)));
+        this.collision.setPosition(this.position.getX(), this.position.getY());
     }
 
-    public void setMissile(Launcher launcher){
-        this.position.set(launcher.getX() + launcher.getOriginX() - StaticUtils.MISSILE_WIDTH/2, launcher.getY() + launcher.getOriginY() - StaticUtils.MISSILE_HEIGHT/2, StaticUtils.MISSILE_WIDTH, StaticUtils.MISSILE_HEIGHT);
+    public void moveForward(float distance){
+        this.position.x += distance * MathUtils.cos((float)((Math.PI / 180) * ( sprite.getRotation() + 90)));
+        this.position.y += distance * MathUtils.sin((float)((Math.PI / 180) * ( sprite.getRotation() + 90)));
+    }
+
+    public void setMissile(float x, float y, LaserType laser_type, TextureRegion laser_texture){
+        this.laserType = laser_type;
+        this.sprite.setRegion(laser_texture);
+        this.position.set(x, y, laserType.getWidth(), laserType.getHeight());
         this.sprite.setBounds(this.position.getX(), this.position.getY(), this.position.getWidth(), this.position.getHeight());
-        this.sprite.setOriginCenter();
+        this.sprite.setOrigin(this.sprite.getWidth()/2, 0);
+        this.collision.setVertices(new float[]{0,0,position.width,0,position.width,position.height,0,position.height});
+        this.collision.setPosition(this.position.getX(), this.position.getY());
+        this.collision.setOrigin(this.position.getWidth()/2, 0);
+        rotateToTarget();
+        this.damage = ((UpgradeType.DmgBonus.getUpgradeLvl() * UpgradeType.DmgBonus.getUpgradeValue()) + StaticUtils.MISSILE_BASE_DAMAGE) * laser_type.getDamageMultiplier();
+        Gdx.app.log("DMG", ""+damage);
         Gdx.app.log("Missile position", " " + sprite.getX() + " " + sprite.getY());
     }
 
@@ -110,4 +134,5 @@ public class Missile extends Actor implements Pool.Poolable {
     public Rectangle getRectangle(){
         return position;
     }
+    public Polygon getPolygon(){return collision;}
 }
