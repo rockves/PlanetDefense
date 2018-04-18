@@ -154,14 +154,6 @@ public class AssetsManager extends AssetManager {
         return atlas.findRegion("button_continue_hover");
     }
 
-    public TextureRegion getButton_newGame(){
-        return atlas.findRegion("button_newgame");
-    }
-
-    public TextureRegion getButton_newGame_hover(){
-        return atlas.findRegion("button_newgame_hover");
-    }
-
     public TextureRegion getButton_options(){
         return atlas.findRegion("button_options");
     }
