@@ -2,6 +2,7 @@ package com.game.planetdefense.Utils.Managers;
 
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
+import com.game.planetdefense.Utils.Singletons.UserData;
 import com.game.planetdefense.Utils.StaticUtils;
 
 public class AudioManager {
@@ -28,6 +29,9 @@ public class AudioManager {
     }
 
     public void playBuySound(){
+        if(!UserData.getInstance().getIsSoundOn()){
+            return;
+        }
         if(buy_sound_id != 0){
             buy_sound.stop(buy_sound_id);
         }
@@ -35,6 +39,9 @@ public class AudioManager {
     }
 
     public void playExplosionSound(){
+        if(!UserData.getInstance().getIsSoundOn()){
+            return;
+        }
         if(explosion_sound_id != 0){
             explosion_sound.stop(explosion_sound_id);
         }
@@ -42,6 +49,9 @@ public class AudioManager {
     }
 
     public void playLaserSound(){
+        if(!UserData.getInstance().getIsSoundOn()){
+            return;
+        }
         if(laser_sound_id != 0){
             laser_sound.stop(laser_sound_id);
         }
@@ -49,6 +59,9 @@ public class AudioManager {
     }
 
     public void playGameMusic(){
+        if(!UserData.getInstance().getIsMusicOn()){
+            return;
+        }
         game_music.setLooping(true);
         game_music.setVolume(StaticUtils.GAME_MUSIC_VOLUME);
         game_music.play();
@@ -58,6 +71,9 @@ public class AudioManager {
     }
 
     public void playMenuMusic(){
+        if(!UserData.getInstance().getIsMusicOn()){
+            return;
+        }
         menu_music.setLooping(true);
         menu_music.setVolume(StaticUtils.MENU_MUSIC_VOLUME);
         menu_music.play();
@@ -67,6 +83,9 @@ public class AudioManager {
     }
 
     public void playUpgradeMenuMusic(){
+        if(!UserData.getInstance().getIsMusicOn()){
+            return;
+        }
         upgrade_menu_music.setLooping(true);
         upgrade_menu_music.setVolume(StaticUtils.UPGRADE_MENU_MUSIC_VOLUME);
         upgrade_menu_music.play();

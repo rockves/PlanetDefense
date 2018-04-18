@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -65,6 +66,9 @@ public class UpgradeScreen implements Screen {
         shop_guy_image = new Image(planetDefense.assets_manager.getShopGuyAnimation().getKeyFrame(state_time, true));
         shop_guy_image.setSize(stage.getWidth() * 0.25f * 1.4f, stage.getHeight() * 0.25f * 1.4f);
         shop_guy_image.setPosition(stage.getWidth()/2 - shop_guy_image.getWidth()/2, stage.getHeight() * 0.95f - shop_guy_image.getHeight());
+        float move_height = stage.getHeight() * 0.03f;
+        float move_time = 1f;
+        shop_guy_image.addAction(Actions.forever(Actions.sequence(Actions.moveBy(0,move_height, move_time), Actions.moveBy(0, -(move_height), move_time))));
         stage.addActor(shop_guy_image);
 
         //set exit button
@@ -123,7 +127,6 @@ public class UpgradeScreen implements Screen {
             //dmgUpgrade.debugAll();
             stage.addActor(shieldUpgrade);
         }
-
     }
 
     @Override

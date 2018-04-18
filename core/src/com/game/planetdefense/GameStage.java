@@ -142,11 +142,11 @@ public class GameStage extends Stage {
         loadUi();
     }
 
-    private void loadUi(){
+    private void loadUi() {
         stage_screen = new Container<Label>(new Label("", new Label.LabelStyle(planetDefense.assets_manager.getGame_font(), Color.WHITE)));
         stage_screen.setBackground(new TextureRegionDrawable(planetDefense.assets_manager.getButtonsBackground()));
         stage_screen.setSize(this.getWidth(), this.getWidth() * 0.10f);
-        stage_screen.setPosition(0 - stage_screen.getWidth(), this.getHeight()/2 - stage_screen.getHeight()/2);
+        stage_screen.setPosition(0 - stage_screen.getWidth(), this.getHeight() / 2 - stage_screen.getHeight() / 2);
         //stage_screen.debugAll();
         stage_screen.setVisible(true);
         this.addActor(stage_screen);
@@ -160,21 +160,23 @@ public class GameStage extends Stage {
         fail_screen.align(Align.center);
         this.addActor(fail_screen);
         ///////////////////////////////
-        Image shield_counter_image = new Image(planetDefense.assets_manager.getEarthTexture());
-        shield_counter_image.setSize(StaticUtils.SHIELD_COUNTER_SIZE, StaticUtils.SHIELD_COUNTER_SIZE);
-        shield_counter_image.setPosition(this.getWidth() * 0.02f, this.getHeight() - shield_counter_image.getHeight() - (this.getWidth() * 0.02f));
-        this.addActor(shield_counter_image);
+        if(UpgradeType.ShieldBonus.getUpgradeLvl() != 0){
+            Image shield_counter_image = new Image(planetDefense.assets_manager.getEarthTexture());
+            shield_counter_image.setSize(StaticUtils.SHIELD_COUNTER_SIZE, StaticUtils.SHIELD_COUNTER_SIZE);
+            shield_counter_image.setPosition(this.getWidth() * 0.02f, this.getHeight() - shield_counter_image.getHeight() - (this.getWidth() * 0.02f));
+            this.addActor(shield_counter_image);
 
-        Image shield_image = new Image(planetDefense.assets_manager.getShieldTexture());
-        shield_image.setSize(shield_counter_image.getWidth() * 0.5f, shield_counter_image.getHeight()  * 0.5f);
-        shield_image.setPosition(shield_counter_image.getX() + shield_counter_image.getWidth()/2 - shield_image.getWidth()/2, shield_counter_image.getY() + shield_counter_image.getHeight()/2 - shield_image.getHeight()/2);
-        this.addActor(shield_image);
+            Image shield_image = new Image(planetDefense.assets_manager.getShieldTexture());
+            shield_image.setSize(shield_counter_image.getWidth() * 0.5f, shield_counter_image.getHeight() * 0.5f);
+            shield_image.setPosition(shield_counter_image.getX() + shield_counter_image.getWidth() / 2 - shield_image.getWidth() / 2, shield_counter_image.getY() + shield_counter_image.getHeight() / 2 - shield_image.getHeight() / 2);
+            this.addActor(shield_image);
 
-        shield_points = (UpgradeType.ShieldBonus.getUpgradeLvl() * UpgradeType.ShieldBonus.getUpgradeValue());
-        shield_counter = new Label("" + (int)shield_points, new Label.LabelStyle(planetDefense.assets_manager.getGame_font(), Color.WHITE));
-        shield_counter.setPosition(shield_counter_image.getX() + shield_counter_image.getWidth() + 10, shield_counter_image.getY() + shield_counter_image.getHeight()/2 - shield_counter.getHeight()/2);
-        shield_counter.setAlignment(Align.center);
-        this.addActor(shield_counter);
+            shield_points = (UpgradeType.ShieldBonus.getUpgradeLvl() * UpgradeType.ShieldBonus.getUpgradeValue());
+            shield_counter = new Label("" + (int) shield_points, new Label.LabelStyle(planetDefense.assets_manager.getGame_font(), Color.WHITE));
+            shield_counter.setPosition(shield_counter_image.getX() + shield_counter_image.getWidth() + 10, shield_counter_image.getY() + shield_counter_image.getHeight() / 2 - shield_counter.getHeight() / 2);
+            shield_counter.setAlignment(Align.center);
+            this.addActor(shield_counter);
+        }
     }
 
     private void createBackground(){
@@ -285,12 +287,12 @@ public class GameStage extends Stage {
             //set move
             stage_screen.setPosition(0 - stage_screen.getWidth(),stage_screen.getY());
             move_action.reset();
-            move_action.setDuration(0.5f);
+            move_action.setDuration(0.7f);
             move_action.setPosition(0,stage_screen.getY());
             stage_screen.addAction(move_action);
         }else {
             move_action.reset();
-            move_action.setDuration(0.5f);
+            move_action.setDuration(0.7f);
             move_action.setPosition(this.getWidth(), stage_screen.getY());
             stage_screen.addAction(move_action);
         }

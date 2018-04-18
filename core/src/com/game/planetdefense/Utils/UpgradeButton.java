@@ -97,6 +97,7 @@ public class UpgradeButton extends Button {
     private void buy(){
         UserData.getInstance().setMoney(UserData.getInstance().getMoney() - upgrade_type.getPrice());
         upgrade_type.addUpgradeLvl();
+        UserData.getInstance().addUpgradeNumber();
         if(upgrade_type.getUpgradeLvl() == upgrade_type.getUpgradeMaxLvl()){
             price_label.setText("MAX");
         }

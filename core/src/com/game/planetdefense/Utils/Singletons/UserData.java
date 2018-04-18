@@ -77,4 +77,31 @@ public class UserData {
     public int getUpgradeLvl(UpgradeType upgradeType){
         return prefs.getInteger(upgradeType.name(), 0);
     }
+
+    public void addUpgradeNumber(){
+        prefs.putInteger("UpgradeNumber", prefs.getInteger("UpgradeNumber", 0) + 1);
+        prefs.flush();
+    }
+
+    public int getUpgradeNumber(){
+        return prefs.getInteger("UpgradeNumber", 0);
+    }
+
+    public void setMusicOn(boolean on){
+        prefs.putBoolean("MusicOn", on);
+        prefs.flush();
+    }
+
+    public boolean getIsMusicOn(){
+        return prefs.getBoolean("MusicOn", true);
+    }
+
+    public void setSoundOn(boolean on){
+        prefs.putBoolean("SoundOn", on);
+        prefs.flush();
+    }
+
+    public boolean getIsSoundOn(){
+        return prefs.getBoolean("SoundOn", true);
+    }
 }

@@ -68,7 +68,7 @@ public class WaveManager {
         Random rand = new Random();
         float start_y = stage.getHeight() + (asteroid_type.getHeight());
         float start_x = rand.nextFloat() * (stage.getWidth());
-        float target_x = rand.nextFloat() * (stage.getWidth());
+        float target_x = (rand.nextFloat() * ((stage.getWidth()/6) * 4)) + stage.getWidth()/6;
         asteroid.setAsteroid(start_x, start_y, asteroid_type.getWidth(), asteroid_type.getHeight());
         asteroid.setTarget(target_x, 0);
         asteroid.rotateToTarget();

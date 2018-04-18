@@ -45,9 +45,9 @@ public class AssetsManager extends AssetManager {
     }
 
     public void setAssetsQueue(){
+        loadTextureAtlas();
         soundLoad();
         fontLoad();
-        loadTextureAtlas();
     }
 
     private void fontLoad(){
