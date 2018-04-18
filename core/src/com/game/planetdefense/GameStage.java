@@ -322,6 +322,9 @@ public class GameStage extends Stage {
     }
 
     private void endWave(){
+        if(fail){
+            return;
+        }
         toggleWaveScreen();
         Iterator<Missile> missile_iterator = active_missiles.iterator();
         while (missile_iterator.hasNext()){

@@ -17,9 +17,9 @@ public class StaticUtils {
 
 
     //WAVE UTILS
-    public static final float DIFFICULTY_POINTS_MULTIPLIER = 1.2f;
+    public static final float DIFFICULTY_POINTS_MULTIPLIER = 1.15f;
     public static final int DIFFICULTY_POINTS = 25;
-    public static final float DIFFICULTY_STATS_MULTIPLIER = 0.001f;
+    public static final float DIFFICULTY_STATS_MULTIPLIER = 0.01f;
     ////////////////
 
 

@@ -87,7 +87,7 @@ public class UpgradeScreen implements Screen {
         stage.addActor(exit_game_button);
 
         //set start button
-        ImageButton start_game_button = new ImageButton(new TextureRegionDrawable(planetDefense.assets_manager.getButton_continue()), new TextureRegionDrawable(planetDefense.assets_manager.getButton_continue_hover()));
+        ImageButton start_game_button = new ImageButton(new TextureRegionDrawable(planetDefense.assets_manager.getButton_restart()), new TextureRegionDrawable(planetDefense.assets_manager.getButton_restart_hover()));
         start_game_button.setSize(stage.getWidth() * 0.1f, stage.getWidth() * 0.1f);
         start_game_button.setPosition(stage.getWidth() - start_game_button.getWidth() - (stage.getWidth() * 0.02f), stage.getWidth() * 0.02f);
         start_game_button.getImageCell().size(start_game_button.getWidth(), start_game_button.getHeight());

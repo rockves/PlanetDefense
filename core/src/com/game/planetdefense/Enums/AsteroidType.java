@@ -14,19 +14,19 @@ public enum AsteroidType {
             case METEORITE:
                 return 2f;
             case ICE_METEORITE:
-                return 10f;
+                return 2f;
             case METAL_METEORITE:
-                return 10f;
+                return 5f;
             case LAVA_METEORITE:
-                return 30f;
+                return 8f;
             case GOLD_METEORITE:
-                return 50f;
+                return 12f;
             case CRYSTAL_METEORITE:
-                return 100f;
+                return 18f;
             case SLIME_METEORITE:
-                return 125f;
+                return 25f;
             case PURPLE_METEORITE:
-                return 125f;
+                return 30f;
             default:
                 return 0f;
         }
@@ -35,21 +35,21 @@ public enum AsteroidType {
     public float getDifficultyPoints(){
         switch(this){
             case METEORITE:
-                return 2f;
+                return 5f;
             case ICE_METEORITE:
-                return 100f;
+                return 10f;
             case METAL_METEORITE:
-                return 100f;
+                return 20f;
             case LAVA_METEORITE:
-                return 150f;
+                return 30f;
             case GOLD_METEORITE:
-                return 200f;
+                return 40f;
             case CRYSTAL_METEORITE:
-                return 300f;
+                return 50f;
             case SLIME_METEORITE:
-                return 300f;
+                return 60f;
             case PURPLE_METEORITE:
-                return 300f;
+                return 70f;
             default:
                 return 0f;
         }
@@ -66,13 +66,13 @@ public enum AsteroidType {
             case LAVA_METEORITE:
                 return 20f;
             case GOLD_METEORITE:
-                return 50f;
+                return 30f;
             case CRYSTAL_METEORITE:
-                return 100f;
+                return 40f;
             case SLIME_METEORITE:
-                return 125f;
+                return 50f;
             case PURPLE_METEORITE:
-                return 125f;
+                return 60f;
             default:
                 return 0f;
         }
@@ -95,7 +95,7 @@ public enum AsteroidType {
             case SLIME_METEORITE:
                 return 250f;
             case PURPLE_METEORITE:
-                return 250f;
+                return 350f;
             default:
                 return 0f;
         }
