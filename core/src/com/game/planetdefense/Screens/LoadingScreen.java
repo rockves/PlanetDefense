@@ -21,7 +21,7 @@ public class LoadingScreen implements Screen {
     public void render(float delta) {
         if(planetDefense.assets_manager.update()){
             planetDefense.assets_manager.getAssets();
-            planetDefense.changeScreen(new MenuScreen(planetDefense), this);
+            planetDefense.changeScreen(new SplashScreen(planetDefense), this);
         }
     }
 
