@@ -58,9 +58,10 @@ public class Launcher extends Actor {
     public void setLauncher(float x, float y, float width, float height){
         this.position.set(x,y,width,height);
         this.launcher_body.setBounds(x,y,width,height * 0.7f);
-        this.launcher_head.setBounds(x - ((width * 0.3f)/2),y + (height * 0.55f),width + (width * 0.3f),height  * 0.3f);
+        this.launcher_head.setSize(StaticUtils.LAUNCHER_HEAD_WIDTH, StaticUtils.LAUNCHER_HEAD_HEIGHT);
+        this.launcher_head.setPosition(launcher_body.getX() + launcher_body.getWidth()/2 - launcher_head.getWidth()/2, launcher_body.getY() + launcher_body.getHeight() -  launcher_head.getHeight() + StaticUtils.LAUNCHER_HEAD_MODIFIER);
         this.launcher_body.setOrigin(this.launcher_body.getWidth()/2, this.launcher_body.getHeight()/2);
-        this.launcher_head.setOrigin(this.launcher_head.getWidth()/2, 0);
+        this.launcher_head.setOrigin(this.launcher_head.getWidth()/2, 15);
     }
 
     public Missile launchMissile(Missile missile, float target_x, float target_y){

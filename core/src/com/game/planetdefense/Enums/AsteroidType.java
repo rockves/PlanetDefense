@@ -12,21 +12,21 @@ public enum AsteroidType {
     public float getHp(){
         switch(this){
             case METEORITE:
-                return 2f;
+                return 3f;
             case ICE_METEORITE:
-                return 2f;
-            case METAL_METEORITE:
                 return 5f;
+            case METAL_METEORITE:
+                return 9f;
             case LAVA_METEORITE:
-                return 8f;
+                return 13f;
             case GOLD_METEORITE:
-                return 12f;
+                return 29f;
             case CRYSTAL_METEORITE:
-                return 18f;
+                return 35f;
             case SLIME_METEORITE:
-                return 25f;
+                return 40f;
             case PURPLE_METEORITE:
-                return 30f;
+                return 50f;
             default:
                 return 0f;
         }

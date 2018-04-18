@@ -24,8 +24,11 @@ public class StaticUtils {
 
 
     //LAUNCHER UTILS
-    public static final int LAUNCHER_WIDTH = 100;
-    public static final int LAUNCHER_HEIGHT = 200;
+    public static final int LAUNCHER_WIDTH = 200;
+    public static final int LAUNCHER_HEIGHT = 230;
+    public static final int LAUNCHER_HEAD_WIDTH = 30;
+    public static final int LAUNCHER_HEAD_HEIGHT = 90;
+    public static final int LAUNCHER_HEAD_MODIFIER = 50;
     public static final float LAUNCHER_DELAY_TIME = 0;
     ////////////////
 
