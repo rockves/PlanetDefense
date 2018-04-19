@@ -5,7 +5,7 @@
 * Upgrade your equipment
 * Save earth from destruction!
 
-### UPGRADE TYPES
+### UPGRADE TYPES:
 * Damage upgrade -> Improves your damage by 1 for each level
 * Laser upgrade -> Improves your laser to be faster and incrase damage multiplier
 * Defense upgrade -> Improves terrestrial defense to stop asteroids from falling to earth
