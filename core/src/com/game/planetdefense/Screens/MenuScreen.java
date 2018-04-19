@@ -31,8 +31,8 @@ public class MenuScreen implements Screen {
     private Table table;
     private Table buttons_table;
     private Table options_table;
-    private CheckBox isSoundOn;
-    private CheckBox isMusicOn;
+    private ImageButton isSoundOn;
+    private ImageButton isMusicOn;
     private Table high_score;
     private Table credits_table;
     private ImageButton back_button;
@@ -141,9 +141,6 @@ public class MenuScreen implements Screen {
                     back_button.setVisible(true);
                 }
             });
-
-
-            if (UserData.getInstance().isHasPlaying()) {
                 ImageButton continue_button = new ImageButton(new TextureRegionDrawable(planetDefense.assets_manager.getButton_continue()), new TextureRegionDrawable(planetDefense.assets_manager.getButton_continue_hover()));
                 continue_button.setSize(size_width, size_height);
                 continue_button.getImageCell().width(size_width).height(size_height);
@@ -155,7 +152,6 @@ public class MenuScreen implements Screen {
                     }
                 });
                 buttons_table.add(continue_button).height(size_height).width(size_width).padRight(size_height * 0.2f);
-            }
 
             buttons_table.add(options_button).height(size_height).width(size_width).padRight(size_height * 0.2f);
             buttons_table.add(high_score_button).height(size_height).width(size_width).padRight(size_height * 0.2f);
@@ -164,32 +160,23 @@ public class MenuScreen implements Screen {
 
         //setting option table
         {
-            CheckBox.CheckBoxStyle style = new CheckBox.CheckBoxStyle();
-            style.font = planetDefense.assets_manager.getGame_font();
-            style.fontColor = Color.WHITE;
-            isSoundOn = new CheckBox("Sound on", style);
-            isSoundOn.setChecked(UserData.getInstance().getIsSoundOn());
-            isSoundOn.addListener(new ChangeListener() {
-                @Override
-                public void changed(ChangeEvent event, Actor actor) {
-                    UserData.getInstance().setSoundOn(isSoundOn.isChecked());
-                }
-            });
-
-            isMusicOn = new CheckBox("Music on", style);
-            isMusicOn.setChecked(UserData.getInstance().getIsMusicOn());
+            ImageButton.ImageButtonStyle style_settings = new ImageButton.ImageButtonStyle();
+            style_settings.imageChecked = new TextureRegionDrawable(planetDefense.assets_manager.getButton_checked());
+            style_settings.up = new TextureRegionDrawable(planetDefense.assets_manager.getButon_unchecked());
+            if(UserData.getInstance().getIsMusicOn()){
+                isMusicOn = new ImageButton(style_settings);
+                isMusicOn.setChecked(true);
+            }else{
+                isMusicOn = new ImageButton(style_settings);
+            }
             isMusicOn.addListener(new ChangeListener() {
                 @Override
                 public void changed(ChangeEvent event, Actor actor) {
-                    UserData.getInstance().setMusicOn(isMusicOn.isChecked());
-                    isMusicOn.setChecked(false);
-                    Gdx.app.log("music", "" + UserData.getInstance().getIsMusicOn());
+                    UserData.getInstance().setMusicOn(!UserData.getInstance().getIsMusicOn());
                 }
             });
-            options_table.add(isMusicOn);
-            options_table.row();
-            options_table.add(isSoundOn);
-            options_table.row();
+
+
 
             TextButton.TextButtonStyle text_style = new TextButton.TextButtonStyle();
             text_style.fontColor = Color.WHITE;
