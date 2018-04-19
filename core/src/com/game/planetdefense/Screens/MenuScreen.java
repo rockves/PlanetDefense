@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Container;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
@@ -31,8 +30,9 @@ public class MenuScreen implements Screen {
     private Table table;
     private Table buttons_table;
     private Table options_table;
-    private CheckBox isSoundOn;
-    private CheckBox isMusicOn;
+    private ImageButton isSoundOn;
+    private ImageButton isMusicOn;
+    private ImageButton splashOn;
     private Table high_score;
     private Table credits_table;
     private ImageButton back_button;
@@ -72,7 +72,7 @@ public class MenuScreen implements Screen {
 
         options_table.setFillParent(true);
         options_table.setVisible(false);
-        options_table.debugAll();
+        //options_table.debugAll();
         stage.addActor(options_table);
 
         high_score.setFillParent(true);
@@ -141,9 +141,6 @@ public class MenuScreen implements Screen {
                     back_button.setVisible(true);
                 }
             });
-
-
-            if (UserData.getInstance().isHasPlaying()) {
                 ImageButton continue_button = new ImageButton(new TextureRegionDrawable(planetDefense.assets_manager.getButton_continue()), new TextureRegionDrawable(planetDefense.assets_manager.getButton_continue_hover()));
                 continue_button.setSize(size_width, size_height);
                 continue_button.getImageCell().width(size_width).height(size_height);
@@ -155,7 +152,6 @@ public class MenuScreen implements Screen {
                     }
                 });
                 buttons_table.add(continue_button).height(size_height).width(size_width).padRight(size_height * 0.2f);
-            }
 
             buttons_table.add(options_button).height(size_height).width(size_width).padRight(size_height * 0.2f);
             buttons_table.add(high_score_button).height(size_height).width(size_width).padRight(size_height * 0.2f);
@@ -164,55 +160,108 @@ public class MenuScreen implements Screen {
 
         //setting option table
         {
-            CheckBox.CheckBoxStyle style = new CheckBox.CheckBoxStyle();
-            style.font = planetDefense.assets_manager.getGame_font();
-            style.fontColor = Color.WHITE;
-            isSoundOn = new CheckBox("Sound on", style);
-            isSoundOn.setChecked(UserData.getInstance().getIsSoundOn());
-            isSoundOn.addListener(new ChangeListener() {
-                @Override
-                public void changed(ChangeEvent event, Actor actor) {
-                    UserData.getInstance().setSoundOn(isSoundOn.isChecked());
-                }
-            });
+            Label.LabelStyle label_style = new Label.LabelStyle(planetDefense.assets_manager.getGame_font(), Color.WHITE);
+            Label musicOn_label = new Label("Music: ", label_style);
+            ImageButton.ImageButtonStyle style_settings = new ImageButton.ImageButtonStyle();
+            style_settings.imageChecked = new TextureRegionDrawable(planetDefense.assets_manager.getButton_checked());
+            style_settings.up = new TextureRegionDrawable(planetDefense.assets_manager.getButton_unchecked());
 
-            isMusicOn = new CheckBox("Music on", style);
-            isMusicOn.setChecked(UserData.getInstance().getIsMusicOn());
+            if(!UserData.getInstance().getIsMusicOn()){
+                isMusicOn = new ImageButton(style_settings);
+                isMusicOn.setChecked(true);
+            }else{
+                isMusicOn = new ImageButton(style_settings);
+                isMusicOn.setChecked(false);
+            }
             isMusicOn.addListener(new ChangeListener() {
                 @Override
                 public void changed(ChangeEvent event, Actor actor) {
-                    UserData.getInstance().setMusicOn(isMusicOn.isChecked());
-                    isMusicOn.setChecked(false);
-                    Gdx.app.log("music", "" + UserData.getInstance().getIsMusicOn());
+                    UserData.getInstance().setMusicOn(!UserData.getInstance().getIsMusicOn());
+                    if(UserData.getInstance().getIsMusicOn()){
+                        audioManager.playMenuMusic();
+                    }else {
+                        audioManager.stopMenuMusic();
+                    }
                 }
             });
+
+
+            Label soundOn_label = new Label("Sound: ", label_style);
+            if(!UserData.getInstance().getIsSoundOn()){
+                isSoundOn = new ImageButton(style_settings);
+                isSoundOn.setChecked(true);
+            }else{
+                isSoundOn = new ImageButton(style_settings);
+                isSoundOn.setChecked(false);
+            }
+            isSoundOn.addListener(new ChangeListener() {
+                @Override
+                public void changed(ChangeEvent event, Actor actor) {
+                    UserData.getInstance().setSoundOn(!UserData.getInstance().getIsSoundOn());
+                }
+            });
+
+
+            Label splashOn_label = new Label("Splash screen: ", label_style);
+            if(!UserData.getInstance().getIsSplashScreenOn()){
+                splashOn = new ImageButton(style_settings);
+                splashOn.setChecked(true);
+            }else{
+                splashOn = new ImageButton(style_settings);
+                splashOn.setChecked(false);
+            }
+            splashOn.addListener(new ChangeListener() {
+                @Override
+                public void changed(ChangeEvent event, Actor actor) {
+                    UserData.getInstance().setSplashScreenOn(!UserData.getInstance().getIsSplashScreenOn());
+                }
+            });
+
+            options_table.add(musicOn_label).center().left();
             options_table.add(isMusicOn);
             options_table.row();
-            options_table.add(isSoundOn);
+            options_table.add(soundOn_label).center().left().padTop(20f);
+            options_table.add(isSoundOn).padTop(20f);
+            options_table.row();
+            options_table.add(splashOn_label).padTop(20f).center().left();
+            options_table.add(splashOn).padTop(20f);
             options_table.row();
 
-            TextButton.TextButtonStyle text_style = new TextButton.TextButtonStyle();
-            text_style.fontColor = Color.WHITE;
-            text_style.font = planetDefense.assets_manager.getGame_font();
-            TextButton reset = new TextButton("Reset save", text_style);
+
+            ImageButton reset = new ImageButton(new TextureRegionDrawable(planetDefense.assets_manager.getButtonDeleteSave()), new TextureRegionDrawable(planetDefense.assets_manager.getButtonDeleteSave_hover()));
+            reset.setSize(StaticUtils.MENU_BUTTON_SIZE, StaticUtils.MENU_BUTTON_SIZE);
+            reset.getImageCell().width(StaticUtils.MENU_BUTTON_SIZE).height(StaticUtils.MENU_BUTTON_SIZE);
+            reset.getImage().setScaling(Scaling.stretch);
             reset.addListener(new ChangeListener() {
                 @Override
                 public void changed(ChangeEvent event, Actor actor) {
                     if (UserData.getInstance().isHasPlaying()) UserData.getInstance().resetUserData();
                 }
             });
-            reset.setSize(StaticUtils.MENU_BUTTON_SIZE, StaticUtils.MENU_BUTTON_SIZE);
-            options_table.add(reset).height(reset.getHeight());
+            options_table.add(reset).height(reset.getHeight()).colspan(2).padTop(stage.getHeight() * 0.05f);
         }
 
         //Setting high score table
         {
+            Table high_scores = new Table();
+            Container<Table> high_score_container = new Container<Table>(high_scores);
+            high_score_container.background(new TextureRegionDrawable(planetDefense.assets_manager.getButtonsBackground()));
+
             Label high_score_label = new Label("Top wave: " + UserData.getInstance().getHigh_wave(), new Label.LabelStyle(planetDefense.assets_manager.getGame_font(), Color.WHITE));
+            Label asteroids_number = new Label("Asteroid destroyed: " + UserData.getInstance().getDestroyed_asteroids(), new Label.LabelStyle(planetDefense.assets_manager.getGame_font(), Color.WHITE));
+            Label shoots_number = new Label("Laser shoots: " + UserData.getInstance().getLaserShoots(), new Label.LabelStyle(planetDefense.assets_manager.getGame_font(), Color.WHITE));
             Label upgrades_number = new Label("Upgrades bought: " + UserData.getInstance().getUpgradeNumber(), new Label.LabelStyle(planetDefense.assets_manager.getGame_font(), Color.WHITE));
 
-            high_score.add(high_score_label).padBottom(10f);
-            high_score.row();
-            high_score.add(upgrades_number).padBottom(10f);
+            high_scores.add(high_score_label).padBottom(10f);
+            high_scores.row();
+            high_scores.add(asteroids_number).padBottom(10f);
+            high_scores.row();
+            high_scores.add(shoots_number).padBottom(10f);
+            high_scores.row();
+            high_scores.add(upgrades_number).padBottom(10f);
+
+            high_score.add(high_score_container).width(stage.getWidth());
+
         }
 
         //setting credits table

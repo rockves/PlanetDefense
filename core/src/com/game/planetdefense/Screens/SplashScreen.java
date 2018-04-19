@@ -12,6 +12,8 @@ public class SplashScreen implements Screen {
     private PlanetDefense planetDefense;
     private Stage stage;
     private float timer = 1f;
+    private float timer_y = 0.7f;
+    private boolean isTimer_y = false;
     private Image title_image;
 
     public SplashScreen(PlanetDefense planetDefense) {
@@ -38,10 +40,16 @@ public class SplashScreen implements Screen {
     public void render(float delta) {
         stage.act(delta);
         stage.draw();
-        if(title_image.getActions().size == 0){
+        if(title_image.getActions().size == 0 && !isTimer_y){
             timer -= delta;
+        }else if(isTimer_y){
+            timer_y -= delta;
         }
         if(timer <= 0){
+            isTimer_y = true;
+            title_image.addAction(Actions.moveTo(title_image.getX(), stage.getHeight() - title_image.getHeight() - 15f, timer_y));
+        }
+        if(timer_y <= 0){
             planetDefense.changeScreen(new MenuScreen(planetDefense), this);
         }
     }
