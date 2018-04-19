@@ -10,13 +10,13 @@ public enum UpgradeType {
     public float getPrice(){
         switch(this){
             case LaserUpgrade:
-                return 1000f;
+                return 3000f;
             case DmgBonus:
                 return 100f;
             case ShieldBonus:
                 return 500f;
             case StageBonus:
-                return 1000f;
+                return 80f;
             default:
                 return 0f;
         }

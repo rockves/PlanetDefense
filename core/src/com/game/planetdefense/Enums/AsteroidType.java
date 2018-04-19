@@ -58,7 +58,7 @@ public enum AsteroidType {
     public float getMoneyDrop(){
         switch(this){
             case METEORITE:
-                return 5f;
+                return 10f;
             case ICE_METEORITE:
                 return 10f;
             case METAL_METEORITE:

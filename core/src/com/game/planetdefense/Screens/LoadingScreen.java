@@ -2,6 +2,7 @@ package com.game.planetdefense.Screens;
 
 import com.badlogic.gdx.Screen;
 import com.game.planetdefense.PlanetDefense;
+import com.game.planetdefense.Utils.Singletons.UserData;
 
 public class LoadingScreen implements Screen {
 
@@ -21,7 +22,12 @@ public class LoadingScreen implements Screen {
     public void render(float delta) {
         if(planetDefense.assets_manager.update()){
             planetDefense.assets_manager.getAssets();
-            planetDefense.changeScreen(new SplashScreen(planetDefense), this);
+            if(UserData.getInstance().getIsSplashScreenOn()){
+                planetDefense.changeScreen(new SplashScreen(planetDefense), this);
+            }else {
+                planetDefense.changeScreen(new MenuScreen(planetDefense), this);
+            }
+
         }
     }
 

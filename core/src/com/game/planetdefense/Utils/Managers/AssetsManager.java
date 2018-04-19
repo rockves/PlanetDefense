@@ -198,8 +198,16 @@ public class AssetsManager extends AssetManager {
         return atlas.findRegion("check_false");
     }
 
-    public TextureRegion getButon_unchecked(){
+    public TextureRegion getButton_unchecked(){
         return atlas.findRegion("check_true");
+    }
+
+    public TextureRegion getButtonDeleteSave(){
+        return atlas.findRegion("button_save");
+    }
+
+    public TextureRegion getButtonDeleteSave_hover(){
+        return atlas.findRegion("button_save_hover");
     }
 
     public TextureRegion getEarthTexture(){

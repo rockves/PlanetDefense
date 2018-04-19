@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.actions.MoveByAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -28,16 +27,11 @@ public class UpgradeButton extends Button {
     private TextureRegionDrawable background;
     private float state_time;
     private float price;
-    private float how_far_up = 60f;
-    private float start_y;
-    private float speed = 3f;
-    private MoveByAction moveAction;
 
     public UpgradeButton(AssetsManager assetsManager, UpgradeType upgradeType, float x, float y, float width, float height) {
         super(new TextureRegionDrawable(assetsManager.getUpgrade_button_animation().getKeyFrame(0, true)));
         this.setPosition(x,y);
         this.audio_manager = assetsManager.getAudio_manager();
-        start_y = y;
         this.setSize(width,height);
         this.align(Align.top);
         state_time = 0f;
@@ -91,15 +85,18 @@ public class UpgradeButton extends Button {
     }
 
     private void getPrice(UpgradeType upgradeType){
-        price = upgradeType.getPrice();
+        price = upgradeType.getPrice() * (upgradeType.getUpgradeLvl() + 1);
     }
 
     private void buy(){
-        UserData.getInstance().setMoney(UserData.getInstance().getMoney() - upgrade_type.getPrice());
+        UserData.getInstance().setMoney(UserData.getInstance().getMoney() - price);
         upgrade_type.addUpgradeLvl();
         UserData.getInstance().addUpgradeNumber();
         if(upgrade_type.getUpgradeLvl() == upgrade_type.getUpgradeMaxLvl()){
             price_label.setText("MAX");
+        }else {
+            getPrice(upgrade_type);
+            price_label.setText("" + (int)price);
         }
         audio_manager.playBuySound();
         Gdx.app.log("Upgrade", "" + upgrade_type.getUpgradeLvl());

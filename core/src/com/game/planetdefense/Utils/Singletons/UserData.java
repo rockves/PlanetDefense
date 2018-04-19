@@ -10,6 +10,8 @@ public class UserData {
 
     private float money;
     private int high_wave;
+    private long destroyed_asteroids;
+    private long laser_fired;
     private boolean hasPlaying;
 
     public static UserData getInstance() {
@@ -25,12 +27,16 @@ public class UserData {
         money = prefs.getFloat("money", 0);
         high_wave = prefs.getInteger("highWave", 0);
         hasPlaying = prefs.getBoolean("hasPlaying", false);
+        destroyed_asteroids = prefs.getLong("destroyedAsteroids", 0);
+        laser_fired = prefs.getLong("laserFired", 0);
     }
 
     public void updateUserData(){
         prefs.putFloat("money",money);
         prefs.putInteger("highWave", high_wave);
         prefs.putBoolean("hasPlaying", hasPlaying);
+        prefs.putLong("destroyedAsteroids", destroyed_asteroids);
+        prefs.putLong("laserFired", laser_fired);
         prefs.flush();
     }
 
@@ -69,6 +75,22 @@ public class UserData {
         this.hasPlaying = hasPlaying;
     }
 
+    public void addDestroyedAsteroid(){
+        destroyed_asteroids += 1;
+    }
+
+    public long getDestroyed_asteroids(){
+        return destroyed_asteroids;
+    }
+
+    public void addLaserShoot(){
+        laser_fired += 1;
+    }
+
+    public long getLaserShoots(){
+        return laser_fired;
+    }
+
     public void addUpgradeLvl(UpgradeType upgradeType){
         prefs.putInteger(upgradeType.name(), prefs.getInteger(upgradeType.name(), 0) + 1);
         prefs.flush();
@@ -103,5 +125,14 @@ public class UserData {
 
     public boolean getIsSoundOn(){
         return prefs.getBoolean("SoundOn", true);
+    }
+
+    public void setSplashScreenOn(boolean on){
+        prefs.putBoolean("SplashScreenOn", on);
+        prefs.flush();
+    }
+
+    public boolean getIsSplashScreenOn(){
+        return prefs.getBoolean("SplashScreenOn", true);
     }
 }

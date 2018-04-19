@@ -202,6 +202,7 @@ public class GameStage extends Stage {
                 explosion_iterator.remove();
             }
         }
+        UserData.getInstance().addDestroyedAsteroid();
     }
 
     private void checkCollisions(){
@@ -266,6 +267,7 @@ public class GameStage extends Stage {
         if(missile == null) return;
         this.addActor(missile);
         this.active_missiles.add(missile);
+        UserData.getInstance().addLaserShoot();
         Gdx.app.log("Active missiles", "" + active_missiles.size());
         Gdx.app.log("Missiles pool", "" + missile_pool.getFree());
     }
