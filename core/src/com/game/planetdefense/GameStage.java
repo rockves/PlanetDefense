@@ -191,6 +191,7 @@ public class GameStage extends Stage {
         this.addActor(explosion);
         active_explosion.add(explosion);
         audio_manager.playExplosionSound();
+        UserData.getInstance().addDestroyedAsteroid();
     }
 
     private void simulateExplosion(){
@@ -202,7 +203,6 @@ public class GameStage extends Stage {
                 explosion_iterator.remove();
             }
         }
-        UserData.getInstance().addDestroyedAsteroid();
     }
 
     private void checkCollisions(){

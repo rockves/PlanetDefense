@@ -37,6 +37,10 @@ public class MenuScreen implements Screen {
     private Table credits_table;
     private ImageButton back_button;
     private AudioManager audioManager;
+    private Label high_score_label;
+    private Label asteroids_number;
+    private Label shoots_number;
+    private Label upgrades_number;
 
     public MenuScreen(final PlanetDefense planetDefense) {
 
@@ -48,6 +52,7 @@ public class MenuScreen implements Screen {
         this.high_score = new Table();
         this.credits_table = new Table();
         this.audioManager = planetDefense.assets_manager.getAudio_manager();
+        Gdx.input.setCatchBackKey(false);
 
 
         stage = new Stage(new ScreenViewport());
@@ -236,6 +241,7 @@ public class MenuScreen implements Screen {
                 @Override
                 public void changed(ChangeEvent event, Actor actor) {
                     if (UserData.getInstance().isHasPlaying()) UserData.getInstance().resetUserData();
+                    refresh_stats();
                 }
             });
             options_table.add(reset).height(reset.getHeight()).colspan(2).padTop(stage.getHeight() * 0.05f);
@@ -247,10 +253,10 @@ public class MenuScreen implements Screen {
             Container<Table> high_score_container = new Container<Table>(high_scores);
             high_score_container.background(new TextureRegionDrawable(planetDefense.assets_manager.getButtonsBackground()));
 
-            Label high_score_label = new Label("Top wave: " + UserData.getInstance().getHigh_wave(), new Label.LabelStyle(planetDefense.assets_manager.getGame_font(), Color.WHITE));
-            Label asteroids_number = new Label("Asteroid destroyed: " + UserData.getInstance().getDestroyed_asteroids(), new Label.LabelStyle(planetDefense.assets_manager.getGame_font(), Color.WHITE));
-            Label shoots_number = new Label("Laser shoots: " + UserData.getInstance().getLaserShoots(), new Label.LabelStyle(planetDefense.assets_manager.getGame_font(), Color.WHITE));
-            Label upgrades_number = new Label("Upgrades bought: " + UserData.getInstance().getUpgradeNumber(), new Label.LabelStyle(planetDefense.assets_manager.getGame_font(), Color.WHITE));
+            high_score_label = new Label("Top wave:" + UserData.getInstance().getHigh_wave(), new Label.LabelStyle(planetDefense.assets_manager.getGame_font(), Color.WHITE));
+            asteroids_number = new Label("Asteroid destroyed:" + UserData.getInstance().getDestroyed_asteroids(), new Label.LabelStyle(planetDefense.assets_manager.getGame_font(), Color.WHITE));
+            shoots_number = new Label("Laser shoots:" + UserData.getInstance().getLaserShoots(), new Label.LabelStyle(planetDefense.assets_manager.getGame_font(), Color.WHITE));
+            upgrades_number = new Label("Upgrades bought:" + UserData.getInstance().getUpgradeNumber(), new Label.LabelStyle(planetDefense.assets_manager.getGame_font(), Color.WHITE));
 
             high_scores.add(high_score_label).padBottom(10f);
             high_scores.row();
@@ -343,5 +349,12 @@ public class MenuScreen implements Screen {
     public void dispose() {
         audioManager.stopMenuMusic();
         stage.dispose();
+    }
+
+    private void refresh_stats(){
+        high_score_label.setText("Top wave:" + UserData.getInstance().getHigh_wave());
+        asteroids_number.setText("Asteroid destroyed:" + UserData.getInstance().getDestroyed_asteroids());
+        shoots_number.setText("Laser shoots:" + UserData.getInstance().getLaserShoots());
+        upgrades_number.setText("Upgrades bought:" + UserData.getInstance().getUpgradeNumber());
     }
 }

@@ -67,6 +67,11 @@ public class UserData {
         this.high_wave = high_wave;
     }
 
+    public void saveHigh_wave(){
+        prefs.putInteger("highWave", high_wave);
+        prefs.flush();
+    }
+
     public boolean isHasPlaying() {
         return hasPlaying;
     }
