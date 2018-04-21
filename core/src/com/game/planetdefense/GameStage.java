@@ -2,6 +2,7 @@ package com.game.planetdefense;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -21,6 +22,7 @@ import com.game.planetdefense.Actors.Missile;
 import com.game.planetdefense.Enums.UpgradeType;
 import com.game.planetdefense.Utils.Managers.AudioManager;
 import com.game.planetdefense.Utils.Managers.WaveManager;
+import com.game.planetdefense.Utils.ScreenShake;
 import com.game.planetdefense.Utils.Singletons.UserData;
 import com.game.planetdefense.Utils.StaticUtils;
 
@@ -39,6 +41,7 @@ public class GameStage extends Stage {
     private List<Explosion> active_explosion;
     private Pool<Explosion> explosion_pool;
 
+    private ScreenShake screenShake;
     private WaveManager wave_manager;
     private AudioManager audio_manager;
     private Launcher launcher;
@@ -81,6 +84,7 @@ public class GameStage extends Stage {
         toggleWaveScreen();
         this.audio_manager = planetDefense.assets_manager.getAudio_manager();
         this.audio_manager.playGameMusic();
+        this.screenShake = new ScreenShake((OrthographicCamera)this.getViewport().getCamera());
     }
 
     @Override
@@ -92,6 +96,8 @@ public class GameStage extends Stage {
     public void act(float delta) {
         super.act(delta);
         simulateExplosion();
+        screenShake.returnToBase((OrthographicCamera)this.getViewport().getCamera());
+        screenShake.update(delta, (OrthographicCamera)this.getViewport().getCamera());
         if(isPause || stage_screen.getActions().size > 0) return;
         checkCollisions();
         if(!wave_manager.isEndOfWave()) {
@@ -181,7 +187,8 @@ public class GameStage extends Stage {
 
     private void createBackground(){
         Image background = new Image(planetDefense.assets_manager.getStarBackground());
-        background.setFillParent(true);
+        background.setSize(this.getWidth() + (this.getWidth() * 0.1f), this.getHeight() + (this.getHeight() * 0.1f));
+        background.setPosition(0 - (this.getWidth() * 0.05f), 0 - (this.getHeight() * 0.05f));
         this.addActor(background);
     }
 
@@ -192,6 +199,7 @@ public class GameStage extends Stage {
         active_explosion.add(explosion);
         audio_manager.playExplosionSound();
         UserData.getInstance().addDestroyedAsteroid();
+        screenShake.shake(20f, 500f);
     }
 
     private void simulateExplosion(){
